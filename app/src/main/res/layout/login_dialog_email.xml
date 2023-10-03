@@ -1,0 +1,58 @@
+<!-- res/layout/login_dialog.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:background="@drawable/button_background"
+    android:orientation="vertical"
+    android:layout_marginTop="150dp"
+    >
+
+    <!-- 로그인 폼 구성 요소들을 이곳에 추가합니다. -->
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그인"
+        android:layout_gravity="center"
+        android:textColor="@color/black"
+        android:textSize="35sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/login_to_email"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_textbox"
+        android:hint="이메일"
+        android:padding="10dp"
+        android:textColor="@android:color/black"
+        android:textColorHint="@color/black"
+        android:textSize="16sp" />
+
+    <EditText
+        android:textColorHint="@color/black"
+        android:id="@+id/login_to_email_password"
+        android:layout_width="match_parent"
+        android:layout_height="47dp"
+        android:layout_margin="16dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/edit_textbox"
+        android:hint="비밀번호"
+        android:padding="10dp"
+        android:textColor="@android:color/black"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/btn_login_to_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/btn_less_radius"
+        android:text="로그인"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+
+</LinearLayout>

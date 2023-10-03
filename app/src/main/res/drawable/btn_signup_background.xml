@@ -1,0 +1,7 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- 배경 색상을 흰색으로 설정 -->
+    <solid android:color="#00ff0000" />
+
+</shape>
