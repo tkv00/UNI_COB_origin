@@ -6,6 +6,25 @@
 
 
     <android.widget.Button
+        android:id="@+id/login_to_google"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/google_login"
+        android:drawableLeft="@drawable/google"
+        android:text="구글로 로그인            "
+
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.528"
+        tools:ignore="MissingConstraints" />
+
+    <android.widget.Button
 
         android:id="@+id/signupButton"
         android:layout_width="81dp"
@@ -22,7 +41,7 @@
         app:layout_constraintHorizontal_bias="0.721"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.589"
+        app:layout_constraintVertical_bias="0.696"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -37,18 +56,17 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.587"
+        app:layout_constraintVertical_bias="0.692"
         tools:ignore="MissingConstraints" />
 
     <android.widget.Button
-        android:id="@+id/login_to_google"
+        android:id="@+id/login_to_phone"
         android:layout_width="300dp"
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:background="@drawable/google_login"
-        android:drawableLeft="@drawable/google"
-        android:text="구글로 로그인            "
-
+        android:drawableLeft="@drawable/iphone"
+        android:text="휴대폰 번호로 로그인        "
         android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -56,25 +74,7 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.418"
-        tools:ignore="MissingConstraints" />
-
-    <android.widget.Button
-        android:id="@+id/facebookLoginButton"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/facebook"
-        android:drawableLeft="@drawable/facebook_icon"
-        android:text="페이스북으로 로그인          "
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.327"
+        app:layout_constraintVertical_bias="0.299"
         tools:ignore="MissingConstraints" />
 
     <android.widget.Button
@@ -93,8 +93,26 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.476"
+        app:layout_constraintVertical_bias="0.596"
         tools:ignore="MissingConstraints,NotSibling" />
+
+    <android.widget.Button
+        android:id="@+id/facebookLoginButton"
+        android:layout_width="300dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/facebook"
+        android:drawableLeft="@drawable/facebook_icon"
+        android:text="페이스북으로 로그인          "
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.437"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/orText"
@@ -105,27 +123,10 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.267"
-        tools:ignore="MissingConstraints" />
-
-    <android.widget.Button
-        android:id="@+id/login_to_phone"
-        android:layout_width="300dp"
-        android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/google_login"
-        android:drawableLeft="@drawable/iphone"
-        android:text="휴대폰 번호로 로그인        "
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.19"
+        app:layout_constraintVertical_bias="0.373"
         tools:ignore="MissingConstraints" />
 
 

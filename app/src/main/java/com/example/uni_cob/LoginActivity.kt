@@ -1,5 +1,6 @@
 package com.example.uni_cob
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,7 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.facebook.CallbackManager
 import com.facebook.FacebookCallback
 import com.facebook.FacebookException
@@ -89,12 +91,30 @@ class LoginActivity : AppCompatActivity() {
 
 
     }
-
+    private val googleSignInLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        val resultCode = result.resultCode
+        val data = result.data
+        if (resultCode == Activity.RESULT_OK) {
+            // Google 로그인 성공 시에 실행할 코드를 여기에 작성하세요.
+            val task = GoogleSignIn.getSignedInAccountFromIntent(data)
+            if (task.isSuccessful) {
+                val account = task.result
+                firebaseAuthWithGoogle(account)
+            } else {
+                Log.d(TAG, "Google 로그인 실패")
+            }
+        } else {
+            Log.d(TAG, "Google 로그인 취소 또는 실패")
+        }
+    }
     private fun signInWithGoogle() {
         val signInIntent = googleSignInClient?.signInIntent
         if (signInIntent != null) {
-            startActivityForResult(signInIntent, RC_SIGN_IN)
+            googleSignInLauncher.launch(signInIntent)
+            val intent=Intent(this,MainActivity::class.java)
+            startActivity(intent)
         }
+
     }
 
     private fun firebaseAuthWithGoogle(acct: GoogleSignInAccount?) {

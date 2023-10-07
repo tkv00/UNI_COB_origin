@@ -12,8 +12,8 @@
         android:text="메인"
         android:textSize="110sp"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="197dp" />
+        tools:layout_editor_absoluteX="93dp"
+        tools:layout_editor_absoluteY="194dp" />
 
     <Button
         android:id="@+id/btn_correct_school"
@@ -21,9 +21,10 @@
         android:layout_height="115dp"
         android:text="학교인증하기"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="433dp" />
+        tools:layout_editor_absoluteY="371dp" />
 
     <Button
         android:id="@+id/logout"
@@ -31,9 +32,20 @@
         android:layout_height="115dp"
         android:text="logout"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="561dp" />
+        tools:layout_editor_absoluteY="531dp" />
+
+    <Button
+        android:id="@+id/btn_chat"
+        android:layout_width="58dp"
+        android:layout_height="63dp"
+        android:text="채팅"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="662dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
