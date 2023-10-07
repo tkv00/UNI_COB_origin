@@ -25,7 +25,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         tools:targetApi="31">
-
+        <activity
+            android:name=".chatActivity"
+            android:exported="false" />
         <!-- SplashActivity를 첫 화면으로 설정 -->
         <activity
             android:name=".SplashActivity"
@@ -35,14 +37,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- image_slide 액티비티 추가 -->
+        </activity> <!-- image_slide 액티비티 추가 -->
         <activity
             android:name=".image_slide"
-            android:exported="false" />
-
-        <!-- 다음에 MainActivity, SignUpActivity1, LoginActivity, SignUpActivity2 추가 -->
+            android:exported="false" /> <!-- 다음에 MainActivity, SignUpActivity1, LoginActivity, SignUpActivity2 추가 -->
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -56,15 +54,12 @@
             android:name=".SignUpActivity2"
             android:exported="false" />
 
-
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
         <meta-data
             android:name="com.facebook.sdk.ClientToken"
             android:value="@string/facebook_client_token" />
-
     </application>
 
 </manifest>
