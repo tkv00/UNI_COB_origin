@@ -61,6 +61,7 @@ dependencies {
     implementation("com.google.firebase:firebase-core:20.0.1")
     implementation("com.google.firebase:firebase-storage-ktx:20.2.1")
     implementation("com.google.android.gms:play-services-auth:20.7.0")
+
     testImplementation("junit:junit:4.13.2")
     implementation ("com.facebook.android:facebook-android-sdk:[8,9)")
     implementation ("com.facebook.android:facebook-android-sdk:latest.release")
@@ -68,4 +69,6 @@ dependencies {
     implementation ("me.relex:circleindicator:2.1.6")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    implementation("androidx.recyclerview:recyclerview:1.3.1")
+    implementation("androidx.recyclerview:recyclerview-selection:1.1.0")
 }

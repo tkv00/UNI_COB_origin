@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Patterns
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
@@ -16,8 +15,11 @@ import com.example.uni_cob.utility.FirebaseID
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.AuthResult
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.SetOptions
+import com.google.firebase.ktx.Firebase
 import java.util.regex.Pattern
 
 class SignUpActivity1 : AppCompatActivity(), View.OnClickListener {
@@ -35,7 +37,7 @@ class SignUpActivity1 : AppCompatActivity(), View.OnClickListener {
 
     private var isEmailValid = false
     private var isEmailAvailable = false
-
+    private lateinit var mDbRef:DatabaseReference
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,6 +49,9 @@ class SignUpActivity1 : AppCompatActivity(), View.OnClickListener {
         et_register_phone = findViewById(R.id.phoneNumber)
         btn_register_button = findViewById(R.id.btn_signup)
         checkEmailButton = findViewById(R.id.btn_checkduplicateEmail)
+
+        //DB초기화
+        mDbRef= Firebase.database.reference
 
         // EditText 필드 내용이 변경될 때마다 버튼 상태 업데이트
         et_register_name.addTextChangedListener(textWatcher)
@@ -219,6 +224,7 @@ class SignUpActivity1 : AppCompatActivity(), View.OnClickListener {
                                     // 회원가입이 성공하면 로그인 페이지로 이동
                                     val intent = Intent(this, LoginActivity::class.java)
                                     startActivity(intent)
+                                    addUserDatabase(name,email,mAuth.currentUser?.uid!!)
                                     finish()
                                 }
                                 .addOnFailureListener { e ->
@@ -238,6 +244,10 @@ class SignUpActivity1 : AppCompatActivity(), View.OnClickListener {
         } else {
             Toast.makeText(this, "모든 필수 정보를 입력하세요.", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun addUserDatabase(name:String,email:String,uId:String) {
+            mDbRef.child("user").child(uId).setValue(FirebaseID)
     }
 
     override fun onClick(view: View) {

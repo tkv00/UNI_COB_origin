@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         btn_chat.setOnClickListener{
-            val intent = Intent(this, chatActivity::class.java)
+            val intent = Intent(this, ChatActivity::class.java)
             // 여기에서 currentUser를 Intent에 추가하여 전달
             intent.putExtra("User", currentUser)
             startActivity(intent)

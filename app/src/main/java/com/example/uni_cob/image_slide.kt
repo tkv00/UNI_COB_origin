@@ -6,8 +6,6 @@ import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.uni_cob.MyAdapter
-import com.example.uni_cob.R
 import me.relex.circleindicator.CircleIndicator
 
 class image_slide : AppCompatActivity() {

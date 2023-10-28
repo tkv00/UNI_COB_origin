@@ -151,10 +151,14 @@ class LoginActivity : AppCompatActivity() {
                         // 로그인 성공 시 MainActivity로 회원 정보를 전달
                         val currentUser = auth?.currentUser
                         if (currentUser != null) {
-                            val intent = Intent(this, MainActivity::class.java)
+                            val intent1= Intent(this, MainActivity::class.java)
+
+                            /*//채팅앱쪽으로 정보 넘기기
+                            val intent2=Intent(this,ChatActivity::class.java)
+*/
                             // 여기에서 currentUser를 Intent에 추가하여 전달
-                            intent.putExtra("User", currentUser)
-                            startActivity(intent)
+                            intent1.putExtra("User", currentUser)
+                            startActivity(intent1)
                             finish()
                         }
                     } else {
