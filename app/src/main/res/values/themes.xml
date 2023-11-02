@@ -6,8 +6,18 @@
     </style>
 
     <style name="Theme.UNI_COB" parent="Base.Theme.UNI_COB" />
+
     <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog">
 
     </style>
+
+    <style name="NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
 </resources>

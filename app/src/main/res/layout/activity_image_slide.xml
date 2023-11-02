@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".image_slide"
-    android:background="@color/white"
+    android:background="#FFFFFF"
     >
 
 
@@ -44,32 +44,31 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663" />
+        app:layout_constraintVertical_bias="0.649" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="279dp"
         android:layout_height="84dp"
         android:gravity="center"
-        android:text="프로필 등록하면                         스카웃 제안이 찾아와요"
+        android:text="혼자서 해결하기                  어려운 일들을 해결해봐요"
         android:textColor="@color/black"
         android:textSize="25sp"
 
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.492"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.782" />
+        app:layout_constraintVertical_bias="0.758" />
 
     <Button
         android:id="@+id/slide_login"
-        android:layout_width="127dp"
-        android:layout_height="54dp"
-        android:background="@drawable/button_background_black"
+        android:layout_width="134dp"
+        android:layout_height="52dp"
+        android:background="@drawable/button_background"
         android:text="로그인"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -80,9 +79,9 @@
 
     <Button
         android:id="@+id/slide_signup"
-        android:layout_width="127dp"
-        android:layout_height="54dp"
-        android:background="@drawable/button_background_black"
+        android:layout_width="132dp"
+        android:layout_height="52dp"
+        android:background="@drawable/btn_signup_blue"
         android:text="회원가입"
         android:textColor="@color/white"
         android:textStyle="bold"
@@ -92,5 +91,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.896" />
+
+    <Button
+        android:id="@+id/btn_find_account"
+        android:layout_width="75dp"
+        android:layout_height="34dp"
+        android:background="#00ff0000"
+        android:text="계정 찾기"
+        android:textSize="13sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.962" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="88dp"
+        android:text="계정이 기억나지 않나요?"
+        android:textColor="@color/Gray_03"
+        android:textSize="13sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.953" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

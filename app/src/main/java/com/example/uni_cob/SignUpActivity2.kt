@@ -1,4 +1,5 @@
 package com.example.uni_cob
+//이 클래스 사용은 아직 나중으로 보류중
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -9,10 +10,18 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
+import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -26,8 +35,10 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import java.io.ByteArrayOutputStream
+import java.lang.IllegalArgumentException
 import java.text.SimpleDateFormat
 import java.util.Date
+
 
 class SignUpActivity2 : AppCompatActivity() {
 
@@ -36,13 +47,18 @@ class SignUpActivity2 : AppCompatActivity() {
     private lateinit var et_school: EditText
     private lateinit var btn_signup: Button
     private lateinit var btn_check_school: Button
-    private lateinit var imageUri: Uri
+    private lateinit var spinner: Spinner
+    private lateinit var email: String
+    private lateinit var password: String
+    private lateinit var phoneNumber: String
+    private lateinit var name: String
+    private lateinit var imageURL: String
+    private var imageUri: Uri? = null
 
     private lateinit var launcher: ActivityResultLauncher<Intent>
 
     private val CAMERA_PERMISSION_REQUEST_CODE = 123
 
-    private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var storage: FirebaseStorage
     private lateinit var storageRef: StorageReference
@@ -50,8 +66,12 @@ class SignUpActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up2)
+        email = intent.getStringExtra("email") ?: throw IllegalArgumentException("Email is required")
+        password = intent.getStringExtra("password") ?: throw IllegalArgumentException("password is required")
+        phoneNumber = intent.getStringExtra("phoneNumber") ?: throw IllegalArgumentException("phoneNumber is required")
+        name = intent.getStringExtra("name") ?: throw IllegalArgumentException("name is required")
+        imageURL = intent.getStringExtra("profileImageUrl") ?: throw IllegalArgumentException("imageURL is required")
 
-        auth = Firebase.auth
         database = FirebaseDatabase.getInstance().reference
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference
@@ -74,8 +94,25 @@ class SignUpActivity2 : AppCompatActivity() {
         et_school = findViewById(R.id.et_school)
         btn_signup = findViewById(R.id.btn_signup)
         btn_check_school = findViewById(R.id.btn_check_school)
+        spinner = findViewById(R.id.spn_SPList)
 
-        launcher = registerForActivityResult(StartActivityForResult()) { result ->
+        val departments = arrayOf("학년 선택", "1학년", "2학년", "3학년", "4학년", "4+학년")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, departments)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinner.adapter = adapter
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedDepartment = departments[position]
+                // selectedDepartment를 데이터베이스에 저장하는 코드를 여기에 작성합니다.
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // 아무것도 선택되지 않았을 때의 처리를 여기에 작성합니다.
+            }
+        }
+
+        launcher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
                 val intentData: Intent? = result.data
                 val imageBitmap = intentData?.extras?.get("data") as? Bitmap
@@ -90,111 +127,60 @@ class SignUpActivity2 : AppCompatActivity() {
         }
 
         btn_signup.setOnClickListener {
-            // 가입 버튼 클릭 시 수행할 작업 추가
-            // 여기에서 사용자를 로그인하고 토큰을 가져와서 Firebase 작업을 수행합니다.
-            loginUserAndPerformFirebaseOperations()
+            uploadUserInfoToFirebase()
         }
+
+        btn_signup.isEnabled = false // 초기에 버튼 비활성화
+
+        val textWatcher = object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+                checkInputs()
+            }
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            }
+        }
+
+        et_department.addTextChangedListener(textWatcher)
+        et_stNumber.addTextChangedListener(textWatcher)
+        et_school.addTextChangedListener(textWatcher)
     }
 
-    private fun loginUserAndPerformFirebaseOperations() {
+    private fun uploadUserInfoToFirebase() {
         val department = et_department.text.toString()
         val stNumber = et_stNumber.text.toString()
         val schoolName = et_school.text.toString()
 
-        val email = "user@example.com" // 사용자 이메일
-        val password = "password" // 사용자 비밀번호
-
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener { signInTask ->
-                if (signInTask.isSuccessful) {
-                    // 로그인 성공
-                    val currentUser = auth.currentUser
-                    if (currentUser != null) {
-                        // 사용자가 로그인된 상태에서 토큰을 가져옵니다.
-                        currentUser.getIdToken(true)
-                            .addOnCompleteListener { tokenTask ->
-                                if (tokenTask.isSuccessful) {
-                                    val idToken = tokenTask.result?.token
-                                    if (idToken != null) {
-                                        // Firebase 작업 수행
-                                        uploadImageAndUserInfoToFirebase(
-                                            department,
-                                            stNumber,
-                                            schoolName,
-                                            idToken
-                                        )
-                                    } else {
-                                        showMessage("토큰이 null입니다.")
-                                    }
-                                } else {
-                                    showMessage("토큰을 가져오는 데 실패했습니다.")
-                                }
-                            }
+        val selectedGrade = spinner.selectedItem.toString()
+        val userInfo = FirebaseID.User(
+            department,
+            email,
+            name,
+            password,
+            imageUri.toString(),
+            schoolName,
+            selectedGrade,
+            stNumber,
+            imageURL,
+            phoneNumber,
+        )
+        val userId = database.child("users").push().key
+        if (userId != null) {
+            database.child("users").child(userId).setValue(userInfo)
+                .addOnCompleteListener { databaseTask ->
+                    if (databaseTask.isSuccessful) {
+                        showMessage("가입이 완료되었습니다.")
+                        finish()
                     } else {
-                        showMessage("사용자가 null입니다.")
+                        showMessage("사용자 정보 업로드 실패: ${databaseTask.exception?.message}")
                     }
-                } else {
-                    showMessage("로그인 실패: ${signInTask.exception?.message}")
                 }
-            }
-    }
-
-    private fun uploadImageAndUserInfoToFirebase(
-        department: String,
-        stNumber: String,
-        schoolName: String,
-        idToken: String
-    ) {
-        // Firebase Storage에 이미지 업로드
-        val imageRef = storageRef.child("images/${generateImageFileName(schoolName, stNumber)}")
-        val baos = ByteArrayOutputStream()
-        // 이미지를 바이트 배열로 변환
-        imageUri?.let {
-            val imageBitmap = MediaStore.Images.Media.getBitmap(this.contentResolver, it)
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        } else {
+            showMessage("사용자 정보를 저장할 수 없습니다.")
         }
-        val data = baos.toByteArray()
-
-        imageRef.putBytes(data)
-            .addOnCompleteListener { uploadTask ->
-                if (uploadTask.isSuccessful) {
-                    // 이미지 업로드 성공
-                    imageRef.downloadUrl.addOnCompleteListener { urlTask ->
-                        if (urlTask.isSuccessful) {
-                            val imageUrl = urlTask.result.toString()
-                            // Firebase Realtime Database에 사용자 정보와 이미지 URL 저장
-                            val currentUser = auth.currentUser
-                            val userId = currentUser?.uid ?: ""
-                            if (userId.isNotEmpty()) {
-                                val userInfo = FirebaseID.User(
-                                    department,
-                                    "",
-                                    "",
-                                    "",
-                                    "",
-                                    stNumber,
-                                    schoolName
-                                )
-                                database.child("users").child(userId).setValue(userInfo)
-                                    .addOnCompleteListener { databaseTask ->
-                                        if (databaseTask.isSuccessful) {
-                                            showMessage("가입이 완료되었습니다.")
-                                            finish()
-                                        } else {
-                                            showMessage("사용자 정보 업로드 실패: ${databaseTask.exception?.message}")
-                                        }
-                                    }
-                            } else {
-                                showMessage("사용자 정보를 저장할 수 없습니다.")
-                            }
-                        } else {
-                            showMessage("이미지 URL 가져오기 실패: ${urlTask.exception?.message}")
-                        }
-                    }
-                } else {
-                    showMessage("이미지 업로드 실패: ${uploadTask.exception?.message}")
-                }
-            }
     }
 
     private fun launchCameraForAuthentication() {
@@ -204,7 +190,7 @@ class SignUpActivity2 : AppCompatActivity() {
 
     @SuppressLint("SimpleDateFormat")
     private fun generateImageFileName(schoolName: String, stNumber: String): String {
-        val sdf = SimpleDateFormat("yyyyMMdd_HHmm")
+        val sdf = SimpleDateFormat("yyyyMMdd_HHmmss")
         val currentDateAndTime: String = sdf.format(Date())
         return "image_${schoolName}_${stNumber}_$currentDateAndTime.jpg"
     }
@@ -214,8 +200,38 @@ class SignUpActivity2 : AppCompatActivity() {
     }
 
     private fun uploadImageToFirebaseStorage(imageBitmap: Bitmap) {
-        // 이미지 업로드를 위한 코드
-        // imageBitmap를 Firebase Storage에 업로드하고, 그 후에 Firebase Realtime Database에 사용자 정보 및 이미지 URL 저장
-        // 필요한 코드는 이미 작성되어 있습니다.
+        val baos = ByteArrayOutputStream()
+        imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+
+        val imageRef = storageRef.child("images/${generateImageFileName("schoolName", "stNumber")}")
+        val uploadTask = imageRef.putBytes(data)
+
+        uploadTask.addOnFailureListener {
+            showMessage("이미지 업로드에 실패하였습니다: ${it.message}")
+        }.addOnSuccessListener { taskSnapshot ->
+            taskSnapshot.metadata?.reference?.downloadUrl?.addOnSuccessListener { uri ->
+                imageUri = uri
+                showMessage("이미지 업로드에 성공하였습니다.")
+            } ?: showMessage("이미지 URL을 가져오는데 실패하였습니다.")
+        }
+    }
+
+    private fun checkInputs() {
+        val department = et_department.text.toString().trim()
+        val stNumber = et_stNumber.text.toString().trim()
+        val schoolName = et_school.text.toString().trim()
+
+        btn_signup.isEnabled = department.isNotEmpty() && stNumber.isNotEmpty() && schoolName.isNotEmpty() && imageUri != null
+
+        // 버튼의 배경색을 변경합니다.
+        if (btn_signup.isEnabled) {
+            btn_signup.setBackgroundResource(R.drawable.skyblue_button_background) // 활성화된 버튼의 색
+        } else {
+            btn_signup.setBackgroundResource( R.drawable.gray_button_background) // 비활성화된 버튼의 색
+        }
     }
 }
+
+
+

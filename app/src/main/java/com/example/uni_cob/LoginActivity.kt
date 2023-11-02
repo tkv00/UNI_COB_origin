@@ -1,4 +1,5 @@
 package com.example.uni_cob
+
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Dialog
@@ -74,12 +75,16 @@ class LoginActivity : AppCompatActivity() {
         val phoneLoginButton=findViewById<Button>(R.id.login_to_phone)
         // 휴대폰 번호로 로그인 버튼 클릭 이벤트
         phoneLoginButton.setOnClickListener {
-            showLogin_phone_Dialog()
+            val intent=Intent(this,login_to_phonenumber::class.java)
+            startActivity(intent)
+            finish()
         }
 
         // 이메일로 로그인 버튼 클릭 이벤트
         emailLoginButton.setOnClickListener {
-            showLogin_email_Dialog()
+            val intent=Intent(this,login_to_email::class.java)
+            startActivity(intent)
+            finish()
         }
         // 페이스북 로그인 버튼 클릭 이벤트
         facebookLoginButton.setOnClickListener {
@@ -179,86 +184,14 @@ class LoginActivity : AppCompatActivity() {
     //유저 정보 넘겨주고 메인 액티비티 호출
     private fun moveMainPage(user: FirebaseUser?) {
         if(user!=null){
-            val intent=Intent(this,MainActivity::class.java)
+            val intent= Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()
         }
     }
 
-    private fun showLogin_phone_Dialog() {
-        val dialog = Dialog(this,R.style.CustomDialogTheme)
-        dialog.setContentView(R.layout.login_dialog_phone)
-
-        // 배경을 반투명하게 설정
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-        // 다이얼로그 크기 설정
-        val windowLayoutParams = dialog.window?.attributes
-        windowLayoutParams?.width = (resources.displayMetrics.widthPixels * 0.8).toInt()
-        dialog.window?.attributes = windowLayoutParams
-        windowLayoutParams?.height = (resources.displayMetrics.heightPixels * 0.8).toInt()
-        dialog.window?.attributes = windowLayoutParams
-
-        // 중앙에 위치하도록 설정
-        windowLayoutParams?.gravity = Gravity.CENTER
-        dialog.window?.attributes = windowLayoutParams
-
-        // 포커스 설정
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        dialog.show()
-
-        dialog.getWindow()?.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-            WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-
-        // 로그인 버튼 클릭 시
-        val loginButton = dialog.findViewById<Button>(R.id.btn_login_to_phone)
-        val phoneEditText = dialog.findViewById<EditText>(R.id.login_to_phone)
-        val phonepasswordEditText = dialog.findViewById<EditText>(R.id.login_to_phone_password)
 
 
-        loginButton.setOnClickListener {
-            val phone =phoneEditText .text.toString().trim()
-            val password = phonepasswordEditText.text.toString().trim()
-
-            // 이메일 및 비밀번호로 로그인 시도
-            signIn(phone, password)
-        }
-
-    }
-    private fun showLogin_email_Dialog() {
-        val dialog = Dialog(this, R.style.CustomDialogTheme)
-        dialog.setContentView(R.layout.login_dialog_email)
-
-        // 배경을 반투명하게 설정
-        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
-
-        // 다이얼로그 크기 설정
-        val windowLayoutParams = dialog.window?.attributes
-        windowLayoutParams?.width = (resources.displayMetrics.widthPixels * 0.8).toInt()
-        dialog.window?.attributes = windowLayoutParams
-        windowLayoutParams?.height = (resources.displayMetrics.heightPixels * 0.8).toInt()
-
-
-        // 포커스 설정
-        dialog.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
-        dialog.show()
-
-        dialog.getWindow()?.setFlags(WindowManager.LayoutParams.FLAG_BLUR_BEHIND,
-            WindowManager.LayoutParams.FLAG_BLUR_BEHIND);
-
-        // 로그인 버튼 클릭 시
-        val loginButton = dialog.findViewById<Button>(R.id.btn_login_to_email)
-        val emailEditText = dialog.findViewById<EditText>(R.id.login_to_email)
-        val passwordEditText = dialog.findViewById<EditText>(R.id.login_to_email_password)
-
-        loginButton.setOnClickListener {
-            val email = emailEditText.text.toString().trim()
-            val password = passwordEditText.text.toString().trim()
-
-            // 이메일 및 비밀번호로 로그인 시도
-            signIn(email, password)
-        }
-    }
 
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

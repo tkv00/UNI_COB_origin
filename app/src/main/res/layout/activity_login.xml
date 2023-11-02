@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#87CFFA"
+    android:background="#FFFFFF"
     android:layout_height="match_parent">
 
 
@@ -35,6 +35,7 @@
         android:text="회원 가입"
         android:textColor="@color/black"
         android:textSize="13sp"
+        android:textStyle="bold"
 
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -42,7 +43,7 @@
         app:layout_constraintHorizontal_bias="0.721"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.696"
+        app:layout_constraintVertical_bias="0.968"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -50,14 +51,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="UNICOB이 처음이신가요?"
-        android:textColor="@color/white"
+        android:textColor="@color/Gray_03"
         android:textSize="13dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/signupButton"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.692"
+        app:layout_constraintVertical_bias="0.96"
         tools:ignore="MissingConstraints" />
 
     <android.widget.Button
@@ -129,6 +130,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.373"
         tools:ignore="MissingConstraints" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

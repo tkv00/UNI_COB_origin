@@ -2,14 +2,19 @@ package com.example.uni_cob.utility
 
 object FirebaseID {
     data class User(
-        val name: String,
-        val department:String,
-        val email: String,
-        val userPhoneNumber: String,
-        val password: String,
-        val stNumber: String,
-        val schoolName: String
+        val department:String?,
+        val email: String?,
+        val name: String?,
+        val password: String?,
+        val profileImageUrl:String?,
+        val schoolName: String?,
+        val selectedGrade:String?,
+        val stNumber: String?,
+        var uid:String?,
+        val userPhoneNumber: String?
     )
+
+
 
     // 나머지 상수 필드는 여기에 추가할 수 있습니다.
     const val name="name"
@@ -19,4 +24,7 @@ object FirebaseID {
     const val password = "password"
     const val stNumber="stNumber"
     const val schoolName="schoolName"
+    const val uid="uid"
+    const val profileImageUrl="profileImageUrl"
+    const val selectedGrade="selectedGrade"
 }

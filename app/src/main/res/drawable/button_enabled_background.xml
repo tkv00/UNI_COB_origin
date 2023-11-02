@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android">
-    <!-- 로그인 버튼 활성화 상태의 스타일 -->
-    <style android:name="LoginButtonEnabled">
-        <item android:name="android:background">@android:drawable/button_background_black</item>
-        <item android:name="android:textColor">@android:color/white</item>
-    </style>
-</resources>
