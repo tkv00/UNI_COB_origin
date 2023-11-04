@@ -10,8 +10,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.uni_cob.utility.FirebaseID
-import com.example.uni_cob.utility.FirebaseID.email
-import com.example.uni_cob.utility.FirebaseID.password
+
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 

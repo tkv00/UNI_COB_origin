@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.uni_cob.utility.FirebaseID
+import com.example.uni_cob.utility.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -95,6 +96,7 @@ class SignUpActivity2 : AppCompatActivity() {
         btn_signup = findViewById(R.id.btn_signup)
         btn_check_school = findViewById(R.id.btn_check_school)
         spinner = findViewById(R.id.spn_SPList)
+        val safekey=imageUri.toString().replace(Regex("[.#$\\[\\]/]"),"")
 
         val departments = arrayOf("학년 선택", "1학년", "2학년", "3학년", "4학년", "4+학년")
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, departments)
@@ -117,7 +119,9 @@ class SignUpActivity2 : AppCompatActivity() {
                 val intentData: Intent? = result.data
                 val imageBitmap = intentData?.extras?.get("data") as? Bitmap
                 imageBitmap?.let { bitmap ->
-                    uploadImageToFirebaseStorage(bitmap)
+                    val schoolName = et_school.text.toString().trim()
+                    val stNumber = et_stNumber.text.toString().trim()
+                    uploadImageToFirebaseStorage(bitmap, schoolName, stNumber)
                 } ?: showMessage("이미지를 가져오지 못했습니다.")
             }
         }
@@ -154,18 +158,25 @@ class SignUpActivity2 : AppCompatActivity() {
         val stNumber = et_stNumber.text.toString()
         val schoolName = et_school.text.toString()
 
+        val authUid=FirebaseAuth.getInstance().currentUser?.uid
+        if(authUid==null){
+            showMessage("인증된 사요자가 아닙니다.")
+            return
+        }
+        val profileImageUrl=imageUri.toString()
+
         val selectedGrade = spinner.selectedItem.toString()
-        val userInfo = FirebaseID.User(
-            department,
-            email,
-            name,
-            password,
-            imageUri.toString(),
-            schoolName,
-            selectedGrade,
-            stNumber,
-            imageURL,
-            phoneNumber,
+        val userInfo = User(
+            department=department,
+            email=email,
+            name=name,
+            password=password,
+            uid = authUid,
+            schoolName=schoolName,
+            selectedGrade=selectedGrade,
+            stNumber=stNumber,
+            profileImageUrl =profileImageUrl,
+            userPhoneNumber = phoneNumber
         )
         val userId = database.child("users").push().key
         if (userId != null) {
@@ -199,12 +210,15 @@ class SignUpActivity2 : AppCompatActivity() {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
-    private fun uploadImageToFirebaseStorage(imageBitmap: Bitmap) {
+    private fun uploadImageToFirebaseStorage(imageBitmap: Bitmap,schoolName: String,stNumber: String) {
         val baos = ByteArrayOutputStream()
         imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
         val data = baos.toByteArray()
-
-        val imageRef = storageRef.child("images/${generateImageFileName("schoolName", "stNumber")}")
+        // 이미지 파일 이름을 생성하기 전에 입력값을 살균합니다.
+        val sanitizedSchoolName = schoolName.replace(Regex("[.#$\\[\\]/]"), "")
+        val sanitizedStNumber = stNumber.replace(Regex("[.#$\\[\\]/]"), "")
+        val fileName=generateImageFileName(sanitizedSchoolName,sanitizedStNumber)
+        val imageRef = storageRef.child("images/$fileName")
         val uploadTask = imageRef.putBytes(data)
 
         uploadTask.addOnFailureListener {

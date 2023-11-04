@@ -15,11 +15,11 @@
         />
     <item
         android:title="Resister"
-        android:id="@+id/register"
+        android:id="@+id/menu_register"
         android:icon="@drawable/register"/>
     <item
         android:title="Notification"
-        android:id="@+id/bell"
+        android:id="@+id/menu_notification"
         android:icon="@drawable/bell"
         android:enabled="true"
         />

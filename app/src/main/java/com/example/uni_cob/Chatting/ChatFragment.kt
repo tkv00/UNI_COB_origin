@@ -13,8 +13,10 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.uni_cob.MessageActivity
 import com.example.uni_cob.R
 import com.example.uni_cob.utility.FirebaseID
+import com.example.uni_cob.utility.User
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -107,7 +109,7 @@ class ChatFragment : Fragment() {
                 }
 
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val friend = snapshot.getValue<FirebaseID>()
+                    val friend = snapshot.getValue<User>()
                     Glide.with(holder.itemView.context).load(friend?.profileImageUrl)
                         .apply(RequestOptions.circleCropTransform())
                         .into(holder.imageView)

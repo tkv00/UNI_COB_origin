@@ -1,4 +1,4 @@
-package com.example.uni_cob.Chatting
+package com.example.uni_cob
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -16,55 +17,68 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.example.uni_cob.R
-import com.example.uni_cob.utility.FirebaseID
+import com.example.uni_cob.Chatting.ChatModel
+import com.example.uni_cob.utility.User
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Comment
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MessageActivity : AppCompatActivity() {
 
-    private val fireDatabase:DatabaseReference = FirebaseDatabase.getInstance().reference
+    private val fireDatabase = FirebaseDatabase.getInstance().reference
     private var chatRoomUid : String? = null
     private var destinationUid : String? = null
     private var uid : String? = null
     private var recyclerView : RecyclerView? = null
-    private val messageActivity_editText= findViewById<TextView>(R.id.messageActivity_editText)
-    private val messageActivity_ImageView=findViewById<ImageView>(R.id.messageActivity_ImageView)
-    private val messageActivity_textView_topName=findViewById<TextView>(R.id.messageActivity_textView_topName)
+    private lateinit var messageActivity_editText:EditText
+    private lateinit var messageActivity_ImageView:ImageView
+    private lateinit var messageActivity_textView_topName:TextView
+
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
-        val imageView = findViewById<ImageView>(R.id.messageActivity_ImageView)
-        val editText = findViewById<TextView>(R.id.messageActivity_editText)
+        messageActivity_ImageView = findViewById(R.id.messageActivity_ImageView)
+        
 
         //메세지를 보낸 시간
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
         val curTime = dateFormat.format(Date(time)).toString()
-
+        messageActivity_textView_topName=findViewById(R.id.messageActivity_textView_topName)
+        messageActivity_editText=findViewById(R.id.messageActivity_editText)
         destinationUid = intent.getStringExtra("destinationUid")
-        uid = Firebase.auth.currentUser?.uid.toString()
+        uid = Firebase.auth.currentUser?.uid
+        // 상단에 친구의 이름을 표시합니다.
+        destinationUid?.let {
+            fireDatabase.child("users").child(it)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(databaseError: DatabaseError) {
+                        // 오류 처리...
+                    }
+
+                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                        val friend = dataSnapshot.getValue<User>()
+                        messageActivity_textView_topName.text = friend?.name
+                    }
+                })
+        }
         recyclerView = findViewById(R.id.messageActivity_recyclerview)
 
-        imageView.setOnClickListener {
+        messageActivity_ImageView.setOnClickListener {
             Log.d("클릭 시 dest", "$destinationUid")
             val chatModel = ChatModel()
             chatModel.users.put(uid.toString(), true)
             chatModel.users.put(destinationUid!!, true)
 
-            val comment = ChatModel.Comment(uid!!, editText.text.toString(), curTime)
+            val comment = ChatModel.Comment(uid, messageActivity_editText.text.toString(), curTime)
             if(chatRoomUid == null){
-                imageView.isEnabled = false
+                messageActivity_ImageView.isEnabled = false
                 fireDatabase.child("chatrooms").push().setValue(chatModel).addOnSuccessListener {
                     //채팅방 생성
                     checkChatRoom()
@@ -87,10 +101,10 @@ class MessageActivity : AppCompatActivity() {
 
     private fun checkChatRoom(){
         fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
                 }
-                override fun onDataChange(snapshot:DataSnapshot) {
+                override fun onDataChange(snapshot: DataSnapshot) {
                     for (item in snapshot.children){
                         println(item)
                         val chatModel = item.getValue<ChatModel>()
@@ -109,15 +123,13 @@ class MessageActivity : AppCompatActivity() {
     inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MessageViewHolder>() {
 
         private val comments = ArrayList<ChatModel.Comment>()
-        private var friend : FirebaseID? = null
+        private var friend : User? = null
         init{
             fireDatabase.child("users").child(destinationUid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
                 override fun onCancelled(error: DatabaseError) {
-                    Log.e("Firebase","Error:$error")
                 }
-
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    friend = snapshot.getValue<FirebaseID>()
+                    friend = snapshot.getValue<User>()
                     messageActivity_textView_topName.text = friend?.name
                     getMessageList()
                 }
@@ -131,7 +143,7 @@ class MessageActivity : AppCompatActivity() {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     comments.clear()
                     for(data in snapshot.children){
-                        val item = data.getValue<Comment>()
+                        val item = data.getValue<ChatModel.Comment>()
                         comments.add(item!!)
                         println(comments)
                     }
@@ -186,6 +198,6 @@ class MessageActivity : AppCompatActivity() {
     }
 }
 
-private fun <E> ArrayList<E>.add(element: Comment) {
 
-}
+
+

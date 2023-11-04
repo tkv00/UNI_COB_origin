@@ -3,4 +3,6 @@
     <item name="orLine" type="id" />
     <item name="chatfragment_recyclerview" type="id" />
     <item name="fragments_frame" type="id" />
+    <item name="home_recycler" type="id" />
+    <item name="chatButton" type="id" />
 </resources>

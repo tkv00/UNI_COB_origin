@@ -237,7 +237,7 @@ class SignUpActivity1 : AppCompatActivity(), View.OnClickListener {
 
     fun uploadImageToFirebaseStorage(uri: Uri, onSuccess: (imageURL: String) -> Unit) {
         val filename = UUID.randomUUID().toString()
-        val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+        val ref = FirebaseStorage.getInstance().getReference("/profile/$filename")
 
         ref.putFile(uri)
             .addOnSuccessListener { taskSnapshot ->

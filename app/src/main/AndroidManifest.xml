@@ -47,10 +47,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- image_slide 액티비티 추가 -->
+        </activity>
         <activity
             android:name=".image_slide"
-            android:exported="false" /> <!-- 다음에 MainActivity, SignUpActivity1, LoginActivity, SignUpActivity2 추가 -->
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false" />
@@ -63,6 +63,11 @@
         <activity
             android:name=".SignUpActivity2"
             android:exported="false" />
+
+        <!-- MessageActivity 추가 -->
+        <activity
+            android:name=".MessageActivity"
+            android:exported="true" /> <!-- android:exported="true" 로 설정해야 다른 앱 혹은 컴포넌트에서 해당 액티비티를 시작할 수 있습니다. -->
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
