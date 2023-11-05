@@ -1,34 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:title="Home"
         android:id="@+id/menu_home"
         android:enabled="true"
         android:icon="@drawable/classroom"
 
-        android:title="Home" />
+        />
     <item
         android:id="@+id/menu_chat"
-        android:enabled="true"
         android:icon="@drawable/chatting"
-
-        android:title="Menu" />
+        android:title="Menu"
+        android:enabled="true"
+        />
     <item
         android:title="Resister"
         android:enabled="true"
         android:id="@+id/menu_register"
-
         android:icon="@drawable/register"/>
     <item
+        android:title="Notification"
         android:id="@+id/menu_notification"
-        android:enabled="true"
         android:icon="@drawable/bell"
-
-        android:title="Notification" />
-    <item
-        android:id="@+id/menu_profile"
         android:enabled="true"
+        />
+    <item
+        android:title="Profile"
+        android:id="@+id/menu_profile"
         android:icon="@drawable/account"
-        android:title="Profile" />
-</menu>
+        android:enabled="true"
+        />
+</selector>

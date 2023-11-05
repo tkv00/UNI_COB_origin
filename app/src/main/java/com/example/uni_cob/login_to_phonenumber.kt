@@ -21,6 +21,7 @@ class login_to_phonenumber : AppCompatActivity() {
     private lateinit var btn_login: Button
     private lateinit var btn_findpassword: Button
     private lateinit var btn_signup: Button
+    private lateinit var btn_NewPassword:Button
     // Firebase 인증 객체 생성
     private var auth = FirebaseAuth.getInstance()
 
@@ -34,7 +35,15 @@ class login_to_phonenumber : AppCompatActivity() {
         btn_login = findViewById(R.id.btn_login_phone_login)
         btn_findpassword = findViewById(R.id.btn_login_phone_findpassword)
         btn_signup = findViewById(R.id.btn_login_phone_signup1)
+        btn_findpassword=findViewById(R.id.btn_login_phone_findpassword)
 
+        //비밀번호찾기
+        btn_findpassword.setOnClickListener{
+            val intent=Intent(this,Find_passwordActivity::class.java)
+            startActivity(intent)
+            finish()
+
+        }
 
         // TextWatcher를 정의하여 텍스트 변경을 감지
         val textWatcher = object : TextWatcher {

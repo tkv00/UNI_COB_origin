@@ -27,6 +27,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.GenericTypeIndicator
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -39,15 +40,8 @@ class HomeFragment : Fragment(){
 
 
     //메모리에 올라갔을 때
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
 
-    }
 
-    //프레그먼트를 포함하고 있는 액티비티에 붙었을 때
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-    }
     //친구 목록 어댑터 내부에서 채팅 버튼에 대한 클릭 리스너
 
 
@@ -83,16 +77,16 @@ class HomeFragment : Fragment(){
                 override fun onDataChange(snapshot: DataSnapshot) {
                     friend.clear()
                     for(data in snapshot.children){
-                        val item = data.getValue<User>()
+                        val item = data.getValue(object :GenericTypeIndicator<User>(){})
                         if(item?.uid.equals(myUid)) { continue } // 본인은 친구창에서 제외
-                        friend.add(item!!)
+                        item?.let { friend.add(it) }
                     }
                     notifyDataSetChanged()
                 }
             })
         }
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CustomViewHolder {
-            return CustomViewHolder(LayoutInflater.from(context).inflate(R.layout.item_home, parent, false))
+            return CustomViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false))
         }
 
 
@@ -114,6 +108,8 @@ class HomeFragment : Fragment(){
                 context?.let { ctx ->
                     val intent = Intent(ctx, MessageActivity::class.java).apply {
                         putExtra("destinationUid", friend[position].uid)
+                        putExtra("destinationName", friend[position].name)
+                        putExtra("destinationProfileImageUrl", friend[position].profileImageUrl)
                     }
                     ctx.startActivity(intent)
                 }
@@ -136,6 +132,4 @@ class HomeFragment : Fragment(){
 
 
 
-private fun <E> ArrayList<E>.add(element: FirebaseID) {
 
-}

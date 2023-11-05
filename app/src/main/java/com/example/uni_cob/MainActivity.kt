@@ -1,71 +1,142 @@
 package com.example.uni_cob
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.TypedValue
+import android.view.Gravity
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
 import com.example.uni_cob.Chatting.ChatFragment
 import com.example.uni_cob.Chatting.HomeFragment
 import com.example.uni_cob.Chatting.ProfileFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.database.collection.LLRBNode
 import org.checkerframework.common.subtyping.qual.Bottom
+
 
 class MainActivity : AppCompatActivity() {
 
     // 현재 표시되고 있는 프래그먼트를 추적하기 위한 변수
     private var currentFragment: Fragment? = null
 
+    private val keywords = listOf(
+        "경영학과", "컴퓨터공학과", "심리학과", "전자공학과", "기계공학과",
+        "법학과", "통계학과", "생명과학과", "화학과", "물리학과",
+        "경제학과", "교육학과", "사회학과", "영어영문학과", "불어불문학과",
+        "독어독문학과", "중어중문학과", "역사학과", "철학과", "수학과",
+        "체육교육과", "음악과", "미술학과", "디자인학과", "건축학과",
+        "의학과", "간호학과", "약학과", "치의학과", "한의학과", "정보통신학과",
+        "행정학과", "국제관계학과", "정치외교학과", "환경과학과", "생태학과",
+        "동양학과", "서양학과", "문화인류학과", "신문방송학과", "국어국문학과",
+        "사진학과", "영상학과", "무대예술학과", "무용학과", "작곡학과",
+        "연극학과", "영상제작학과", "인공지능학과", "데이터과학과", "로봇공학과",
+        "우주학과", "항공학과", "해양학과", "조경학과", "도시계획학과",
+        "사회복지학과", "심리치료학과", "특수교육학과", "영양학과", "간호학과",
+        "보건학과", "안전공학과", "재료공학과", "나노공학과", "생명공학과",
+        "경찰학과", "소방학과", "국방학과", "세무학과", "회계학과",
+        "물류학과", "유통학과", "관광학과", "호텔경영학과", "레저스포츠학과"
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
-        bottomNav.setOnItemSelectedListener(BottomNavItemSelectedListener)
+        displayRandomKeywords()
 
-        // 처음 시작할 때 homeFragment를 보여줌
-        if (savedInstanceState == null) {
-            bottomNav.selectedItemId = R.id.menu_home
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        bottomNav.setOnItemSelectedListener { item ->
+            val mainContent: NestedScrollView = findViewById(R.id.nestedScrollView)
+            val fragmentFrame: FrameLayout = findViewById(R.id.fragments_frame)
+
+            when (item.itemId) {
+                R.id.menu_home -> {
+                    fragmentFrame.visibility = View.GONE
+                    mainContent.visibility = View.VISIBLE
+                    true
+                }
+                R.id.menu_chat -> {
+                    val homeFragment = HomeFragment.newInstance()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragments_frame, homeFragment).commit()
+                    mainContent.visibility = View.GONE
+                    fragmentFrame.visibility = View.VISIBLE
+                    true
+                }
+                R.id.menu_profile -> {
+                    val profileFragment = ProfileFragment.newInstance()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragments_frame, profileFragment).commit()
+                    mainContent.visibility = View.GONE
+                    fragmentFrame.visibility = View.VISIBLE
+                    true
+                }
+                R.id.menu_notification -> {
+                    true
+                }
+                R.id.menu_register -> {
+                    true
+                }
+                else -> false
+            }
         }
     }
 
-    private val BottomNavItemSelectedListener = BottomNavigationView.OnNavigationItemSelectedListener { item ->
-        val mainContent:NestedScrollView=findViewById(R.id.nestedScrollView)
-        val fragmentFrame:FrameLayout=findViewById(R.id.fragments_frame)
+    private fun displayRandomKeywords() {
+        val firstRowLayout = findViewById<LinearLayout>(R.id.layoutKeywordsFirstRow)
+        val secondRowLayout = findViewById<LinearLayout>(R.id.layoutKeywordsSecondRow)
 
+        // 랜덤으로 키워드 섞기
+        val shuffledKeywords = keywords.shuffled()
+        val firstRowKeywords = shuffledKeywords.take(4)
+        val secondRowKeywords = shuffledKeywords.drop(4).take(4)
 
-        when (item.itemId) {
-            R.id.menu_home -> {
-               //프래그먼트가 보여지고 있으면 숨김
-                fragmentFrame.visibility= View.GONE
-                //메인 컨텐츠 보여줌
-                mainContent.visibility=View.VISIBLE
-                true
-            }
-            R.id.menu_chat -> {
-                // HomeFragment로 이동
-                val homeFragment = HomeFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, homeFragment).commit()
-                //메인 컨텐츠 숨김
-                mainContent.visibility=View.GONE
-                //프래그먼트 보여줨
-                fragmentFrame.visibility=View.VISIBLE
-                true
-            }
-            R.id.menu_profile -> {
-                // ProfileFragment로 이동
-                val profileFragment = ProfileFragment.newInstance()
-                supportFragmentManager.beginTransaction().replace(R.id.fragments_frame, profileFragment).commit()
-                //메인 컨텐츠 숨김
-                mainContent.visibility=View.GONE
-                //프래그먼트 보여줌
-                fragmentFrame.visibility=View.VISIBLE
-                true
-            }
-            else->false
+        firstRowKeywords.forEach { keyword ->
+            val textView = createKeywordTextView(keyword)
+            firstRowLayout.addView(textView)
         }
 
+        secondRowKeywords.forEach { keyword ->
+            val textView = createKeywordTextView(keyword)
+            secondRowLayout.addView(textView)
+        }
+    }
+
+    private fun createKeywordTextView(keyword: String): TextView {
+        val density = resources.displayMetrics.density
+        val heightInPx = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 40f, resources.displayMetrics)
+        return TextView(this).apply {
+            text = keyword
+            gravity=Gravity.CENTER
+            setTextSize(TypedValue.COMPLEX_UNIT_SP,13f)
+            setTextColor(Color.BLACK)
+
+            setBackgroundResource(R.drawable.et_keywords)
+            setPadding(30, 30, 30, 30)
+            setOnClickListener {
+                // 클릭 이벤트 처리
+            }
+            val layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, // 너비: 부모에 맞춤
+                LinearLayout.LayoutParams.WRAP_CONTENT // 높이: 40dp를 픽셀로 변환
+
+            ).apply {
+                setMargins(15, 0, 15, 0)
+            }
+            this.layoutParams = layoutParams
+        }
     }
 }
+
+
+
+
+
+
+
 

@@ -11,7 +11,6 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
@@ -30,12 +29,14 @@
         android:theme="@style/Theme.Design.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Find_passwordActivity"
+            android:exported="false" />
+        <activity
             android:name=".login_to_email"
             android:exported="false" />
         <activity
             android:name=".login_to_phonenumber"
             android:exported="false" />
-
         <activity
             android:name=".Chatting.ChatFragment"
             android:exported="false" />
@@ -62,13 +63,10 @@
             android:exported="false" />
         <activity
             android:name=".SignUpActivity2"
-            android:exported="false" />
-
-        <!-- MessageActivity 추가 -->
+            android:exported="false" /> <!-- MessageActivity 추가 -->
         <activity
             android:name=".MessageActivity"
             android:exported="true" /> <!-- android:exported="true" 로 설정해야 다른 앱 혹은 컴포넌트에서 해당 액티비티를 시작할 수 있습니다. -->
-
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

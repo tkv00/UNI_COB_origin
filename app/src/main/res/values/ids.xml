@@ -5,4 +5,8 @@
     <item name="fragments_frame" type="id" />
     <item name="home_recycler" type="id" />
     <item name="chatButton" type="id" />
+    <item name="layoutTabs" type="id" />
+    <item name="btnFindId" type="id" />
+    <item name="etPhoneNumber" type="id" />
+    <item name="btnConfirm" type="id" />
 </resources>

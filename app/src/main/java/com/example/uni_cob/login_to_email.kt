@@ -20,6 +20,7 @@ class login_to_email : AppCompatActivity() {
     private lateinit var btn_login:Button
     private lateinit var btn_findpassword:Button
     private lateinit var btn_signup:Button
+    private lateinit var btn_NewPassword:Button
     // Firebase 인증 객체 생성
     private var auth = FirebaseAuth.getInstance()
 
@@ -32,9 +33,17 @@ class login_to_email : AppCompatActivity() {
         btn_login = findViewById(R.id.btn_login_email_login)
         btn_findpassword = findViewById(R.id.btn_login_email_find_password)
         btn_signup = findViewById(R.id.btn_login_email_signup)
+        btn_NewPassword=findViewById(R.id.btn_login_email_find_password)
         val email = et_email.text.toString()
         val password = et_password.text.toString()
 
+
+        //비밀번호 찾기
+        btn_NewPassword.setOnClickListener{
+            val intent=Intent(this,Find_passwordActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
         btn_signup.setOnClickListener{
             val intent=Intent(this,SignUpActivity1::class.java)
             startActivity(intent)

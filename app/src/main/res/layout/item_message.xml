@@ -16,10 +16,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:gravity="center">
+
             <ImageView
                 android:id="@+id/messageItem_imageview_profile"
                 android:layout_width="50dp"
-                android:layout_height="50dp"/>
+                android:layout_height="50dp" />
         </LinearLayout>
 
         <LinearLayout

@@ -3,6 +3,7 @@ package com.example.uni_cob
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -18,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.uni_cob.Chatting.ChatModel
+import com.example.uni_cob.utility.FirebaseID.Companion.name
 import com.example.uni_cob.utility.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -27,90 +29,81 @@ import org.w3c.dom.Comment
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-
 class MessageActivity : AppCompatActivity() {
 
     private val fireDatabase = FirebaseDatabase.getInstance().reference
-    private var chatRoomUid : String? = null
-    private var destinationUid : String? = null
-    private var uid : String? = null
-    private var recyclerView : RecyclerView? = null
-    private lateinit var messageActivity_editText:EditText
-    private lateinit var messageActivity_ImageView:ImageView
-    private lateinit var messageActivity_textView_topName:TextView
+    private var chatRoomUid: String? = null
+    private var destinationUid: String? = null
+    private var uid: String? = null
+    private var recyclerView: RecyclerView? = null
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
-        messageActivity_ImageView = findViewById(R.id.messageActivity_ImageView)
-        
+        val imageView = findViewById<ImageView>(R.id.messageActivity_ImageView)
+        val editText = findViewById<TextView>(R.id.messageActivity_editText)
 
         //메세지를 보낸 시간
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
         val curTime = dateFormat.format(Date(time)).toString()
-        messageActivity_textView_topName=findViewById(R.id.messageActivity_textView_topName)
-        messageActivity_editText=findViewById(R.id.messageActivity_editText)
-        destinationUid = intent.getStringExtra("destinationUid")
-        uid = Firebase.auth.currentUser?.uid
-        // 상단에 친구의 이름을 표시합니다.
-        destinationUid?.let {
-            fireDatabase.child("users").child(it)
-                .addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onCancelled(databaseError: DatabaseError) {
-                        // 오류 처리...
-                    }
 
-                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                        val friend = dataSnapshot.getValue<User>()
-                        messageActivity_textView_topName.text = friend?.name
-                    }
-                })
-        }
+        // 인텐트에서 사용자의 정보를 가져옵니다.
+        val destinationName = intent.getStringExtra("destinationName")
+        val destinationProfileImageUrl = intent.getStringExtra("destinationProfileImageUrl")
+        destinationUid = intent.getStringExtra("destinationUid")
+
+        val textViewTopName = findViewById<TextView>(R.id.messageActivity_textView_topName)
+        textViewTopName.text = destinationName
+        uid = Firebase.auth.currentUser?.uid.toString()
         recyclerView = findViewById(R.id.messageActivity_recyclerview)
 
-        messageActivity_ImageView.setOnClickListener {
+        imageView.setOnClickListener {
             Log.d("클릭 시 dest", "$destinationUid")
             val chatModel = ChatModel()
             chatModel.users.put(uid.toString(), true)
             chatModel.users.put(destinationUid!!, true)
 
-            val comment = ChatModel.Comment(uid, messageActivity_editText.text.toString(), curTime)
-            if(chatRoomUid == null){
-                messageActivity_ImageView.isEnabled = false
+            val comment = ChatModel.Comment(uid, editText.text.toString(), curTime)
+            if (chatRoomUid == null) {
+                imageView.isEnabled = false
                 fireDatabase.child("chatrooms").push().setValue(chatModel).addOnSuccessListener {
                     //채팅방 생성
                     checkChatRoom()
                     //메세지 보내기
-                    Handler().postDelayed({
+                    Handler(Looper.getMainLooper()).postDelayed({
                         println(chatRoomUid)
-                        fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments").push().setValue(comment)
-                        messageActivity_editText.text = null
+                        fireDatabase.child("chatrooms").child(chatRoomUid.toString())
+                            .child("comments").push().setValue(comment)
+                        editText.text = null
                     }, 1000L)
                     Log.d("chatUidNull dest", "$destinationUid")
                 }
-            }else{
-                fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments").push().setValue(comment)
-                messageActivity_editText.text = null
+            } else {
+                fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
+                    .push().setValue(comment)
+                editText.text = null
                 Log.d("chatUidNotNull dest", "$destinationUid")
             }
         }
         checkChatRoom()
     }
 
-    private fun checkChatRoom(){
+    private fun checkChatRoom() {
+        val imageView = findViewById<ImageView>(R.id.messageActivity_ImageView)
         fireDatabase.child("chatrooms").orderByChild("users/$uid").equalTo(true)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onCancelled(error: DatabaseError) {
                 }
+
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    for (item in snapshot.children){
+                    for (item in snapshot.children) {
                         println(item)
                         val chatModel = item.getValue<ChatModel>()
-                        if(chatModel?.users!!.containsKey(destinationUid)){
+                        if (chatModel?.users!!.containsKey(destinationUid)) {
                             chatRoomUid = item.key
-                            messageActivity_ImageView.isEnabled = true
+                            imageView.isEnabled = true
                             recyclerView?.layoutManager = LinearLayoutManager(this@MessageActivity)
                             recyclerView?.adapter = RecyclerViewAdapter()
                         }
@@ -120,60 +113,80 @@ class MessageActivity : AppCompatActivity() {
     }
 
 
-    inner class RecyclerViewAdapter : RecyclerView.Adapter<RecyclerViewAdapter.MessageViewHolder>() {
+    inner class RecyclerViewAdapter :
+        RecyclerView.Adapter<RecyclerViewAdapter.MessageViewHolder>() {
 
         private val comments = ArrayList<ChatModel.Comment>()
-        private var friend : User? = null
-        init{
-            fireDatabase.child("users").child(destinationUid.toString()).addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                }
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    friend = snapshot.getValue<User>()
-                    messageActivity_textView_topName.text = friend?.name
-                    getMessageList()
-                }
-            })
+        private var friend: User? = null
+        private val textView_TopName = findViewById<TextView>(R.id.messageActivity_textView_topName)
+
+        init {
+            fireDatabase.child("users").child(destinationUid.toString())
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        friend = snapshot.getValue<User>()
+                        textView_TopName.text = friend?.name
+                        getMessageList()
+                    }
+                })
         }
 
-        fun getMessageList(){
-            fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments").addValueEventListener(object : ValueEventListener{
-                override fun onCancelled(error: DatabaseError) {
-                }
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    comments.clear()
-                    for(data in snapshot.children){
-                        val item = data.getValue<ChatModel.Comment>()
-                        comments.add(item!!)
-                        println(comments)
+        fun getMessageList() {
+            fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onCancelled(error: DatabaseError) {
                     }
-                    notifyDataSetChanged()
-                    //메세지를 보낼 시 화면을 맨 밑으로 내림
-                    recyclerView?.scrollToPosition(comments.size - 1)
-                }
-            })
+
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        comments.clear()
+                        for (data in snapshot.children) {
+                            data.getValue<ChatModel.Comment>()?.let { comment ->
+                                comments.add(comment)
+                            }
+                            println(comments)
+                        }
+                        notifyDataSetChanged()
+                        //메세지를 보낼 시 화면을 맨 밑으로 내림
+                        recyclerView?.scrollToPosition(comments.size - 1)
+                    }
+                })
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MessageViewHolder {
-            val view : View = LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
+            val view: View =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_message, parent, false)
 
             return MessageViewHolder(view)
         }
+
         @SuppressLint("RtlHardcoded")
         override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
             holder.textView_message.textSize = 20F
             holder.textView_message.text = comments[position].message
             holder.textView_time.text = comments[position].time
-            if(comments[position].uid.equals(uid)){ // 본인 채팅
+            
+            if (comments[position].uid.equals(uid)) { // 본인 채팅
                 holder.textView_message.setBackgroundResource(R.drawable.rightbubble)
                 holder.textView_name.visibility = View.INVISIBLE
                 holder.layout_destination.visibility = View.INVISIBLE
                 holder.layout_main.gravity = Gravity.RIGHT
-            }else{ // 상대방 채팅
+            } else { // 상대방 채팅
+                val textViewTopName=findViewById<TextView>(R.id.messageActivity_textView_topName)
+                val destinationName = intent.getStringExtra("destinationName")
+                textViewTopName.text=destinationName
+                val message_name=findViewById<TextView>(R.id.messageItem_textview_name)
+                message_name.text=destinationName
+                val destinationProfileImageUrl = intent.getStringExtra("destinationProfileImageUrl")
+                val imageViewProfile=findViewById<ImageView>(R.id.messageItem_imageview_profile)
                 Glide.with(holder.itemView.context)
-                    .load(friend?.profileImageUrl)
-                    .apply(RequestOptions().circleCrop())
-                    .into(holder.imageView_profile)
+                    .load(destinationProfileImageUrl)
+                    .apply(RequestOptions.circleCropTransform())
+                    .into(imageViewProfile)
+                holder.textView_name.visibility=View.VISIBLE
+                holder.imageView_profile.visibility=View.VISIBLE
                 holder.textView_name.text = friend?.name
                 holder.layout_destination.visibility = View.VISIBLE
                 holder.textView_name.visibility = View.VISIBLE
@@ -186,9 +199,10 @@ class MessageActivity : AppCompatActivity() {
             val textView_message: TextView = view.findViewById(R.id.messageItem_textView_message)
             val textView_name: TextView = view.findViewById(R.id.messageItem_textview_name)
             val imageView_profile: ImageView = view.findViewById(R.id.messageItem_imageview_profile)
-            val layout_destination: LinearLayout = view.findViewById(R.id.messageItem_layout_destination)
+            val layout_destination: LinearLayout =
+                view.findViewById(R.id.messageItem_layout_destination)
             val layout_main: LinearLayout = view.findViewById(R.id.messageItem_linearlayout_main)
-            val textView_time : TextView = view.findViewById(R.id.messageItem_textView_time)
+            val textView_time: TextView = view.findViewById(R.id.messageItem_textView_time)
         }
 
         override fun getItemCount(): Int {
@@ -197,7 +211,4 @@ class MessageActivity : AppCompatActivity() {
 
     }
 }
-
-
-
 

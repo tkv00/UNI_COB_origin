@@ -31,6 +31,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
+        android:inputType="textPassword"
         />
 
     <EditText
@@ -67,7 +68,7 @@
         android:layout_marginStart="108dp"
         android:background="#00000000"
         android:text="비밀번호 찾기"
-        android:textColor="@color/Gray_03"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -80,7 +81,7 @@
         android:layout_marginEnd="104dp"
         android:background="#00000000"
         android:text="회원가입"
-        android:textColor="@color/Gray_03"
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.232"

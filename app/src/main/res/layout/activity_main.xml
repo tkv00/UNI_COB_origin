@@ -11,7 +11,7 @@
     <androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
         android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
         app:layout_constraintTop_toTopOf="parent"
@@ -57,18 +57,48 @@
                 app:layout_constraintVertical_bias="1.0" />
 
             <TextView
+                android:id="@+id/popularkeyword"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="인기 키워드"
+                android:layout_marginTop="36dp"
+                android:text="추천 키워드"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.076"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.864" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_department_communication" />
+
+            <LinearLayout
+                    android:id="@+id/layoutKeywordsFirstRow"
+
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_constraintTop_toBottomOf="@id/popularkeyword"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:padding="8dp"
+                    android:gravity="start">
+                    >
+
+
+
+                </LinearLayout>
+                    <LinearLayout
+                        android:id="@+id/layoutKeywordsSecondRow"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintTop_toBottomOf="@id/layoutKeywordsFirstRow"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        android:padding="10dp"
+                        android:gravity="start">
+
+                </LinearLayout>
+
 
             <ImageButton
                 android:id="@+id/btn_onedayclass"
@@ -80,7 +110,7 @@
                 app:layout_constraintHorizontal_bias="0.935"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.776" />
+                app:layout_constraintVertical_bias="0.75" />
 
             <ImageButton
                 android:id="@+id/btn_department_communication"
@@ -89,10 +119,10 @@
                 android:background="@drawable/main_icon2"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_onedayclass"
-                app:layout_constraintHorizontal_bias="0.116"
+                app:layout_constraintHorizontal_bias="0.096"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.776" />
+                app:layout_constraintVertical_bias="0.75" />
 
             <ImageButton
                 android:id="@+id/imageButton"
@@ -103,10 +133,10 @@
 
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.645"
+                app:layout_constraintHorizontal_bias="0.63"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.776" />
+                app:layout_constraintVertical_bias="0.75" />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -114,15 +144,15 @@
                 android:background="@drawable/main_icon4"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageButton"
-                app:layout_constraintHorizontal_bias="0.433"
+                app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toEndOf="@+id/btn_department_communication"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.776" />
+                app:layout_constraintVertical_bias="0.75" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager_main"
-                android:layout_width="367dp"
-                android:layout_height="333dp"
+                android:layout_width="365dp"
+                android:layout_height="289dp"
                 android:background="@drawable/btn_gray02"
                 android:scaleType="fitXY"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -144,13 +174,10 @@
         android:id="@+id/bottom_nav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="0dp"
         android:background="@color/white"
-        app:itemIconTint="@drawable/menu_item_icon_color"
-        app:itemTextColor="@drawable/menu_item_icon_color"
-        app:menu="@menu/bottom_menu"
+        app:itemIconTint="@drawable/selector_icon_menu"
         app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
