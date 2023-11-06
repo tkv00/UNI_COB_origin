@@ -10,6 +10,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="65dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal"
+            android:text="날짜"
+            android:textColor="@color/black"
+            android:visibility="gone" />
+
         <LinearLayout
             android:id="@+id/messageItem_layout_destination"
             android:layout_width="wrap_content"
@@ -21,6 +30,7 @@
                 android:id="@+id/messageItem_imageview_profile"
                 android:layout_width="50dp"
                 android:layout_height="50dp" />
+
         </LinearLayout>
 
         <LinearLayout
@@ -41,12 +51,21 @@
                 android:layout_marginTop="3dp"
                 android:text="메세지"
                 android:textColor="#000000" />
+            <ImageView
+                android:id="@+id/imageView_message"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:visibility="gone"
+                android:src="@drawable/user" />
             <TextView
                 android:id="@+id/messageItem_textView_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="시간"
                 android:textSize="12sp" />
+
         </LinearLayout>
     </LinearLayout>
+
+
 </LinearLayout>

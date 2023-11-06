@@ -9,5 +9,5 @@
     <solid android:color="@android:color/white" />
 
     <!-- 모서리를 둥글게 설정 -->
-    <corners android:radius="25dp" />
+    <corners android:radius="15dp" />
 </shape>

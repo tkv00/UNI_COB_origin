@@ -9,24 +9,32 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#FFAE37"
+        android:layout_height="71dp"
+        android:background="#87CFFA"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="16dp"
+            android:layout_height="36dp"
+            android:layout_gravity="start|center_vertical"
+            android:background="@drawable/back" />
+
         <TextView
             android:id="@+id/messageActivity_textView_topName"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_marginLeft="15dp"
-            android:layout_marginBottom="5dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
             android:fontFamily="sans-serif"
             android:text="친구 이름"
-            android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="19sp"
             android:textStyle="bold" />
     </LinearLayout>
 
@@ -44,7 +52,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/messageActivity_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            tools:layout_editor_absoluteX="43dp"
+            android:background="#87CFFA"
+            tools:layout_editor_absoluteY="-27dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -56,32 +67,44 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
+        <Button
+            android:id="@+id/btn_send_image"
+            android:layout_width="31dp"
+            android:layout_height="31dp"
+            android:background="@drawable/media"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/messageActivity_editText"
+            app:layout_constraintHorizontal_bias="0.388"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.526" />
+
         <EditText
 
             android:id="@+id/messageActivity_editText"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_width="361dp"
+            android:layout_height="39dp"
             android:layout_alignParentBottom="true"
-
-            android:layout_marginStart="5dp"
-            android:layout_marginLeft="5dp"
-
-            android:layout_marginEnd="55dp"
-            android:layout_marginRight="55dp"
+            android:background="@drawable/et_keywords"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/messageActivity_ImageView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.976"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.545" />
 
         <ImageView
             android:id="@+id/messageActivity_ImageView"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="35dp"
+            android:layout_height="39dp"
 
+            android:layout_marginEnd="8dp"
             android:src="@drawable/send"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="@+id/messageActivity_editText"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.545" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

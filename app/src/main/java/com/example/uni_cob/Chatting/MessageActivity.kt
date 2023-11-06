@@ -1,6 +1,9 @@
 package com.example.uni_cob
 
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -9,22 +12,27 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.uni_cob.Chatting.ChatModel
+import com.example.uni_cob.Chatting.HomeFragment
 import com.example.uni_cob.utility.FirebaseID.Companion.name
 import com.example.uni_cob.utility.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import org.w3c.dom.Comment
 import java.text.SimpleDateFormat
 import java.util.*
@@ -36,14 +44,30 @@ class MessageActivity : AppCompatActivity() {
     private var destinationUid: String? = null
     private var uid: String? = null
     private var recyclerView: RecyclerView? = null
+    private lateinit var btn_image:Button
+    private lateinit var btn_back:Button
+    private val imageChooserLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let { selectedImageUri ->
+            uploadImageToFirebaseStorage(selectedImageUri)
+        }
+    }
+    companion object{
+        const val IMAGE_REQUEST_CODE=102
+    }
 
     @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_message)
+        btn_image=findViewById<Button>(R.id.btn_send_image)
+        btn_back=findViewById(R.id.btn_back)
         val imageView = findViewById<ImageView>(R.id.messageActivity_ImageView)
         val editText = findViewById<TextView>(R.id.messageActivity_editText)
-
+        btn_back.setOnClickListener{
+            val intent=Intent(this,HomeFragment::class.java)
+            startActivity(intent)
+            finish()
+        }
         //메세지를 보낸 시간
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm")
@@ -65,7 +89,7 @@ class MessageActivity : AppCompatActivity() {
             chatModel.users.put(uid.toString(), true)
             chatModel.users.put(destinationUid!!, true)
 
-            val comment = ChatModel.Comment(uid, editText.text.toString(), curTime)
+            val comment = ChatModel.Comment(uid, editText.text.toString(), "",curTime,"")
             if (chatRoomUid == null) {
                 imageView.isEnabled = false
                 fireDatabase.child("chatrooms").push().setValue(chatModel).addOnSuccessListener {
@@ -88,7 +112,15 @@ class MessageActivity : AppCompatActivity() {
             }
         }
         checkChatRoom()
+
+        btn_image.setOnClickListener{
+            imageChooserLauncher.launch("image/*")
+        }
     }
+    //이미지 선택 Intent를 열기위한 함수
+
+
+
 
     private fun checkChatRoom() {
         val imageView = findViewById<ImageView>(R.id.messageActivity_ImageView)
@@ -110,6 +142,42 @@ class MessageActivity : AppCompatActivity() {
                     }
                 }
             })
+    }// 이미지 선택 결과를 처리하는 함수
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == IMAGE_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            val selectedImageUri: Uri = data.data!!
+            uploadImageToFirebaseStorage(selectedImageUri)
+        }
+    }
+
+    // Firebase Storage에 이미지 업로드하는 함수
+    private fun uploadImageToFirebaseStorage(selectedImageUri: Uri) {
+        val filename = UUID.randomUUID().toString()
+        val ref = Firebase.storage.reference.child("chat_images/$filename")
+
+        ref.putFile(selectedImageUri)
+            .addOnSuccessListener {
+                ref.downloadUrl.addOnSuccessListener {
+                    val imageUrl = it.toString()
+                    sendMessageWithImage(imageUrl)
+                }
+            }
+            .addOnFailureListener {
+                // 실패 처리
+
+            }
+    }
+
+    // 이미지를 포함한 메시지를 채팅방에 전송하는 함수
+    private fun sendMessageWithImage(imageUrl: String) {
+        val time = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("MM월dd일 hh:mm", Locale.getDefault())
+        val curTime = dateFormat.format(Date(time))
+        val comment = ChatModel.Comment(uid, null,imageUrl, curTime,messageType = "image")
+        fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
+            .push().setValue(comment)
     }
 
 
@@ -164,38 +232,73 @@ class MessageActivity : AppCompatActivity() {
 
         @SuppressLint("RtlHardcoded")
         override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
-            holder.textView_message.textSize = 20F
-            holder.textView_message.text = comments[position].message
+            val comment = comments[position]
+            val context = holder.itemView.context
             holder.textView_time.text = comments[position].time
-            
-            if (comments[position].uid.equals(uid)) { // 본인 채팅
-                holder.textView_message.setBackgroundResource(R.drawable.rightbubble)
-                holder.textView_name.visibility = View.INVISIBLE
-                holder.layout_destination.visibility = View.INVISIBLE
+
+
+            // 프로필 이미지와 이름 설정
+            val destinationName = intent.getStringExtra("destinationName")
+            val destinationProfileImageUrl = intent.getStringExtra("destinationProfileImageUrl")
+            val textViewTopName = findViewById<TextView>(R.id.messageActivity_textView_topName)
+            textViewTopName.text=intent.getStringExtra("destinationName")
+
+            if (comment.uid == uid) { // 본인 채팅
                 holder.layout_main.gravity = Gravity.RIGHT
+                holder.textView_time.visibility=View.VISIBLE
+                holder.textView_name.visibility = View.INVISIBLE
+
+                if (comment.messageType == "image") {
+                    holder.textView_message.visibility = View.GONE
+                    holder.textView_time.visibility=View.VISIBLE
+                    holder.imageView_message.visibility = View.VISIBLE
+                    Glide.with(context)
+                        .load(comment.imageUrl)
+                        .into(holder.imageView_message)
+                    holder.imageView_message.setBackgroundResource(R.drawable.rightbubble) // 이미지일 때는 배경 설정
+                } else {
+                    holder.textView_message.visibility = View.VISIBLE
+                    holder.textView_time.visibility=View.VISIBLE
+                    holder.imageView_message.visibility = View.GONE
+                    holder.textView_message.text = comment.message
+                    holder.textView_message.setBackgroundResource(R.drawable.rightbubble)
+                }
             } else { // 상대방 채팅
-                val textViewTopName=findViewById<TextView>(R.id.messageActivity_textView_topName)
-                val destinationName = intent.getStringExtra("destinationName")
-                textViewTopName.text=destinationName
-                val message_name=findViewById<TextView>(R.id.messageItem_textview_name)
-                message_name.text=destinationName
-                val destinationProfileImageUrl = intent.getStringExtra("destinationProfileImageUrl")
-                val imageViewProfile=findViewById<ImageView>(R.id.messageItem_imageview_profile)
-                Glide.with(holder.itemView.context)
+                holder.layout_main.gravity = Gravity.LEFT
+                holder.layout_destination.visibility = View.VISIBLE
+                holder.textView_time.visibility=View.VISIBLE
+                holder.textView_name.visibility = View.VISIBLE
+                holder.textView_name.text = destinationName // 상대방 이름 설정
+
+                Glide.with(context)
                     .load(destinationProfileImageUrl)
                     .apply(RequestOptions.circleCropTransform())
-                    .into(imageViewProfile)
-                holder.textView_name.visibility=View.VISIBLE
-                holder.imageView_profile.visibility=View.VISIBLE
-                holder.textView_name.text = friend?.name
-                holder.layout_destination.visibility = View.VISIBLE
-                holder.textView_name.visibility = View.VISIBLE
-                holder.textView_message.setBackgroundResource(R.drawable.leftbubble)
-                holder.layout_main.gravity = Gravity.LEFT
+                    .into(holder.imageView_profile)
+
+                if (comment.messageType == "image") {
+                    holder.textView_message.visibility = View.GONE
+                    holder.textView_time.visibility=View.VISIBLE
+                    holder.imageView_message.visibility = View.VISIBLE
+                    Glide.with(context)
+                        .load(comment.imageUrl)
+                        .into(holder.imageView_message)
+                    holder.imageView_message.setBackgroundResource(R.drawable.leftbubble) // 이미지일 때는 배경 설정
+                } else {
+                    holder.textView_message.visibility = View.VISIBLE
+                    holder.imageView_message.visibility = View.GONE
+                    holder.textView_message.text = comment.message
+                    holder.textView_time.visibility=View.VISIBLE
+                    holder.textView_message.setBackgroundResource(R.drawable.leftbubble)
+                }
             }
+
+            holder.textView_time.text = comment.time // 메시지 시간 설정
         }
 
+
+
         inner class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val imageView_message: ImageView=view.findViewById(R.id.imageView_message)
             val textView_message: TextView = view.findViewById(R.id.messageItem_textView_message)
             val textView_name: TextView = view.findViewById(R.id.messageItem_textview_name)
             val imageView_profile: ImageView = view.findViewById(R.id.messageItem_imageview_profile)
@@ -211,4 +314,3 @@ class MessageActivity : AppCompatActivity() {
 
     }
 }
-
