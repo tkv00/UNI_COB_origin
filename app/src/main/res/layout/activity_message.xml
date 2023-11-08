@@ -82,16 +82,16 @@
         <EditText
 
             android:id="@+id/messageActivity_editText"
-            android:layout_width="361dp"
-            android:layout_height="39dp"
+            android:layout_width="345dp"
+            android:layout_height="38dp"
             android:layout_alignParentBottom="true"
             android:background="@drawable/et_keywords"
+            android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.976"
+            app:layout_constraintHorizontal_bias="0.757"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.545" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/messageActivity_ImageView"

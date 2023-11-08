@@ -9,4 +9,5 @@
     <item name="btnFindId" type="id" />
     <item name="etPhoneNumber" type="id" />
     <item name="btnConfirm" type="id" />
+    <item name="find_password_to_email" type="id" />
 </resources>

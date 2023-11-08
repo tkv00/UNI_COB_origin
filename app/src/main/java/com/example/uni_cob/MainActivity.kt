@@ -1,11 +1,13 @@
 package com.example.uni_cob
 
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -43,9 +45,22 @@ class MainActivity : AppCompatActivity() {
         "물류학과", "유통학과", "관광학과", "호텔경영학과", "레저스포츠학과"
     )
 
+    private lateinit var btn_department:Button //전공대화
+    private lateinit var btn_ondayclass:Button//원데이클래스
+    private lateinit var btn_usefulinfo:Button//알쓸신잡
+    private lateinit var btn_commu:Button//아고라
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        btn_commu=findViewById(R.id.btn_usefulinfo)
+        btn_ondayclass=findViewById(R.id.btn_onedayclass)
+
+        //아고라 페이지로 이동
+        btn_commu.setOnClickListener{
+            val intent=Intent(this,Agora::class.java)
+            startActivity(intent)
+            finish()
+        }
 
         displayRandomKeywords()
 

@@ -35,7 +35,7 @@ class login_to_phonenumber : AppCompatActivity() {
         btn_login = findViewById(R.id.btn_login_phone_login)
         btn_findpassword = findViewById(R.id.btn_login_phone_findpassword)
         btn_signup = findViewById(R.id.btn_login_phone_signup1)
-        btn_findpassword=findViewById(R.id.btn_login_phone_findpassword)
+
 
         //비밀번호찾기
         btn_findpassword.setOnClickListener{

@@ -1,171 +1,163 @@
 package com.example.uni_cob
 
-
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.example.uni_cob.utility.FirebaseID
-import com.example.uni_cob.utility.FirebaseID.Companion.password
-import com.google.firebase.FirebaseException
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.PhoneAuthCredential
-import com.google.firebase.auth.PhoneAuthOptions
-import com.google.firebase.auth.PhoneAuthProvider
-import java.util.concurrent.TimeUnit
-import java.util.regex.Pattern
+
 
 class Find_passwordActivity : AppCompatActivity() {
 
-    // Firebase 인증 인스턴스 초기화
-    private lateinit var auth: FirebaseAuth
-    private lateinit var PhoneNumber: EditText
-    private lateinit var et_correctNum: EditText
-    private lateinit var btn_correct: Button
-    private lateinit var btn_correct_Num: Button
-    private lateinit var et_NewPassword:EditText
-    private var verificationId: String? = null
+    private lateinit var editText: EditText
+    private lateinit var underlineEmail: View
+    private lateinit var underlinePhone: View
+    private lateinit var find_password:Button
+    private var isEmailMode:Boolean=true //현재 이메일 입력 모드인지 확인
+    private var defaultEditTextBackground: Int = 0
+    private var defaultUnderlineBackground: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_find_password)
+        setContentView(R.layout.activity_find_password_phone)
 
-        PhoneNumber = findViewById(R.id.etPhoneNumber)
-        et_correctNum = findViewById(R.id.etCorrectNum)
-        et_NewPassword=findViewById(R.id.New_password)
-        btn_correct = findViewById(R.id.btnSendVerification)
-        btn_correct_Num = findViewById(R.id.btnSendcorrectVerification)
+        // EditText와 View(선)를 초기화합니다.
+        editText = findViewById(R.id.et_find_password_to_email)
+        underlineEmail = findViewById(R.id.underline_email)
+        underlinePhone = findViewById(R.id.underline_phone)
+        find_password=findViewById(R.id.btn_num1)
 
-        // 전화번호 입력 상자의 포커스가 변경될 때 호출되는 리스너 설정
-        PhoneNumber.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                val phone = PhoneNumber.text.toString()
-                if (!isPhoneNumberValid(phone)) {
-                    PhoneNumber.error = "올바른 전화번호 형식을 입력하세요."
+        // 기본 색상을 저장합니다. (예를 들어 회색)
+        defaultEditTextBackground = ContextCompat.getColor(this, R.color.Gray_02)
+        defaultUnderlineBackground = ContextCompat.getColor(this, R.color.Gray_02)
+
+        findViewById<Button>(R.id.find_password_to_email).setOnClickListener {
+            setHintAndColor("이메일", underlineEmail)
+            underlinePhone.setBackgroundColor(defaultUnderlineBackground) // 다른 선을 기본색으로 변경
+            isEmailMode=true //이메일 모드로 설정
+        }
+
+        findViewById<Button>(R.id.find_password_to_phone).setOnClickListener {
+            setHintAndColor("휴대폰 번호( - 제외)", underlinePhone)
+            underlineEmail.setBackgroundColor(defaultUnderlineBackground) // 다른 선을 기본색으로 변경
+            isEmailMode=false
+        }
+        find_password=findViewById(R.id.btn_num1)
+        // TextWatcher를 정의하여 텍스트 변경을 감지
+        val textWatcher = object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                // 텍스트 변경 이전의 상태
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // 텍스트 변경 중에 수행할 작업
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                // 텍스트 변경 이후의 상태
+                val email = editText.text.toString()
+
+
+                if (email.isNotBlank()) {
+                    find_password.isEnabled = true // 버튼 활성화
+                    find_password.setBackgroundResource(R.drawable.skyblue_button_background)
                 } else {
-                    PhoneNumber.error = null
+                    find_password.isEnabled = false // 버튼 비활성화
+                    find_password.setBackgroundResource(R.drawable.gray_button_background)
                 }
             }
         }
+        // TextWatcher를 EditText에 연결
+        editText.addTextChangedListener(textWatcher)
+        find_password.isEnabled=false
+        find_password.setBackgroundResource(R.drawable.gray_button_background)
 
-        // 이메일 입력 상자의 포커스가 변경될 때 호출되는 리스너 설정
-        et_NewPassword.setOnFocusChangeListener { _, hasFocus ->
-            if (!hasFocus) {
-                val Newemail = et_NewPassword.text.toString()
-                if (!isPasswordValid(Newemail)) {
-                    et_NewPassword.error = "올바른 이메일 형식을 입력하세요."
-                } else {
-                    et_NewPassword.error = null
+
+        // 비밀번호 재설정 요청 처리
+       find_password.setOnClickListener {
+            val input = editText.text.toString().trim()
+            if (isEmailMode) {
+                sendPasswordResetEmail(input)
+            } else {
+                sendPasswordResetSms(input)
+            }
+        }
+    }
+
+    private fun sendPasswordResetSms(input: String) {
+
+    }
+
+    private fun sendPasswordResetEmail(email: String) {
+        if (email.isNotEmpty()) {
+            FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        showCustomDialog()
+                    } else {
+                        Toast.makeText(this, "이메일 전송에 실패했습니다: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
-        }
-
-
-        // Firebase 인증 초기화
-        auth = FirebaseAuth.getInstance()
-        val password=et_NewPassword.toString()
-
-
-        btn_correct.setOnClickListener {
-            val phoneNumber = PhoneNumber.text.toString().trim()
-            val formattedPhoneNumber = formatPhoneNumber(phoneNumber)
-            if (formattedPhoneNumber.isNotEmpty()) {
-                sendVerificationCode(formattedPhoneNumber)
-            } else {
-                Toast.makeText(this@Find_passwordActivity, "휴대폰 번호를 입력하세요.", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        btn_correct_Num.setOnClickListener {
-            val code = et_correctNum.text.toString().trim()
-            if (code.isNotEmpty() && verificationId != null) {
-                verifyVerificationCode(code, verificationId!!)
-            } else {
-                Toast.makeText(this@Find_passwordActivity, "인증번호를 다시 입력하세요", Toast.LENGTH_SHORT).show()
-            }
-        }
-    }
-    // 전화번호 형식 검사
-    private fun isPhoneNumberValid(phoneNumber: String): Boolean {
-        return phoneNumber.length == 11
-    }
-    private fun sendVerificationCode(phoneNumber: String) {
-        val options = PhoneAuthOptions.newBuilder(auth)
-            .setPhoneNumber(phoneNumber)       // 전화번호 설정
-            .setTimeout(60L, TimeUnit.SECONDS) // 타임아웃 설정
-            .setActivity(this)                 // 액티비티 설정
-            .setCallbacks(callbacks)           // 콜백 설정
-            .build()
-        PhoneAuthProvider.verifyPhoneNumber(options)
-    }
-   private fun isPasswordValid (password:String):Boolean{
-        return Pattern.matches(
-            "^(?=.*[A-Za-z])(?=.*\\d|[!@#\$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>\\/?])\\S{8,}\$",
-            FirebaseID.password
-        )
-    }
-    private fun isEmailValid(email: String): Boolean {
-        val emailPattern = "[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,3}"
-        return Pattern.matches(emailPattern, email)
-    }
-    private val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-        override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-            signInWithPhoneAuthCredential(credential)
-        }
-
-        override fun onVerificationFailed(e: FirebaseException) {
-            Toast.makeText(this@Find_passwordActivity, "Verification failed: ${e.message}", Toast.LENGTH_LONG).show()
-        }
-
-        override fun onCodeSent(id: String, token: PhoneAuthProvider.ForceResendingToken) {
-            super.onCodeSent(id, token)
-            verificationId = id
-            Toast.makeText(this@Find_passwordActivity, "Code sent to the number", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun verifyVerificationCode(code: String, verificationId: String) {
-        val credential = PhoneAuthProvider.getCredential(verificationId, code)
-        signInWithPhoneAuthCredential(credential)
-    }
-
-    private fun signInWithPhoneAuthCredential(credential: PhoneAuthCredential) {
-        et_NewPassword=findViewById(R.id.New_password)
-        val Newpassword=et_NewPassword.text.toString()
-        auth.signInWithCredential(credential)
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    // 인증 성공, 비밀번호 재설정 로직으로 진행
-                    resetPassword(Newpassword) // 실제 사용 시 적절한 비밀번호로 변경 필요
-                } else {
-                    Toast.makeText(this@Find_passwordActivity, "Verification failed", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
-
-    private fun resetPassword(newPassword: String) {
-        val user = auth.currentUser
-        et_NewPassword=findViewById(R.id.New_password)
-        val Newpassword=et_NewPassword.text.toString()
-        user?.updatePassword(Newpassword)?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(this@Find_passwordActivity, "Password reset successful", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this@Find_passwordActivity, "Password reset failed", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    }
-    // 전화번호 형식을 검증하고 포맷하는 함수
-    private fun formatPhoneNumber(phoneNumber: String): String {
-        // 여기서 전화번호를 국제 형식으로 포맷하는 로직을 구현합니다.
-        // 예: 한국 전화번호인 경우 앞에 +82를 붙이고 첫 번째 0을 제거합니다.
-        return if (phoneNumber.startsWith("0")) {
-            "+82${phoneNumber.substring(1)}"
         } else {
-            phoneNumber
+            Toast.makeText(this, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
-}
 
+    private fun setHintAndColor(hint: String, underline: View) {
+        // EditText의 힌트와 배경 색상을 변경합니다.
+        editText.hint = hint
+        underline.setBackgroundColor(ContextCompat.getColor(this, R.color.black))
+    }
+    private fun showCustomDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.find_password_dialog, null)
+
+        // 다이얼로그 설정
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+        // 다이얼로그 크기 조절
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+        // 다이얼로그를 보여주기 전에 크기를 조정합니다.
+        dialog.setOnShowListener {
+            // 다이얼로그의 너비를 화면 너비의 일정 비율로 설정합니다.
+            val width = (resources.displayMetrics.widthPixels * 0.9).toInt()
+            dialog.window?.setLayout(width, ConstraintLayout.LayoutParams.WRAP_CONTENT)
+        }
+
+        // 확인 버튼 클릭 리스너 설정
+        dialogView.findViewById<Button>(R.id.dialog_check).setOnClickListener {
+            dialog.dismiss()
+        }
+        Handler(Looper.getMainLooper()).postDelayed({
+            if(dialog.isShowing){
+                dialog.dismiss()
+            }
+        },5000)
+
+        // 다이얼로그 표시
+        dialog.show()
+    }
+
+
+
+}

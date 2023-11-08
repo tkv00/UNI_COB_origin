@@ -29,6 +29,12 @@
         android:theme="@style/Theme.Design.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".Agora"
+            android:exported="false" />
+        <activity
+            android:name=".department_communication"
+            android:exported="false" />
+        <activity
             android:name=".Find_passwordActivity"
             android:exported="false" />
         <activity
