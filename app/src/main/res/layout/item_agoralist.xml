@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="horizontal">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageView
+            android:id="@+id/agora_image"
+            android:layout_width="94dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="16dp"
+            android:src="@drawable/user"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="109dp"
+            android:layout_marginTop="4dp"
+            android:text="강의명"
+            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/agora_image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/class_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="6dp"
+            android:text="날짜"
+            android:textColor="#8A252525"
+            app:layout_constraintBottom_toBottomOf="@+id/agora_image"
+            app:layout_constraintStart_toEndOf="@+id/agora_image"
+            app:layout_constraintTop_toBottomOf="@+id/class_name"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/where_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="장소"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/agora_image"
+            app:layout_constraintTop_toBottomOf="@+id/class_date"
+            app:layout_constraintVertical_bias="0.0"
+            tools:layout_editor_absoluteX="130dp" />
+
+        <TextView
+            android:id="@+id/who_class"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="강사"
+            android:textColor="@color/black"
+            app:layout_constraintBottom_toBottomOf="@id/agora_image"
+            app:layout_constraintTop_toBottomOf="@+id/where_class"
+            app:layout_constraintVertical_bias="0.4"
+            tools:layout_editor_absoluteX="130dp" />
+
+        <Button
+            android:id="@+id/btn_search"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:background="@drawable/icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.959"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.887" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#87CFFA" /> <!-- 스크롤 바의 색상 -->
+    <corners android:radius="2dp" /> <!-- 스크롤 바의 라운드 코너 반경 -->
+    <size android:width="1dp" /> <!-- 스크롤 바의 두께 -->
+</shape>

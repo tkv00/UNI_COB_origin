@@ -9,6 +9,7 @@ import android.view.Gravity
 import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -45,16 +46,24 @@ class MainActivity : AppCompatActivity() {
         "물류학과", "유통학과", "관광학과", "호텔경영학과", "레저스포츠학과"
     )
 
-    private lateinit var btn_department:Button //전공대화
-    private lateinit var btn_ondayclass:Button//원데이클래스
-    private lateinit var btn_usefulinfo:Button//알쓸신잡
-    private lateinit var btn_commu:Button//아고라
+    private lateinit var btn_department:ImageButton //전공대화
+    private lateinit var btn_ondayclass:ImageButton//원데이클래스
+    private lateinit var btn_usefulinfo: ImageButton//알쓸신잡
+    private lateinit var btn_commu:ImageButton//아고라
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btn_commu=findViewById(R.id.btn_usefulinfo)
-        btn_ondayclass=findViewById(R.id.btn_onedayclass)
+        btn_commu=findViewById(R.id.study_together)//아고라
+        btn_ondayclass=findViewById(R.id.btn_onedayclass)//원데이클래스
+        btn_usefulinfo=findViewById(R.id.btn_usefulinfo)//알쓸신잡
+        btn_department=findViewById(R.id.btn_department_communication)//전공대화
 
+        //알쓸신잡
+        btn_usefulinfo.setOnClickListener{
+            val intent=Intent(this,Useful_info::class.java)
+            startActivity(intent)
+            finish()
+        }
         //아고라 페이지로 이동
         btn_commu.setOnClickListener{
             val intent=Intent(this,Agora::class.java)

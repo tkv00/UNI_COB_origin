@@ -1,0 +1,26 @@
+<!-- item_category.xml -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="60dp"
+    android:layout_height="87dp"
+    android:orientation="vertical"
+    android:background="@drawable/category_box"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/imageViewCategory"
+        android:layout_width="32dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center"
+        android:src="@drawable/user" />
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="Category"
+        android:textColor="@color/black"
+        android:textSize="8sp" />
+</LinearLayout>

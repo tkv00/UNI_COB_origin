@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".find_department">
+
+    <TextView
+        android:id="@+id/textView15"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="분야를 선택하고 내가 찾는 강의를 찾아보세요."
+        android:textColor="@color/black"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView14"
+        app:layout_constraintVertical_bias="0.001" />
+
+    <TextView
+        android:id="@+id/textView14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="어떤 전공지식을 찾고 있나요?"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.492"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.054" />
+
+    <TextView
+        android:id="@+id/textView16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="분야"
+        android:textColor="@color/Gray_03"
+        android:textSize="17sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintVertical_bias="0.028" />
+
+
+    <com.google.android.flexbox.FlexboxLayout
+        android:id="@+id/flexboxLayoutKeywords"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        app:alignContent="flex_start"
+        app:alignItems="flex_start"
+        app:flexWrap="wrap"
+        app:justifyContent="flex_start"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintTop_toBottomOf="@+id/textView15"
+        app:layout_constraintVertical_bias="0.561"
+        tools:layout_editor_absoluteX="0dp">
+        <!-- 키워드 텍스트뷰가 동적으로 추가될 곳 -->
+    </com.google.android.flexbox.FlexboxLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:itemIconTint="@drawable/selector_icon_menu"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_menu" />
+
+    <Button
+        android:id="@+id/btn_dep_04"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="451dp"
+        android:background="@drawable/info_image_4"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_dep_03"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="46dp"
+        android:layout_marginBottom="433dp"
+        android:text="예술체육"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_04"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btn_dep_02"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="451dp"
+        android:background="@drawable/info_image_2"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toStartOf="@+id/btn_dep_03"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_dep_01"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/btn_dep_03"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="451dp"
+        android:background="@drawable/info_image_3"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toStartOf="@+id/btn_dep_04"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btn_dep_02"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="433dp"
+        android:text="교육학"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toStartOf="@+id/textView17"
+        app:layout_constraintHorizontal_bias="0.44"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_01" />
+
+
+    <Button
+        android:id="@+id/btn_dep_01"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="451dp"
+        android:background="@drawable/info_image_1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toStartOf="@+id/btn_dep_02"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView17"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="56dp"
+        android:layout_marginBottom="433dp"
+        android:text="의약학"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toStartOf="@+id/textView21"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_02" />
+
+    <TextView
+        android:id="@+id/textView21"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="433dp"
+        android:text="사회과학"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.626"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_03" />
+
+    <TextView
+        android:id="@+id/textView18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="342dp"
+        android:text="인문과학"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.384"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_6"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView22"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="343dp"
+        android:text="자연과학"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.122"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_05"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_dep_05"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="42dp"
+        android:layout_marginBottom="361dp"
+        android:background="@drawable/info_image_1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.131"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_01"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_dep_6"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="41dp"
+        android:layout_marginBottom="359dp"
+        android:background="@drawable/info_image_1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.379"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_02"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/btn_dep_07"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginBottom="361dp"
+        android:background="@drawable/info_image_1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.586"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_03"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <TextView
+        android:id="@+id/textView19"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="342dp"
+        android:text="공학"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.629"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_dep_07"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:itemIconTint="@drawable/selector_icon_menu"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:menu="@menu/bottom_menu" />
+</androidx.constraintlayout.widget.ConstraintLayout>
