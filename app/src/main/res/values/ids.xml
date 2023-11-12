@@ -10,4 +10,8 @@
     <item name="etPhoneNumber" type="id" />
     <item name="btnConfirm" type="id" />
     <item name="find_password_to_email" type="id" />
+    <item name="content_frame" type="id" />
+    <item name="nav_view" type="id" />
+    <item name="text3" type="id" />
+    <item name="drawer_layout" type="id" />
 </resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/design"
+        android:title="디자인"/>
+    <item
+        android:id="@+id/appliedart"
+        android:title="응용예술"/>
+    <item
+        android:id="@+id/dancing"
+        android:title="무용•체육"/>
+    <item
+        android:id="@+id/art"
+        android:title="미술•조형"/>
+    <item
+        android:id="@+id/movie"
+        android:title="연극영화"/>
+    <item
+        android:id="@+id/music"
+        android:title="음악"/>
+    <item
+        android:id="@+id/physical"
+        android:title="예술•체육기타"/>
+
+
+</menu>

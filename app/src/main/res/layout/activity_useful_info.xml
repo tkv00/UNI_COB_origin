@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Useful_info">
+    tools:context=".department.Useful_info">
 
 
     <TextView
@@ -30,7 +30,7 @@
         android:scrollbarThumbHorizontal="@drawable/scrollbar"
         android:scrollbars="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/et_name"
+        app:layout_constraintBottom_toTopOf="@+id/et_name2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,7 +138,7 @@
         app:layout_constraintVertical_bias="0.252" />
 
     <TextView
-        android:id="@+id/et_name"
+        android:id="@+id/et_name2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -158,15 +158,15 @@
         android:id="@+id/c_image_02"
         android:layout_width="122dp"
         android:layout_height="83dp"
-        android:layout_marginTop="31dp"
-        android:layout_marginBottom="26dp"
-        app:layout_constraintBottom_toBottomOf="@+id/c_text02"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="354dp"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.847"
-        app:layout_constraintStart_toStartOf="parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/recyclerViewCategories"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintHorizontal_bias="0.861"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView11"
+        app:layout_constraintVertical_bias="1.0" />
 
     <ImageView
         android:id="@+id/c_image_01"
@@ -303,12 +303,13 @@
         android:id="@+id/c_text02"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="76dp"
         android:text="이미지2"
         android:textColor="@color/black"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="291dp" />
+        app:layout_constraintHorizontal_bias="0.781"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c_image_02" />
 
     <ImageView
         android:id="@+id/today_image01"
@@ -360,14 +361,15 @@
         android:textColor="@color/Gray_03"
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/c_who2"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c_text02" />
-
 
     <TextView
         android:id="@+id/c_who2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="68dp"
+        android:layout_marginEnd="64dp"
         android:text="강사2"
         android:textColor="@color/Gray_03"
         android:textSize="12sp"
@@ -418,6 +420,12 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c_text04" />
+    <FrameLayout
+        android:id="@+id/fragments_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

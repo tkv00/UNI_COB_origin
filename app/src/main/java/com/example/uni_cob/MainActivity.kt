@@ -7,20 +7,16 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.Gravity
 import android.view.View
-import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
-import com.example.uni_cob.Chatting.ChatFragment
 import com.example.uni_cob.Chatting.HomeFragment
 import com.example.uni_cob.Chatting.ProfileFragment
+import com.example.uni_cob.department.Useful_info
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.database.collection.LLRBNode
-import org.checkerframework.common.subtyping.qual.Bottom
 
 
 class MainActivity : AppCompatActivity() {
@@ -60,7 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         //알쓸신잡
         btn_usefulinfo.setOnClickListener{
-            val intent=Intent(this,Useful_info::class.java)
+            val intent=Intent(this, Useful_info::class.java)
             startActivity(intent)
             finish()
         }

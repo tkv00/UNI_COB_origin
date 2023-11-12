@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".find_department">
+    tools:context=".department.find_department">
 
     <TextView
         android:id="@+id/textView15"
@@ -60,22 +60,13 @@
         app:alignItems="flex_start"
         app:flexWrap="wrap"
         app:justifyContent="flex_start"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintTop_toBottomOf="@+id/textView15"
-        app:layout_constraintVertical_bias="0.561"
+        app:layout_constraintVertical_bias="0.677"
         tools:layout_editor_absoluteX="0dp">
         <!-- 키워드 텍스트뷰가 동적으로 추가될 곳 -->
     </com.google.android.flexbox.FlexboxLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        app:itemIconTint="@drawable/selector_icon_menu"
-        app:labelVisibilityMode="unlabeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_menu" />
 
     <Button
         android:id="@+id/btn_dep_04"
@@ -83,7 +74,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="451dp"
         android:background="@drawable/info_image_4"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_dep_03"
@@ -98,12 +89,12 @@
         android:text="예술체육"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.106"
         app:layout_constraintStart_toEndOf="@+id/textView21"
         app:layout_constraintTop_toBottomOf="@+id/btn_dep_04"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/btn_dep_02"
@@ -111,7 +102,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="451dp"
         android:background="@drawable/info_image_2"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toStartOf="@+id/btn_dep_03"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_dep_01"
@@ -124,7 +115,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="451dp"
         android:background="@drawable/info_image_3"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toStartOf="@+id/btn_dep_04"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/btn_dep_02"
@@ -139,7 +130,7 @@
         android:text="교육학"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toStartOf="@+id/textView17"
         app:layout_constraintHorizontal_bias="0.44"
         app:layout_constraintStart_toStartOf="parent"
@@ -152,7 +143,7 @@
         android:layout_height="50dp"
         android:layout_marginBottom="451dp"
         android:background="@drawable/info_image_1"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toStartOf="@+id/btn_dep_02"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -168,7 +159,7 @@
         android:text="의약학"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toStartOf="@+id/textView21"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -182,7 +173,7 @@
         android:text="사회과학"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.626"
         app:layout_constraintStart_toStartOf="parent"
@@ -196,7 +187,7 @@
         android:text="인문과학"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.384"
         app:layout_constraintStart_toStartOf="parent"
@@ -212,7 +203,7 @@
         android:text="자연과학"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.122"
         app:layout_constraintStart_toStartOf="parent"
@@ -226,8 +217,8 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="42dp"
         android:layout_marginBottom="361dp"
-        android:background="@drawable/info_image_1"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        android:background="@drawable/info_image_5"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.131"
         app:layout_constraintStart_toStartOf="parent"
@@ -240,8 +231,8 @@
         android:layout_height="50dp"
         android:layout_marginTop="41dp"
         android:layout_marginBottom="359dp"
-        android:background="@drawable/info_image_1"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        android:background="@drawable/info_image_7"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.379"
         app:layout_constraintStart_toStartOf="parent"
@@ -255,8 +246,8 @@
         android:layout_marginStart="44dp"
         android:layout_marginTop="40dp"
         android:layout_marginBottom="361dp"
-        android:background="@drawable/info_image_1"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        android:background="@drawable/info_image_6"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.586"
         app:layout_constraintStart_toStartOf="parent"
@@ -272,15 +263,23 @@
         android:text="공학"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_nav1"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_nav2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.629"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_dep_07"
         app:layout_constraintVertical_bias="1.0" />
 
+    <FrameLayout
+        android:id="@+id/fragments_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_nav1"
+        android:id="@+id/bottom_nav2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/white"

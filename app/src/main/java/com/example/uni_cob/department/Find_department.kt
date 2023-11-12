@@ -1,25 +1,23 @@
-package com.example.uni_cob
+package com.example.uni_cob.department
 
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
-import android.widget.FrameLayout
-import android.widget.GridLayout
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.core.widget.NestedScrollView
-import com.example.uni_cob.Chatting.HomeFragment
-import com.example.uni_cob.Chatting.ProfileFragment
+import androidx.fragment.app.Fragment
+import com.example.uni_cob.Chatting.ChatFragment
+import com.example.uni_cob.MainActivity
+import com.example.uni_cob.R
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class find_department : AppCompatActivity() {
+
+    // 각 버튼의 기본 Drawable을 저장하는 Map
+
     private val educationkeywords = listOf(
         "유아교육", "특수교육", "초등교육", "중등교육", "교육일반"
     )
@@ -51,48 +49,53 @@ class find_department : AppCompatActivity() {
     private lateinit var btn_nat: Button//자연과학
 
 
+
+
     private lateinit var flexboxLayoutKeywords: FlexboxLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_find_department)
         //하단바 작동액티비티
 
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
+        //하단바 작동액티비티
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav2)
         bottomNav.setOnItemSelectedListener { item ->
-            val mainContent: NestedScrollView = findViewById(R.id.nestedScrollView)
-            val fragmentFrame: FrameLayout = findViewById(R.id.fragments_frame)
+
 
             when (item.itemId) {
                 R.id.menu_home -> {
-                    fragmentFrame.visibility = View.GONE
-                    mainContent.visibility = View.VISIBLE
+                    // 홈 메뉴 아이템을 눌렀을 때 MainActivity로 이동
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
                     true
                 }
+
                 R.id.menu_chat -> {
-                    val homeFragment = HomeFragment.newInstance()
+                    // 채팅 메뉴 아이템을 눌렀을 때 ChatFragment로 교체
+                    val chatFragment = ChatFragment.newInstance()
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragments_frame, homeFragment).commit()
-                    mainContent.visibility = View.GONE
-                    fragmentFrame.visibility = View.VISIBLE
+                        .replace(R.id.fragments_frame, chatFragment)
+                        .commit()
                     true
                 }
+
                 R.id.menu_profile -> {
-                    val profileFragment = ProfileFragment.newInstance()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragments_frame, profileFragment).commit()
-                    mainContent.visibility = View.GONE
-                    fragmentFrame.visibility = View.VISIBLE
+
                     true
                 }
+
                 R.id.menu_notification -> {
                     true
                 }
+
                 R.id.menu_register -> {
                     true
                 }
+
                 else -> false
             }
         }
+
         flexboxLayoutKeywords = findViewById(R.id.flexboxLayoutKeywords)
         //버튼 초기화
         btn_edu = findViewById(R.id.btn_dep_01)
@@ -103,43 +106,43 @@ class find_department : AppCompatActivity() {
         btn_hum = findViewById(R.id.btn_dep_6)
         btn_eng = findViewById(R.id.btn_dep_07)
 
+
         //각 버튼 토클
         btn_edu.setOnClickListener {
-            toggleKeywords(educationkeywords,flexboxLayoutKeywords)
+           displayKeywords(educationkeywords)
         }
         btn_mad.setOnClickListener {
-            toggleKeywords(madicalkeywords,flexboxLayoutKeywords)
+            displayKeywords( madicalkeywords)
         }
         btn_soc.setOnClickListener {
-            toggleKeywords(socialsciencekeywords,flexboxLayoutKeywords)
+           displayKeywords( socialsciencekeywords)
         }
         btn_art.setOnClickListener {
-            toggleKeywords(artsportskeywords,flexboxLayoutKeywords)
+            displayKeywords( artsportskeywords)
         }
         btn_nat.setOnClickListener {
-            toggleKeywords(naturalsciencekeywords,flexboxLayoutKeywords)
+            displayKeywords( naturalsciencekeywords)
         }
         btn_hum.setOnClickListener {
-            toggleKeywords(humanitieskeywords,flexboxLayoutKeywords)
+            displayKeywords( humanitieskeywords)
         }
         btn_eng.setOnClickListener {
-            toggleKeywords(engineeringkeywords,flexboxLayoutKeywords)
+            displayKeywords(engineeringkeywords)
         }
     }
 
-    // 키워드를 표시하거나 숨기는 함수
-    private fun toggleKeywords(keywords: List<String>, flexboxLayout: FlexboxLayout) {
-        flexboxLayout.removeAllViews() // 기존 키워드 제거
-
-        keywords.forEach { keyword ->
-            val textView = createKeywordTextView(keyword)
-            flexboxLayout.addView(textView)
+    private fun displayKeywords(keywords: List<String>) {
+        flexboxLayoutKeywords.removeAllViews() // 기존에 있던 뷰들을 제거
+        for (keyword in keywords) {
+            val keywordButton = createKeywordButton(keyword)
+            flexboxLayoutKeywords.addView(keywordButton)
         }
     }
 
-    // 키워드 TextView를 생성하는 함수
-    private fun createKeywordTextView(keyword: String): TextView {
-        return TextView(this).apply {
+
+
+    private fun createKeywordButton(keyword: String): Button {
+        return Button(this).apply {
             text = keyword
             textSize = 14f
             setTextColor(ContextCompat.getColor(context, R.color.black))
@@ -151,17 +154,38 @@ class find_department : AppCompatActivity() {
                 val margin = 8.dpToPx(context)
                 setMargins(margin, margin, margin, margin)
             }
-            setPadding(16.dpToPx(context), 8.dpToPx(context), 16.dpToPx(context), 8.dpToPx(context))
+            setPadding(
+                16.dpToPx(context),
+                8.dpToPx(context),
+                16.dpToPx(context),
+                8.dpToPx(context)
+            )
             setOnClickListener {
-                onKeywordClicked(keyword)
+
+                navigateToActivity(keyword)
             }
         }
     }
 
-    // 키워드 클릭 시 호출되는 함수
-    private fun onKeywordClicked(keyword: String) {
-        Toast.makeText(this, "Selected: $keyword", Toast.LENGTH_SHORT).show()
-        // 여기에 클릭된 키워드에 따라 실행할 작업을 정의합니다.
+    private fun navigateToActivity(keyword: String) {
+        val intent = when (keyword) {
+            "디자인" -> Intent(this,DesignActivity::class.java)
+            "응용예술" -> Intent(this,AppliedArtActivity::class.java)
+           "무용•체육"-> Intent(this,DancingActivity::class.java)
+           "미술•조형"->Intent(this,ArtisticActivity::class.java)
+            "연극영화"-> Intent(this,MovieActivity::class.java)
+           "음악"->Intent(this,MusicActivity::class.java)
+          "예술•체육기타"->Intent(this,PhsicalActivity::class.java)
+
+
+            else -> null
+
+        }
+        intent ?. let {
+            startActivity(it)
+        }?:run{
+            Toast.makeText(this,"해당엑티비티를 찾을 수 없습니다 : $keyword",Toast.LENGTH_SHORT).show()
+        }
     }
 
 
