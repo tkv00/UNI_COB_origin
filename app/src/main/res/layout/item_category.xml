@@ -1,15 +1,15 @@
 <!-- item_category.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="60dp"
-    android:layout_height="87dp"
+    android:layout_width="80dp"
+    android:layout_height="110dp"
     android:orientation="vertical"
     android:background="@drawable/category_box"
     android:padding="10dp">
 
     <ImageView
         android:id="@+id/imageViewCategory"
-        android:layout_width="32dp"
-        android:layout_height="42dp"
+        android:layout_width="50dp"
+        android:layout_height="70dp"
         android:layout_gravity="center"
         android:src="@drawable/user" />
 
@@ -22,5 +22,5 @@
         android:gravity="center"
         android:text="Category"
         android:textColor="@color/black"
-        android:textSize="8sp" />
+        android:textSize="10sp" />
 </LinearLayout>

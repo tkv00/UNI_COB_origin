@@ -11,6 +11,16 @@ import androidx.fragment.app.Fragment
 import com.example.uni_cob.Chatting.ChatFragment
 import com.example.uni_cob.MainActivity
 import com.example.uni_cob.R
+import com.example.uni_cob.department.Humanities.HumanitiesPlus
+import com.example.uni_cob.department.Humanities.LanguageActivity
+import com.example.uni_cob.department.NaturalScience.AgricultureActivity
+import com.example.uni_cob.department.NaturalScience.BiologicalChemistryActivity
+import com.example.uni_cob.department.NaturalScience.HumanEcologyAcctivity
+import com.example.uni_cob.department.NaturalScience.MathActivity
+import com.example.uni_cob.department.NaturalScience.NaturalSciencePlusActivity
+import com.example.uni_cob.department.SocialScience.BusinessActivity
+import com.example.uni_cob.department.SocialScience.LawActivity
+import com.example.uni_cob.department.SocialScience.SocialPlus
 import com.google.android.flexbox.FlexboxLayout
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
@@ -169,6 +179,7 @@ class find_department : AppCompatActivity() {
 
     private fun navigateToActivity(keyword: String) {
         val intent = when (keyword) {
+            //예술*체육
             "디자인" -> Intent(this,DesignActivity::class.java)
             "응용예술" -> Intent(this,AppliedArtActivity::class.java)
            "무용•체육"-> Intent(this,DancingActivity::class.java)
@@ -176,6 +187,23 @@ class find_department : AppCompatActivity() {
             "연극영화"-> Intent(this,MovieActivity::class.java)
            "음악"->Intent(this,MusicActivity::class.java)
           "예술•체육기타"->Intent(this,PhsicalActivity::class.java)
+
+            //자연과학
+            "농림•수산"->Intent(this,AgricultureActivity::class.java)
+            "생물•화학•환경"-> Intent(this,BiologicalChemistryActivity::class.java)
+            "생활과학"-> Intent(this,HumanEcologyAcctivity::class.java)
+            "수학•물리•천문•지리"-> Intent(this,MathActivity::class.java)
+            "자연과학기타"-> Intent(this,NaturalSciencePlusActivity::class.java)
+
+            //인문과학
+            "언어•문학"->Intent(this,LanguageActivity::class.java)
+            "인문과학기타"-> Intent(this,HumanitiesPlus::class.java)
+
+            //사회과학
+            "경영•경제"-> Intent(this,BusinessActivity::class.java)
+            "법률"-> Intent(this,LawActivity::class.java)
+            "사화과학기타"-> Intent(this,SocialPlus::class.java)
+
 
 
             else -> null

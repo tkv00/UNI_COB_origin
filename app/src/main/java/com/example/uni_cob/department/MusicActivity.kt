@@ -1,4 +1,5 @@
 package com.example.uni_cob.department
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -15,14 +16,16 @@ import com.example.uni_cob.R
 import com.example.uni_cob.department.keywords.ApiService
 import com.example.uni_cob.department.keywords.LectureDTO
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-class MusicActivity :AppCompatActivity(){
+class MusicActivity :AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener{
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btn: Button
     private lateinit var adapter: KeywordsAdapter
+    private lateinit var searchView:  androidx.appcompat.widget.SearchView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,13 +46,15 @@ class MusicActivity :AppCompatActivity(){
             drawerLayout.openDrawer(GravityCompat.START)
         }
 
+
         // RecyclerView 어댑터 초기화 및 설정
         adapter = KeywordsAdapter(arrayListOf())
         val recyclerView = findViewById<RecyclerView>(R.id.recycler_view1)
         recyclerView.layoutManager = GridLayoutManager(this, 2) // 두 열 그리드 레이아웃
         recyclerView.adapter = adapter
 
-
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
         // BottomNavigationView 설정
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
@@ -60,7 +65,43 @@ class MusicActivity :AppCompatActivity(){
         // API 데이터 요청
         requestApi()
     }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // Handle navigation view item clicks here.
+        when (item.itemId) {
+            R.id.design -> {
+                val intent = Intent(this, DesignActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.appliedart -> {
+                val intent = Intent(this, AppliedArtActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.movie->{
+                val intent= Intent(this,MovieActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.music->{
+                val intent= Intent(this,MusicActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.physical->{
+                val intent= Intent(this,PhsicalActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.art->{
+                val intent= Intent(this,AppliedArtActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.dancing->{
+                val intent= Intent(this,DancingActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
+        // Close the navigation drawer
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
     private fun requestApi() {
         val service = RetrofitClient.getInstance().create(ApiService::class.java)
         service.getLectureDetail().enqueue(object : Callback<LectureDTO> {
@@ -83,6 +124,7 @@ class MusicActivity :AppCompatActivity(){
             }
         })
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (toggle.onOptionsItemSelected(item)) {

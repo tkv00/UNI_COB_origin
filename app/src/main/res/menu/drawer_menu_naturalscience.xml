@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/agriculture"
+        android:title="농림ㆍ수산"/>
+    <item
+        android:id="@+id/biological"
+        android:title="생물ㆍ화학ㆍ환경"/>
+    <item
+        android:id="@+id/humanecology"
+        android:title="생활과학"/>
+    <item
+        android:id="@+id/math"
+        android:title="수학ㆍ물리ㆍ천문ㆍ지리"/>
+    <item
+        android:id="@+id/plus"
+        android:title="자연과학기타"/>
+
+</menu>

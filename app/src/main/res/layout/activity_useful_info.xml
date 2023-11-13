@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/textView23"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="알쓸전잡"
@@ -21,22 +22,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewCategories"
-        android:layout_width="415dp"
-        android:layout_height="92dp"
-        android:orientation="horizontal"
-        android:scrollbarStyle="insideInset"
-        android:scrollbarThumbHorizontal="@drawable/scrollbar"
-        android:scrollbars="horizontal"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@+id/et_name2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12"
-        app:layout_constraintVertical_bias="1.0" />
-
     <TextView
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
@@ -47,10 +32,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
+        app:layout_constraintHorizontal_bias="0.07"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.07" />
+        app:layout_constraintVertical_bias="0.055" />
 
     <Button
         android:id="@+id/button2"
@@ -62,65 +47,72 @@
         android:text="      원하는 강의 찾기"
         android:textColor="@color/white"
         android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.92" />
 
-    <ImageView
-        android:id="@+id/c_image_04"
-        android:layout_width="122dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="44dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_02" />
 
-    <TextView
-        android:id="@+id/c_text03"
-        android:layout_width="wrap_content"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view3"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="80dp"
-        android:layout_marginBottom="41dp"
-        android:text="이미지3"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/today_image01"
-
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_03"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/c_text04"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="146dp"
-        android:layout_marginEnd="72dp"
-        android:text="이미지4"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/today_image02"
+        android:padding="15dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.461"
-        app:layout_constraintStart_toEndOf="@+id/c_text03"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_04"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <ImageView
-        android:id="@+id/c_image_03"
-        android:layout_width="122dp"
-        android:layout_height="83dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginTop="56dp"
-
-        android:layout_marginEnd="79dp"
-        app:layout_constraintEnd_toStartOf="@+id/c_image_04"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_01" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.521"
+        tools:listitem="@layout/item_layout" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="15dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.555"
+        tools:listitem="@layout/item_layout" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오늘의 강좌"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.049"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.587" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewCategories"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+
+        android:layout_marginTop="92dp"
+        android:orientation="horizontal"
+
+        android:scrollbarStyle="insideInset"
+        android:scrollbarThumbHorizontal="@drawable/scrollbar"
+        android:scrollbars="horizontal"
+
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
     <TextView
         android:id="@+id/textView11"
@@ -132,10 +124,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.228"
+        app:layout_constraintHorizontal_bias="0.218"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.252" />
+        app:layout_constraintVertical_bias="0.286" />
 
     <TextView
         android:id="@+id/et_name2"
@@ -151,281 +143,7 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.252" />
-
-
-    <ImageView
-        android:id="@+id/c_image_02"
-        android:layout_width="122dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginBottom="354dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-
-        app:layout_constraintHorizontal_bias="0.861"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/c_image_01"
-        android:layout_width="122dp"
-        android:layout_height="83dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/c_image_02"
-        app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
-
-    <TextView
-        android:id="@+id/c_where1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:text="장소1"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/c_image_03"
-        app:layout_constraintEnd_toStartOf="@+id/c_who1"
-        app:layout_constraintHorizontal_bias="0.712"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_text01"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/c_who1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
-        android:layout_marginBottom="12dp"
-        android:text="강사1"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/c_image_03"
-        app:layout_constraintEnd_toStartOf="@+id/c_where2"
-        app:layout_constraintTop_toBottomOf="@+id/c_text01"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/c_text01"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginEnd="143dp"
-        android:text="이미지1"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_text02"
-        app:layout_constraintHorizontal_bias="0.366"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_01" />
-
-    <TextView
-        android:id="@+id/c_text06"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="80dp"
-        android:layout_marginBottom="35dp"
-        android:text="이미지6"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/today_image02"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/c_who6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:text="강사6"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_text06" />
-
-    <TextView
-        android:id="@+id/c_where3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="장소3"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_who3"
-        app:layout_constraintHorizontal_bias="0.712"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_text03" />
-
-    <TextView
-        android:id="@+id/c_text05"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="75dp"
-        android:layout_marginEnd="143dp"
-        android:layout_marginBottom="35dp"
-        android:text="이미지5"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toStartOf="@+id/c_text06"
-        app:layout_constraintHorizontal_bias="0.366"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/today_image01"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <TextView
-        android:id="@+id/c_where5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:text="장소5"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_who5"
-        app:layout_constraintHorizontal_bias="0.074"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_text05" />
-
-    <TextView
-        android:id="@+id/c_who5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="120dp"
-        android:text="강사5"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_where6"
-        app:layout_constraintTop_toBottomOf="@+id/c_text05" />
-
-    <TextView
-        android:id="@+id/c_text02"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="이미지2"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.781"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_02" />
-
-    <ImageView
-        android:id="@+id/today_image01"
-        android:layout_width="122dp"
-        android:layout_height="83dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginBottom="61dp"
-
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toStartOf="@+id/today_image02"
-        app:layout_constraintHorizontal_bias="0.025"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_03"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <ImageView
-        android:id="@+id/today_image02"
-        android:layout_width="122dp"
-        android:layout_height="83dp"
-        android:layout_marginEnd="44dp"
-        android:layout_marginBottom="61dp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_image_04"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView13"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="오늘의 강좌"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.049"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.673" />
-
-
-    <TextView
-        android:id="@+id/c_where2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="장소2"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_who2"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_text02" />
-
-    <TextView
-        android:id="@+id/c_who2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:text="강사2"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_text02" />
-
-    <TextView
-        android:id="@+id/c_where6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:text="장소6"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_who6"
-        app:layout_constraintTop_toBottomOf="@+id/c_text06" />
-
-    <TextView
-        android:id="@+id/c_who3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="124dp"
-        android:text="강사3"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_where4"
-        app:layout_constraintTop_toBottomOf="@+id/c_text03" />
-
-    <TextView
-        android:id="@+id/c_where4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="1dp"
-        android:layout_marginEnd="20dp"
-        android:text="장소4"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/c_who4"
-        app:layout_constraintTop_toBottomOf="@+id/c_text04" />
-
-    <TextView
-        android:id="@+id/c_who4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="64dp"
-        android:text="강사4"
-        android:textColor="@color/Gray_03"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/c_text04" />
-    <FrameLayout
-        android:id="@+id/fragments_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        />
+        app:layout_constraintVertical_bias="0.287" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

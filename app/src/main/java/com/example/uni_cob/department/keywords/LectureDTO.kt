@@ -16,6 +16,7 @@ data class LectureDTO(
     @SerializedName("data")
     val data:MutableList<Lecture>
 )
+
 data class Lecture(
     @SerializedName("중분류")//중분류
     val classification:String?,

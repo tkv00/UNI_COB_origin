@@ -80,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        app:headerLayout="@layout/nav_header"
-        app:menu="@menu/drawer_menu" />
+        app:headerLayout="@layout/nav_naturalscience"
+        app:menu="@menu/drawer_menu_naturalscience" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

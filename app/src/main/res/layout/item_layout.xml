@@ -21,7 +21,7 @@
         android:gravity="center"
         android:textColor="@color/black"
         android:text="Item Title"
-        android:textSize="20sp"
+        android:textSize="17sp"
         android:textStyle="bold"/>
 
     <!-- 텍스트 뷰와 선을 가로로 배치하기 위한 새로운 LinearLayout -->
@@ -40,7 +40,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Item Description"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
 
         <View
             android:layout_width="1dp"
@@ -56,7 +56,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Item Description"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 </LinearLayout>
 

@@ -1,6 +1,4 @@
 package com.example.uni_cob.department
-
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
@@ -9,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.URLUtil
 import android.widget.Button
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -17,10 +17,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.uni_cob.R
 import com.example.uni_cob.department.keywords.Lecture
+import java.util.Locale
 
 class KeywordsAdapter(private var lectures: List<Lecture>) :
-    RecyclerView.Adapter<KeywordsAdapter.KeywordViewHolder>() {
-
+    RecyclerView.Adapter<KeywordsAdapter.KeywordViewHolder>() ,Filterable{
+    var filteredList: List<Lecture> = lectures
     // ViewHolder 클래스 정의
     class KeywordViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val professorNameTextView: TextView = view.findViewById(R.id.text_item_description1)
@@ -77,4 +78,33 @@ class KeywordsAdapter(private var lectures: List<Lecture>) :
     }
     // 데이터셋의 크기를 반환하는 메소드
     override fun getItemCount() = lectures.size
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                filteredList = if (charSearch.isEmpty()) {
+                    lectures
+                } else {
+                    val resultList = ArrayList<Lecture>()
+                    for (row in lectures) {
+                        // 여기서 검색 조건을 정의합니다.
+                        // 예를 들어, 강의명과 교수명으로 필터링을 할 수 있습니다.
+                        if (row.lecturnName?.lowercase(Locale.ROOT)?.contains(charSearch.lowercase(Locale.ROOT)) == true ||
+                                    row.teacher?.lowercase(Locale.ROOT)?.contains(charSearch.lowercase(Locale.ROOT)) == true) {
+                                resultList.add(row)
+                        }
+                    }
+                    resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = filteredList
+                return filterResults
+            }
+
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                filteredList = results?.values as List<Lecture>
+                notifyDataSetChanged()
+            }
+        }
+    }
 }

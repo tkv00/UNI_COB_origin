@@ -1,5 +1,6 @@
 package com.example.uni_cob.department
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -16,10 +17,11 @@ import com.example.uni_cob.R
 import com.example.uni_cob.department.keywords.ApiService
 import com.example.uni_cob.department.keywords.LectureDTO
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.navigation.NavigationView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-class MovieActivity:AppCompatActivity() {
+class MovieActivity:AppCompatActivity() , NavigationView.OnNavigationItemSelectedListener{
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var btn: Button
@@ -53,7 +55,8 @@ class MovieActivity:AppCompatActivity() {
 
         // BottomNavigationView 설정
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
-
+        val navigationView = findViewById<NavigationView>(R.id.nav_view)
+        navigationView.setNavigationItemSelectedListener(this)
         // 제목 설정
         val textViewTitle = findViewById<TextView>(R.id.text3)
         textViewTitle.text = intent.getStringExtra(ARG_TITLE) ?: "연극영화"
@@ -61,7 +64,43 @@ class MovieActivity:AppCompatActivity() {
         // API 데이터 요청
         requestApi()
     }
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        // Handle navigation view item clicks here.
+        when (item.itemId) {
+            R.id.design -> {
+                val intent = Intent(this, DesignActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.appliedart -> {
+                val intent = Intent(this, AppliedArtActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.movie->{
+                val intent= Intent(this,MovieActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.music->{
+                val intent= Intent(this,MusicActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.physical->{
+                val intent= Intent(this,PhsicalActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.art->{
+                val intent= Intent(this,AppliedArtActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.dancing->{
+                val intent= Intent(this,DancingActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
+        // Close the navigation drawer
+        drawerLayout.closeDrawer(GravityCompat.START)
+        return true
+    }
     private fun requestApi() {
         val service = RetrofitClient.getInstance().create(ApiService::class.java)
         service.getLectureDetail().enqueue(object : Callback<LectureDTO> {

@@ -35,17 +35,29 @@
         <activity android:name=".department.ArtisticActivity"/>
         <activity android:name=".department.MovieActivity"/>
         <activity android:name=".department.PhsicalActivity"/>
+        <activity android:name=".department.NaturalScience.BiologicalChemistryActivity"/>
+        <activity android:name=".department.NaturalScience.HumanEcologyAcctivity"/>
+        <activity android:name=".department.NaturalScience.MathActivity"/>
+        <activity android:name=".department.NaturalScience.NaturalSciencePlusActivity"/>
+        <activity android:name=".department.NaturalScience.AgricultureActivity"/>
+        <activity android:name=".department.Humanities.HumanitiesPlus"/>
+        <activity android:name=".department.Humanities.LanguageActivity"/>
+        <activity android:name=".department.SocialScience.BusinessActivity"/>
+        <activity android:name=".department.SocialScience.LawActivity"/>
+        <activity android:name=".department.SocialScience.SocialPlus"/>
         <activity
             android:name=".department.DesignActivity"/>
         <activity
             android:name=".department.find_department"
             android:exported="false" />
+
         <activity
             android:name=".department.AppliedArtActivity"/>
 
         <activity
             android:name=".department.Useful_info"
             android:exported="false" />
+
         <activity
             android:name=".Agora"
             android:exported="false" />
