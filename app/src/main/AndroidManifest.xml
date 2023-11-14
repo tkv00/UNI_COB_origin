@@ -45,6 +45,24 @@
         <activity android:name=".department.SocialScience.BusinessActivity"/>
         <activity android:name=".department.SocialScience.LawActivity"/>
         <activity android:name=".department.SocialScience.SocialPlus"/>
+        <activity android:name=".department.Engineering.ArchitectureActivity"/>
+        <activity android:name=".department.Engineering.ChemistryActivitty"/>
+        <activity android:name=".department.Engineering.civilengineeringcityActivity"/>
+        <activity android:name=".department.Engineering.ComputerActivity"/>
+        <activity android:name=".department.Engineering.electricalelectronicsActivity"/>
+        <activity android:name=".department.Engineering.EnergyActivity"/>
+        <activity android:name=".department.Engineering.EngineeringPlus"/>
+        <activity android:name=".department.Engineering.IndustryActivity"/>
+        <activity android:name=".department.Engineering.machinemetalActivity"/>
+        <activity android:name=".department.Medical.MedicalTreatmentActivity"/>
+        <activity android:name=".department.Medical.NurseActivity"/>
+        <activity android:name=".department.Medical.PharmacyActivity"/>
+        <activity android:name=".department.Medical.TreatmentHealthActivity"/>
+        <activity android:name=".department.Education.ChildEducationActivity"/>
+        <activity android:name=".department.Education.ElementaryEducationActivity"/>
+        <activity android:name=".department.Education.GeneralEducationActivity"/>
+        <activity android:name=".department.Education.MiddleEducationActivity"/>
+        <activity android:name=".department.Education.SpecialEducationActivity"/>
         <activity
             android:name=".department.DesignActivity"/>
         <activity

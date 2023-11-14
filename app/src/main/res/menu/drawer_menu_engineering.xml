@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/architecture"
+        android:title="건축"/>
+    <item
+        android:id="@+id/civilengineering"
+        android:title="토목ㆍ도시"/>
+    <item
+        android:id="@+id/machine"
+        android:title="기계ㆍ금속"/>
+    <item
+        android:id="@+id/electric"
+        android:title="전기ㆍ전자"/>
+    <item
+        android:id="@+id/energy"
+        android:title="정밀ㆍ에너지"/>
+    <item
+        android:id="@+id/computer"
+        android:title="컴퓨터ㆍ통신"/>
+    <item
+        android:id="@+id/industry"
+        android:title="산업"/>
+    <item
+        android:id="@+id/chemistry"
+        android:title="화공"/>
+    <item
+        android:id="@+id/e_plus"
+        android:title="기타공학"/>
+
+</menu>

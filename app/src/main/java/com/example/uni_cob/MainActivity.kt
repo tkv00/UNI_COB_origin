@@ -58,13 +58,13 @@ class MainActivity : AppCompatActivity() {
         btn_usefulinfo.setOnClickListener{
             val intent=Intent(this, Useful_info::class.java)
             startActivity(intent)
-            finish()
+
         }
         //아고라 페이지로 이동
         btn_commu.setOnClickListener{
             val intent=Intent(this,Agora::class.java)
             startActivity(intent)
-            finish()
+
         }
 
         displayRandomKeywords()

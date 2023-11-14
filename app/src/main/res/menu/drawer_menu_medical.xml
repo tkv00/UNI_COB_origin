@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/medicaltreatment"
+        android:title="의료"/>
+    <item
+        android:id="@+id/nurse"
+        android:title="간호"/>
+    <item
+        android:id="@+id/pharmacy"
+        android:title="약학"/>
+    <item
+        android:id="@+id/health"
+        android:title="치료보건"/>
+
+
+</menu>

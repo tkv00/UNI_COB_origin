@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/chid"
+        android:title="유아교육"/>
+    <item
+        android:id="@+id/different"
+        android:title="특수교육"/>
+    <item
+        android:id="@+id/elementary"
+        android:title="초등교육"/>
+    <item
+        android:id="@+id/middleschool"
+        android:title="중등교육"/>
+    <item
+        android:id="@+id/general"
+        android:title="교육일반"/>
+
+
+</menu>

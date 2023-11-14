@@ -11,8 +11,26 @@ import androidx.fragment.app.Fragment
 import com.example.uni_cob.Chatting.ChatFragment
 import com.example.uni_cob.MainActivity
 import com.example.uni_cob.R
+import com.example.uni_cob.department.Education.ChildEducationActivity
+import com.example.uni_cob.department.Education.ElementaryEducationActivity
+import com.example.uni_cob.department.Education.GeneralEducationActivity
+import com.example.uni_cob.department.Education.MiddleEducationActivity
+import com.example.uni_cob.department.Education.SpecialEducationActivity
+import com.example.uni_cob.department.Engineering.ArchitectureActivity
+import com.example.uni_cob.department.Engineering.ChemistryActivitty
+import com.example.uni_cob.department.Engineering.ComputerActivity
+import com.example.uni_cob.department.Engineering.EnergyActivity
+import com.example.uni_cob.department.Engineering.EngineeringPlus
+import com.example.uni_cob.department.Engineering.IndustryActivity
+import com.example.uni_cob.department.Engineering.civilengineeringcityActivity
+import com.example.uni_cob.department.Engineering.electricalelectronicsActivity
+import com.example.uni_cob.department.Engineering.machinemetalActivity
 import com.example.uni_cob.department.Humanities.HumanitiesPlus
 import com.example.uni_cob.department.Humanities.LanguageActivity
+import com.example.uni_cob.department.Medical.MedicalTreatmentActivity
+import com.example.uni_cob.department.Medical.NurseActivity
+import com.example.uni_cob.department.Medical.PharmacyActivity
+import com.example.uni_cob.department.Medical.TreatmentHealthActivity
 import com.example.uni_cob.department.NaturalScience.AgricultureActivity
 import com.example.uni_cob.department.NaturalScience.BiologicalChemistryActivity
 import com.example.uni_cob.department.NaturalScience.HumanEcologyAcctivity
@@ -44,7 +62,7 @@ class find_department : AppCompatActivity() {
         "농림•수산", "생물•화학•환경", "생활과학", "수학•물리•천문•지리", "자연과학기타"
     )
     private val madicalkeywords = listOf(
-        "의료", "간호", "역학", "치료보건"
+        "의료", "간호", "약학", "치료보건"
     )
     private val artsportskeywords = listOf(
         "디자인", "응용예술", "무용•체육", "미술•조형", "연극영화", "음악", "예술•체육기타"
@@ -203,6 +221,30 @@ class find_department : AppCompatActivity() {
             "경영•경제"-> Intent(this,BusinessActivity::class.java)
             "법률"-> Intent(this,LawActivity::class.java)
             "사화과학기타"-> Intent(this,SocialPlus::class.java)
+
+            //의약학
+            "의료"-> Intent(this,MedicalTreatmentActivity::class.java)
+            "간호"-> Intent(this,NurseActivity::class.java)
+            "약학"-> Intent(this,PharmacyActivity::class.java)
+            "치료보건"-> Intent(this,TreatmentHealthActivity::class.java)
+
+            //공학
+            "건축"-> Intent(this,ArchitectureActivity::class.java)
+            "토목•도시"->Intent(this,civilengineeringcityActivity::class.java)
+            "기계•금속"->Intent(this,machinemetalActivity::class.java)
+            "전기•전자"->Intent(this,electricalelectronicsActivity::class.java)
+            "정밀•에너지"-> Intent(this,EnergyActivity::class.java)
+            "컴퓨터•통신"-> Intent(this,ComputerActivity::class.java)
+            "산업"-> Intent(this,IndustryActivity::class.java)
+            "화공"->Intent(this,ChemistryActivitty::class.java)
+            "기타공학"-> Intent(this,EngineeringPlus::class.java)
+
+            //교육학
+            "유아교육"-> Intent(this,ChildEducationActivity::class.java)
+            "특수교육"-> Intent(this,SpecialEducationActivity::class.java)
+            "초등교육"-> Intent(this,ElementaryEducationActivity::class.java)
+            "중등교육"-> Intent(this,MiddleEducationActivity::class.java)
+            "교육일반"-> Intent(this,GeneralEducationActivity::class.java)
 
 
 
