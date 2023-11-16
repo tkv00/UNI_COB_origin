@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import com.example.uni_cob.Chatting.HomeFragment
 import com.example.uni_cob.Chatting.ProfileFragment
 import com.example.uni_cob.department.Useful_info
+import com.example.uni_cob.writeboard.WriteBoard_base
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -53,6 +54,8 @@ class MainActivity : AppCompatActivity() {
         btn_ondayclass=findViewById(R.id.btn_onedayclass)//원데이클래스
         btn_usefulinfo=findViewById(R.id.btn_usefulinfo)//알쓸신잡
         btn_department=findViewById(R.id.btn_department_communication)//전공대화
+
+
 
         //알쓸신잡
         btn_usefulinfo.setOnClickListener{
@@ -100,6 +103,8 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.menu_register -> {
+                    val intent=Intent(this,WriteBoard_base::class.java)
+                    startActivity(intent)
                     true
                 }
                 else -> false

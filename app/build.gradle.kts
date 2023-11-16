@@ -68,6 +68,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database:20.3.0")
     implementation("androidx.navigation:navigation-fragment-ktx:2.7.5")
     implementation("androidx.navigation:navigation-ui-ktx:2.7.5")
+    implementation(files("src\\main\\jniLibs"))
     testImplementation("junit:junit:4.13.2")
     implementation ("com.facebook.android:facebook-android-sdk:[8,9)")
     implementation ("com.facebook.android:facebook-android-sdk:latest.release")
@@ -85,8 +86,9 @@ dependencies {
     implementation("com.squareup.retrofit2:converter-gson:2.9.0")
     implementation("com.github.bumptech.glide:glide:4.12.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
-
-
+    implementation("com.google.android.material:material:1.11.0-beta01")
+    implementation ("com.kakao.maps.open:android:2.6.0")
+    implementation( "com.kakao.sdk:v2-all:2.18.0") // 전체 모듈 설치, 2.11.0 버전부터 지원
 
 
 }

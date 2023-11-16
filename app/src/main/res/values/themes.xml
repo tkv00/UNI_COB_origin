@@ -10,6 +10,12 @@
     <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog">
 
     </style>
+    <style name="AppModalStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/et_dialog</item>
+    </style>
+    <style name="AppBottomSheetDialogTheme" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+    <item name="bottomSheetStyle">@style/AppModalStyle</item>
+</style>
 
     <style name="NoActionBar">
         <item name="windowActionBar">false</item>

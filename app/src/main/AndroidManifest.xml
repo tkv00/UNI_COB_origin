@@ -11,8 +11,13 @@
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
+
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -29,53 +34,56 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Design.Light.NoActionBar"
         android:usesCleartextTraffic="true"
+        android:hardwareAccelerated="true"
+
         tools:targetApi="31">
-        <activity android:name=".department.MusicActivity"/>
-        <activity android:name=".department.DancingActivity"/>
-        <activity android:name=".department.ArtisticActivity"/>
-        <activity android:name=".department.MovieActivity"/>
-        <activity android:name=".department.PhsicalActivity"/>
-        <activity android:name=".department.NaturalScience.BiologicalChemistryActivity"/>
-        <activity android:name=".department.NaturalScience.HumanEcologyAcctivity"/>
-        <activity android:name=".department.NaturalScience.MathActivity"/>
-        <activity android:name=".department.NaturalScience.NaturalSciencePlusActivity"/>
-        <activity android:name=".department.NaturalScience.AgricultureActivity"/>
-        <activity android:name=".department.Humanities.HumanitiesPlus"/>
-        <activity android:name=".department.Humanities.LanguageActivity"/>
-        <activity android:name=".department.SocialScience.BusinessActivity"/>
-        <activity android:name=".department.SocialScience.LawActivity"/>
-        <activity android:name=".department.SocialScience.SocialPlus"/>
-        <activity android:name=".department.Engineering.ArchitectureActivity"/>
-        <activity android:name=".department.Engineering.ChemistryActivitty"/>
-        <activity android:name=".department.Engineering.civilengineeringcityActivity"/>
-        <activity android:name=".department.Engineering.ComputerActivity"/>
-        <activity android:name=".department.Engineering.electricalelectronicsActivity"/>
-        <activity android:name=".department.Engineering.EnergyActivity"/>
-        <activity android:name=".department.Engineering.EngineeringPlus"/>
-        <activity android:name=".department.Engineering.IndustryActivity"/>
-        <activity android:name=".department.Engineering.machinemetalActivity"/>
-        <activity android:name=".department.Medical.MedicalTreatmentActivity"/>
-        <activity android:name=".department.Medical.NurseActivity"/>
-        <activity android:name=".department.Medical.PharmacyActivity"/>
-        <activity android:name=".department.Medical.TreatmentHealthActivity"/>
-        <activity android:name=".department.Education.ChildEducationActivity"/>
-        <activity android:name=".department.Education.ElementaryEducationActivity"/>
-        <activity android:name=".department.Education.GeneralEducationActivity"/>
-        <activity android:name=".department.Education.MiddleEducationActivity"/>
-        <activity android:name=".department.Education.SpecialEducationActivity"/>
         <activity
-            android:name=".department.DesignActivity"/>
+            android:name=".utility.MapSearchActivity"
+            android:exported="false" />
+        <activity
+            android:name=".writeboard.WriteBoard_base"
+            android:exported="false" />
+        <activity android:name=".department.MusicActivity" />
+        <activity android:name=".department.DancingActivity" />
+        <activity android:name=".department.ArtisticActivity" />
+        <activity android:name=".department.MovieActivity" />
+        <activity android:name=".department.PhsicalActivity" />
+        <activity android:name=".department.NaturalScience.BiologicalChemistryActivity" />
+        <activity android:name=".department.NaturalScience.HumanEcologyAcctivity" />
+        <activity android:name=".department.NaturalScience.MathActivity" />
+        <activity android:name=".department.NaturalScience.NaturalSciencePlusActivity" />
+        <activity android:name=".department.NaturalScience.AgricultureActivity" />
+        <activity android:name=".department.Humanities.HumanitiesPlus" />
+        <activity android:name=".department.Humanities.LanguageActivity" />
+        <activity android:name=".department.SocialScience.BusinessActivity" />
+        <activity android:name=".department.SocialScience.LawActivity" />
+        <activity android:name=".department.SocialScience.SocialPlus" />
+        <activity android:name=".department.Engineering.ArchitectureActivity" />
+        <activity android:name=".department.Engineering.ChemistryActivitty" />
+        <activity android:name=".department.Engineering.civilengineeringcityActivity" />
+        <activity android:name=".department.Engineering.ComputerActivity" />
+        <activity android:name=".department.Engineering.electricalelectronicsActivity" />
+        <activity android:name=".department.Engineering.EnergyActivity" />
+        <activity android:name=".department.Engineering.EngineeringPlus" />
+        <activity android:name=".department.Engineering.IndustryActivity" />
+        <activity android:name=".department.Engineering.machinemetalActivity" />
+        <activity android:name=".department.Medical.MedicalTreatmentActivity" />
+        <activity android:name=".department.Medical.NurseActivity" />
+        <activity android:name=".department.Medical.PharmacyActivity" />
+        <activity android:name=".department.Medical.TreatmentHealthActivity" />
+        <activity android:name=".department.Education.ChildEducationActivity" />
+        <activity android:name=".department.Education.ElementaryEducationActivity" />
+        <activity android:name=".department.Education.GeneralEducationActivity" />
+        <activity android:name=".department.Education.MiddleEducationActivity" />
+        <activity android:name=".department.Education.SpecialEducationActivity" />
+        <activity android:name=".department.DesignActivity" />
         <activity
             android:name=".department.find_department"
             android:exported="false" />
-
-        <activity
-            android:name=".department.AppliedArtActivity"/>
-
+        <activity android:name=".department.AppliedArtActivity" />
         <activity
             android:name=".department.Useful_info"
             android:exported="false" />
-
         <activity
             android:name=".Agora"
             android:exported="false" />
@@ -121,6 +129,8 @@
         <activity
             android:name=".MessageActivity"
             android:exported="true" /> <!-- android:exported="true" 로 설정해야 다른 앱 혹은 컴포넌트에서 해당 액티비티를 시작할 수 있습니다. -->
+        <meta-data android:name="com.kakao.vectormap.APP_KEY"
+            android:value="3dc02472edb5090c210d1299ad05a499" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />

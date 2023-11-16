@@ -1,0 +1,52 @@
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="330dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_gravity="center"
+    android:padding="16dp"
+    android:background="@drawable/dilog_background">
+
+
+    <Button
+        android:id="@+id/btn_department"
+        android:layout_width="327dp"
+        android:layout_height="42dp"
+        android:background="#00000000"
+        android:gravity="left|center"
+        android:text="     전공관련대화"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+
+        tools:layout_editor_absoluteX="-13dp"
+        tools:layout_editor_absoluteY="-15dp" />
+
+    <Button
+        android:id="@+id/agora"
+        android:layout_width="326dp"
+        android:layout_height="42dp"
+        android:background="#00000000"
+        android:gravity="left|center"
+        android:text="     아고라"
+        android:textColor="@color/black"
+
+        android:textSize="12sp"
+
+        tools:layout_editor_absoluteX="-12dp"
+        tools:layout_editor_absoluteY="31dp" />
+
+    <Button
+        android:layout_width="328dp"
+        android:layout_height="42dp"
+        android:background="#00000000"
+        android:gravity="left|center"
+        android:text="     원데이클래스"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteX="-14dp"
+        tools:layout_editor_absoluteY="74dp" />
+
+
+    <!-- 여기에 추가적인 뷰를 추가할 수 있습니다. -->
+</androidx.constraintlayout.widget.ConstraintLayout>
