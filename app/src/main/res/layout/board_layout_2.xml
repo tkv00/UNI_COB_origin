@@ -120,7 +120,7 @@
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/btn_how_many_people"
+        android:id="@+id/et_how_many_people"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/class2"
@@ -132,6 +132,36 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.845"
         tools:layout_editor_absoluteX="0dp" />
+
+    <Button
+        android:id="@+id/btn_offline"
+        android:layout_width="56dp"
+        android:layout_height="37dp"
+        android:background="@drawable/btn_register"
+        android:text="오프라인"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786" />
+
+    <Button
+        android:id="@+id/btn_online"
+        android:layout_width="56dp"
+        android:layout_height="37dp"
+        android:background="@drawable/btn_register"
+        android:text="온라인"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.842"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786" />
 
     <Button
         android:id="@+id/btn_select_date"
@@ -197,8 +227,9 @@
 
     <Button
         android:id="@+id/btn_take_where"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
+        android:layout_width="289dp"
+        android:layout_height="31dp"
+        android:layout_marginEnd="10dp"
         android:background="#00000000"
         android:drawableLeft="@drawable/location"
         android:gravity="left|center_vertical"
@@ -207,9 +238,11 @@
         android:textColor="@color/Gray_03"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btn_online"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.785"
-        tools:layout_editor_absoluteX="6dp" />
+        app:layout_constraintVertical_bias="0.785" />
 
     <View
         android:id="@+id/view31"

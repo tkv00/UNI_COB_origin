@@ -88,6 +88,7 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.12.0")
     implementation("com.google.android.material:material:1.11.0-beta01")
     implementation ("com.kakao.maps.open:android:2.6.0")
+    implementation( files("libs/libDaumMapAndroid.jar"))
     implementation( "com.kakao.sdk:v2-all:2.18.0") // 전체 모듈 설치, 2.11.0 버전부터 지원
 
 

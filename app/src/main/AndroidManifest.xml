@@ -36,10 +36,12 @@
         android:usesCleartextTraffic="true"
         android:hardwareAccelerated="true"
 
+
         tools:targetApi="31">
         <activity
-            android:name=".utility.MapSearchActivity"
-            android:exported="false" />
+            android:name=".writeboard.MapSearchActivity"
+            android:exported="false"
+             />
         <activity
             android:name=".writeboard.WriteBoard_base"
             android:exported="false" />
@@ -77,6 +79,8 @@
         <activity android:name=".department.Education.MiddleEducationActivity" />
         <activity android:name=".department.Education.SpecialEducationActivity" />
         <activity android:name=".department.DesignActivity" />
+
+
         <activity
             android:name=".department.find_department"
             android:exported="false" />
@@ -129,7 +133,7 @@
         <activity
             android:name=".MessageActivity"
             android:exported="true" /> <!-- android:exported="true" 로 설정해야 다른 앱 혹은 컴포넌트에서 해당 액티비티를 시작할 수 있습니다. -->
-        <meta-data android:name="com.kakao.vectormap.APP_KEY"
+        <meta-data android:name="com.kakao.sdk.AppKey"
             android:value="3dc02472edb5090c210d1299ad05a499" />
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

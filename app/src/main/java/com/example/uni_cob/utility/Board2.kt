@@ -9,5 +9,6 @@ data class Board2(
     var time:String?=null,//만날시간지정
     var eventDate: String? = null, // Board2에만 해당
     var location: String? = null, // Board2에만 해당
-    var numberOfPeople: Int? = null // Board2에만 해당
+    var numberOfPeople: Int? = null ,// Board2에만 해당
+    var online:Boolean=true //온라인 오프라인상태
 )
