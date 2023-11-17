@@ -8,22 +8,19 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 
-import com.example.uni_cob.R
-import com.example.uni_cob.databinding.ActivityMainBinding
 import com.example.uni_cob.databinding.ActivityMapSearchBinding
-import com.example.uni_cob.utility.Board2
+import net.daum.mf.map.api.CameraPosition
 import net.daum.mf.map.api.MapPOIItem
 import net.daum.mf.map.api.MapPoint
-import net.daum.mf.map.api.MapView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class MapSearchActivity :AppCompatActivity() {
 
@@ -43,21 +40,22 @@ class MapSearchActivity :AppCompatActivity() {
         binding = ActivityMapSearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        listAdapter= ListAdapter(listItems,object :ListAdapter.OnItemClickListener{
+        listAdapter= ListAdapter(this,listItems,object :ListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int) {
                 val mapPoint = MapPoint.mapPointWithGeoCoord(listItems[position].y, listItems[position].x)
                 binding.mapView.setMapCenterPointAndZoomLevel(mapPoint, 1, true)
             }
-            override fun onSelectClick(position: Int) {
-                val selectedLocation = listItems[position].address
+            override fun onSelectClick(position:Int) {
+                val selectedRoad = listItems[position].address
                 val returnIntent = Intent().apply {
-                    putExtra("selectedAddress", selectedLocation)
+                    putExtra("roadAddress", selectedRoad)
                 }
                 setResult(Activity.RESULT_OK, returnIntent)
                 finish()
-
             }
+
         })
+
 
         // 리사이클러 뷰
         binding.rvList.layoutManager = LinearLayoutManager(this)
@@ -179,6 +177,7 @@ class MapSearchActivity :AppCompatActivity() {
 
                 // 지도에 마커 추가
                 val point = MapPOIItem()
+
                 point.apply {
                     itemName = document.place_name
                     mapPoint = MapPoint.mapPointWithGeoCoord(document.y.toDouble(),

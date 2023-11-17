@@ -6,6 +6,7 @@ import android.app.TimePickerDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +15,10 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uni_cob.MainActivity
@@ -34,16 +38,20 @@ class WriteBoard_base : AppCompatActivity() {
     private lateinit var btn_cancel2: Button
     private lateinit var btn_category: Button
     private lateinit var et_title: EditText
+    private var selectedLocation: String? = null
+    private val startForResult=registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val selectedLocation = result.data?.getStringExtra("roadAddress")
+            findViewById<Button>(R.id.btn_take_where).text = selectedLocation ?: "선택된 위치가 없습니다."
+        }
+    }
 
 
     private lateinit var delete: Button
     private val currentUser = FirebaseAuth.getInstance().currentUser
 
     //보드2추가 버튼
-
-
     private var selectedDate: String? = null
-    private var selectedLocation: String? = null
     private var selectedTime: String? = null
 
     private val userId = currentUser?.uid
@@ -65,11 +73,11 @@ class WriteBoard_base : AppCompatActivity() {
 
 
 
+
         btn_select = findViewById(R.id.select)
         delete = findViewById(R.id.close)
         delete.setOnClickListener {
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         btn_category.setOnClickListener {
@@ -79,6 +87,9 @@ class WriteBoard_base : AppCompatActivity() {
         btn_select.setOnClickListener {
             showBoardSelectionDialog()
         }
+
+
+
 
 
 
@@ -174,20 +185,13 @@ class WriteBoard_base : AppCompatActivity() {
         // 다이얼로그 내 등록 버튼 클릭 리스너
         val submitButton: Button = bottomSheetDialog.findViewById(R.id.register_category) ?: return
         submitButton.setOnClickListener {
-            val title = et_title.text.toString().trim()
-            val content = et_write.text.toString().trim()
-
-            if (title.isEmpty() || content.isEmpty()) {
-                Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
-            } else {
-
                 // 카테고리 정보를 메인 액티비티의 상태에 저장
                 categories.addAll(
                     ArrayList(
                         etdialogText.text.toString().split(",").map { it.trim() })
                 )
                 bottomSheetDialog.dismiss()
-            }
+
         }
 
         bottomSheetDialog.show()
@@ -233,6 +237,7 @@ class WriteBoard_base : AppCompatActivity() {
         // 현재 ConstraintLayout의 부모 뷰그룹을 가져옵니다.
 
 
+
         val parentLayout: ViewGroup = findViewById(R.id.baselayout)
         parentLayout.removeAllViews()
         val inflater = layoutInflater
@@ -247,9 +252,22 @@ class WriteBoard_base : AppCompatActivity() {
         val btn_offline = newLayout.findViewById<Button>(R.id.btn_offline)
         val btn_board=newLayout.findViewById<Button>(R.id.select)
         val btn_category2=newLayout.findViewById<Button>(R.id.category)
+        val btn_close1=newLayout.findViewById<Button>(R.id.close)
+        val btn_close2=newLayout.findViewById<Button>(R.id.btn_delete)
+        val et_title=newLayout.findViewById<EditText>(R.id.et_title)
+        val et_write=newLayout.findViewById<EditText>(R.id.write)
 
 
-        val btn_map:Button=newLayout.findViewById(R.id.btn_take_where)
+        // 새로운 레이아웃에 있는 버튼을 찾아서 클릭 이벤트를 설정합니다.
+        val btn_map: Button = findViewById(R.id.btn_take_where)
+        btn_map.setOnClickListener {
+            // MapSearchActivity를 시작하기 위해 startForResult 사용
+            val intent = Intent(this, MapSearchActivity::class.java)
+            startForResult.launch(intent)
+        }
+
+
+
         val et_people:EditText=newLayout.findViewById(R.id.et_how_many_people)
 
 
@@ -258,48 +276,41 @@ class WriteBoard_base : AppCompatActivity() {
 
 // onCreate 함수 내에 있는 코드의 일부
         btn_board.text="아고라"
+        btn_close1.setOnClickListener{
+            finish()
+        }
+        btn_close2.setOnClickListener{
+            finish()
+        }
 
 
         btn_offline.setOnClickListener {
-            // 오프라인 버튼이 클릭되면 isOnlineClass를 false로 설정하고, 장소 선택 버튼을 비활성화합니다.
+            btn_offline.setBackgroundResource(R.drawable.btn_register)
+            btn_online.setBackgroundResource(R.drawable.et_gray)
+
+            // 오프라인 버튼이 클릭되면 isOnlineClass를 false로 설정
             isOnlineClass = false
-            btn_map.isEnabled = false
+            btn_online.isSelected = false
+            btn_offline.isSelected = true
+            btn_map.isEnabled = false // 장소 선택 버튼 비활성화
+
         }
 
 
         btn_online.setOnClickListener {
-            // 온라인 버튼이 클릭되면 isOnlineClass를 true로 설정하고, 장소 선택 버튼을 활성화합니다.
+            btn_online.setBackgroundResource(R.drawable.btn_register)
+            btn_offline.setBackgroundResource(R.drawable.et_gray)
+            // 온라인 버튼이 클릭되면 isOnlineClass를 true로 설정
             isOnlineClass = true
-            btn_map.isEnabled = true
+            btn_online.isSelected = true
+            btn_offline.isSelected = false
+            btn_map.isEnabled = true // 장소 선택 버튼 활성화
+
         }
         btn_category2.setOnClickListener{
             showDialog()
         }
 
-        btn_map.setOnClickListener {
-            // 장소 선택 버튼이 클릭되었을 때 isOnlineClass 상태를 체크합니다.
-            if (!isOnlineClass) {
-                // 오프라인 상태일 때 Toast 메시지를 띄웁니다.
-                Toast.makeText(this, "장소를 선택하시려면 온라인 클래스로 바꿔주세요", Toast.LENGTH_LONG).show()
-            } else {
-                // 온라인 상태일 때 장소 선택 로직을 수행합니다.
-                // 예: MapSearchActivity를 시작하는 코드
-                val intent = Intent(this, MapSearchActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-
-
-        //카카오맵
-
-        val intent = Intent(this, MapSearchActivity::class.java)
-        btn_map.setOnClickListener {
-            startActivity(intent)
-        }
-        val selectedAddress = intent.getStringExtra("selectedAddress")
-        // 장소 버튼 텍스트 변경
-        findViewById<Button>(R.id.btn_take_where).text = selectedAddress
 
         // 게시글 등록 버튼에 리스너를 설정합니다.
         val submit: Button = newLayout.findViewById(R.id.btn_register)
@@ -308,9 +319,17 @@ class WriteBoard_base : AppCompatActivity() {
             val content = et_write.text.toString().trim()
             val peopleString = et_people.text.toString().trim()
             val people = peopleString.toIntOrNull() ?: 0 // 유효하지 않은 값이면 0을 반환
+            val Location=btn_map.getText().toString()
+
+            // 디버깅을 위해 수집된 데이터 로깅
+            Log.d("SubmitDebug", "Title: $title")
+            Log.d("SubmitDebug", "Content: $content")
+            Log.d("SubmitDebug", "People: $people")
+            Log.d("SubmitDebug", "Location: $Location")
+            Log.d("SubmitDebug", "Categories: ${categories.joinToString()}")
 
             // 모든 정보를 입력했는지 확인합니다.
-            if (title.isEmpty() || content.isEmpty() || people <= 0 || (!isOnlineClass && selectedLocation == null)) {
+            if (title.isEmpty() || content.isEmpty() || people <= 0 || (!isOnlineClass && selectedLocation.isNullOrBlank())) {
                 Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
@@ -324,7 +343,7 @@ class WriteBoard_base : AppCompatActivity() {
                 date = System.currentTimeMillis(),
                 time = selectedTime,
                 eventDate = selectedDate,
-                location = selectedLocation,
+                location = Location,
                 numberOfPeople = people,
                 online = isOnlineClass
             )
@@ -349,54 +368,22 @@ class WriteBoard_base : AppCompatActivity() {
 
     }
 
-    private fun submitBoard2() {
-        // Board2를 생성하고 Firebase에 저장하는 로직
-        // submitBoard1() 함수의 로직을 참고하여 필요한 정보를 채워주세요.
-        val title=et_title.text.toString().trim()
-        val content=et_write.text.toString().trim()
-        val et_people:EditText=findViewById(R.id.et_how_many_people)
-        val on:Button=findViewById(R.id.btn_online)
-        val off:Button=findViewById(R.id.btn_offline)
 
-        val isonline=on.isSelected
-        val isoffline=off.isSelected
-        val peopleString = et_people.text.toString().trim()
-        val people = peopleString.toIntOrNull() ?: 0 // 유효하지 않은 값이면 0을 반환
-
-        if(title.isEmpty()||content.isEmpty()||peopleString.isEmpty()||people<=0||(!isonline&&!isoffline)){
-            Toast.makeText(this,"모든 정보를 입력해주세요.",Toast.LENGTH_SHORT).show()
-            return
-        }
-
-
-        val board2 = Board2(
-            userId = userId,
-            title = et_title.text.toString(),
-            content = et_write.text.toString(),
-            categories = categories,
-            date = System.currentTimeMillis(),
-            time = selectedTime, // 만날 시간
-            eventDate = selectedDate, // 이벤트 날짜
-            location = selectedLocation ,// 선택한 장소
-            numberOfPeople = people,
-            online = isonline
-
-            // 나머지 필요한 정보들...
-        )
-        saveBoard2ToFirebase("Board2",board2)
-
-
-    }
     private fun saveBoard2ToFirebase(boardType: String, board: Board2) {
         val databaseReference = FirebaseDatabase.getInstance().getReference(boardType)
         val boardId = databaseReference.push().key ?: return
+
+        // Board2 객체에 올바른 위치 정보가 있는지 확인
+        if (board.location.isNullOrEmpty()) {
+            Toast.makeText(this, "위치 정보가 없습니다", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         databaseReference.child(boardId).setValue(board).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Toast.makeText(this, "게시글 저장 성공", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(this, "게시글 저장 실패: ${task.exception?.message}", Toast.LENGTH_SHORT)
-                    .show()
+                Toast.makeText(this, "게시글 저장 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -405,12 +392,14 @@ class WriteBoard_base : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_MAP_SEARCH && resultCode == Activity.RESULT_OK) {
-            // MapSearchActivity에서 선택한 주소를 받아옵니다.
-            val selectedAddress = data?.getStringExtra("selectedAddress")
-            findViewById<Button>(R.id.btn_take_where).text = selectedAddress ?: "Location not selected"
-
+            val selectedLocation = data?.getStringExtra("roadAddress")
+            // 받은 주소를 사용합니다. 예를 들어, 버튼 텍스트를 설정합니다.
+            findViewById<Button>(R.id.btn_take_where).text = selectedLocation ?: "Location not selected"
+            Log.d("CallerActivity", "Received road: $selectedLocation") // 로그 추가
+            // 나머지 로직 처리
         }
     }
+
 
     companion object {
         private const val REQUEST_CODE_MAP_SEARCH = 1

@@ -1,5 +1,6 @@
 package com.example.uni_cob.writeboard
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,7 +9,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uni_cob.R
 
-class ListAdapter (private val itemList: ArrayList<ListLayout>,
+class ListAdapter (
+    private val context:Context,
+    private val itemList: ArrayList<ListLayout>,
     private val itemClickListener: OnItemClickListener): RecyclerView.Adapter<ListAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_map, parent, false)
@@ -20,16 +23,18 @@ class ListAdapter (private val itemList: ArrayList<ListLayout>,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.name.text = itemList[position].name
-        holder.road.text = itemList[position].road
-        holder.address.text = itemList[position].address
+        val item = itemList[position]
+        holder.name.text = item.name
+        holder.road.text = item.road
+        holder.address.text = item.address
+
+        // '선택' 버튼에 리스너를 설정합니다.
         holder.selectButton.setOnClickListener {
-            // 버튼 클릭시 처리할 로직
+            // 리스너를 통해 'road' 텍스트를 WriteBoard 클래스로 전달합니다.
             itemClickListener.onSelectClick(position)
         }
 
-
-// 아이템 클릭 이벤트
+        // 아이템 클릭 이벤트
         holder.itemView.setOnClickListener {
             itemClickListener.onClick(it, position)
         }
@@ -45,6 +50,7 @@ class ListAdapter (private val itemList: ArrayList<ListLayout>,
     interface OnItemClickListener {
         fun onSelectClick(position: Int)
         fun onClick(v: View, position: Int)
+
     }
 
 
