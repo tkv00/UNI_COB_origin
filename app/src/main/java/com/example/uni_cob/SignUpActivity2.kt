@@ -178,7 +178,8 @@ class SignUpActivity2 : AppCompatActivity() {
             profileImageUrl =profileImageUrl,
             userPhoneNumber = phoneNumber
         )
-        val userId = database.child("users").push().key
+        val user=Firebase.auth.currentUser
+        val userId= user?.uid
         if (userId != null) {
             database.child("users").child(userId).setValue(userInfo)
                 .addOnCompleteListener { databaseTask ->

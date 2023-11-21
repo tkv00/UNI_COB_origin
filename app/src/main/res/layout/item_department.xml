@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="140dp"
+    android:layout_height="120dp"
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:paddingTop="4dp">
@@ -16,7 +16,7 @@
         android:id="@+id/class_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="강의명"
+        android:text="제목"
         android:textColor="#000000"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -27,50 +27,18 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.052" />
 
-
     <TextView
-        android:id="@+id/et_day"
-        android:layout_width="50dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center_vertical"
-        android:background="@drawable/btn_register"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="D-100"
-        android:textColor="@color/white"
-        android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.955"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.083" />
-
-    <TextView
-        android:id="@+id/class_date"
+        android:id="@+id/et_department"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="날짜"
-        android:textColor="#8A252525"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.361" />
-
-    <TextView
-        android:id="@+id/where_class"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="장소"
+        android:text="학괴"
         android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.041"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.634" />
+        app:layout_constraintVertical_bias="0.52" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/register_profile"
@@ -80,10 +48,10 @@
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.031"
+        app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.918" />
+        app:layout_constraintVertical_bias="0.9" />
 
     <TextView
         android:id="@+id/who_class"
@@ -97,7 +65,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/register_profile"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.924" />
+        app:layout_constraintVertical_bias="0.898" />
 
     <View
         android:id="@+id/view2"
@@ -106,7 +74,6 @@
         android:background="#D3D3D3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.974"
+        app:layout_constraintVertical_bias="0.983"
         tools:layout_editor_absoluteX="0dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
-

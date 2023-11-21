@@ -1,22 +1,18 @@
 package com.example.uni_cob.utility
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+data class Board3(
 
-@Parcelize
-data class Board2(
-    var userName:String?=null,//이름
-    var profileImageURl:String?=null,//이미지
     var userId: String? = null, // 글을 쓴 사용자의 ID
     var title: String? = null,
     var content: String? = null,
-    var categories: MutableList<String> = mutableListOf(),
+    var categories: List<String> = mutableListOf(),
     var date: Long = System.currentTimeMillis(),
     var time:String?=null,//만날시간지정
     var eventDate: String? = null, // Board2에만 해당
     var location: String? = null, // Board2에만 해당
-    var numberOfPeople: Int? = null ,// Board2에만 해당
-    var online:Boolean=true //온라인 오프라인상태
-):Parcelable
+    var numberOfPeople: Int = 0,// Board2에만 해당
+    var online:Boolean=true,//온라인 오프라인상태
+    var money:Int=0, //원데이클래스 비용 설정
 
+)
 

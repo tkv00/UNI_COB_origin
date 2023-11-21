@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Agora">
+    tools:context=".writeboard.Agora">
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -18,32 +19,23 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintVertical_bias="0.022" />
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/viewpager2"
-        android:layout_width="336dp"
-        android:layout_height="290dp"
-        android:layout_marginTop="92dp"
-        android:background="@drawable/btn_gray02"
-        android:scaleType="fitXY"
-
-        app:layout_constraintBottom_toTopOf="@+id/list_view2"
-        app:layout_constraintEnd_toEndOf="@+id/indicator"
-        app:layout_constraintHorizontal_bias="0.506"
-        app:layout_constraintStart_toStartOf="@+id/indicator"
+    <Button
+        android:id="@+id/btn_show_more"
+        android:layout_width="58dp"
+        android:layout_height="37dp"
+        android:background="#00000000"
+        android:text="더보기+"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/textView10"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.014" />
-
-    <me.relex.circleindicator.CircleIndicator
-        android:id="@+id/indicator"
-        android:layout_width="257dp"
-        android:layout_height="48dp"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        app:layout_constraintBottom_toBottomOf="@+id/viewpager2"
-        app:layout_constraintStart_toStartOf="parent" />
-
+        app:layout_constraintVertical_bias="0.397" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,10 +46,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textView10"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.909"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.601" />
+        app:layout_constraintVertical_bias="0.407" />
 
     <TextView
         android:id="@+id/textView10"
@@ -71,9 +63,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.601" />
-    <ListView
-        android:id="@+id/list_view2"
+        app:layout_constraintVertical_bias="0.407" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/agora_list_view_"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:divider="@android:color/darker_gray"

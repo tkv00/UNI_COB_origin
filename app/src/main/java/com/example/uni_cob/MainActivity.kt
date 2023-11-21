@@ -16,7 +16,10 @@ import androidx.fragment.app.Fragment
 import com.example.uni_cob.Chatting.HomeFragment
 import com.example.uni_cob.Chatting.ProfileFragment
 import com.example.uni_cob.department.Useful_info
+import com.example.uni_cob.writeboard.Agora
+import com.example.uni_cob.writeboard.Board1All
 import com.example.uni_cob.writeboard.WriteBoard_base
+
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -65,9 +68,14 @@ class MainActivity : AppCompatActivity() {
         }
         //아고라 페이지로 이동
         btn_commu.setOnClickListener{
-            val intent=Intent(this,Agora::class.java)
+            val intent=Intent(this, Agora::class.java)
             startActivity(intent)
 
+        }
+        //전공대화 페이지로 이동
+        btn_department.setOnClickListener{
+            val intent=Intent(this, Board1All::class.java)
+            startActivity(intent)
         }
 
         displayRandomKeywords()

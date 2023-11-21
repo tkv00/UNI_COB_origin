@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     id ("kotlin-android")
     id("com.google.gms.google-services")
+    id("kotlin-parcelize")
 }
 
 
@@ -90,6 +91,8 @@ dependencies {
     implementation ("com.kakao.maps.open:android:2.6.0")
     implementation( files("libs/libDaumMapAndroid.jar"))
     implementation( "com.kakao.sdk:v2-all:2.18.0") // 전체 모듈 설치, 2.11.0 버전부터 지원
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4")
+    implementation ("com.google.firebase:firebase-database:20.3.0")
 
 
 }
