@@ -11,7 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.uni_cob.utility.Category
 
-class CategoryAdapter(private val context: Context, private val categories: List<Category>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
+class CategoryAdapter(private val context: Context, private val categories: MutableList<Category>) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageViewCategory)
@@ -21,6 +21,13 @@ class CategoryAdapter(private val context: Context, private val categories: List
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_category, parent, false)
         return ViewHolder(view)
+    }
+    fun removeCategory(position: Int) {
+        if (position < categories.size) {
+            categories.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemCount)
+        }
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -136,7 +136,7 @@ class Useful_info : AppCompatActivity() {
         et_name = findViewById(R.id.et_name2)
 
         //카테고리설정
-        val categories = listOf(
+        val categories = mutableListOf(
             Category(
                 R.drawable.info_image_1,
                 "교육학",

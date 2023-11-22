@@ -1,5 +1,6 @@
 package com.example.uni_cob.writeboard
 
+import android.content.Intent
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -31,6 +32,8 @@ class Board1Detail : AppCompatActivity() {
     private lateinit var commentsAdapter: CommentsAdapter
     private var comments = mutableListOf<Comment1>()
     private val auth = FirebaseAuth.getInstance()
+    private lateinit var et_categories:TextView
+    private lateinit var btn_back:Button
 
     @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,7 +54,12 @@ class Board1Detail : AppCompatActivity() {
         findViewById<TextView>(R.id.et_title).text = title
         findViewById<TextView>(R.id.et_name4).text = userName
         findViewById<TextView>(R.id.textView31).text = content
-
+        btn_back=findViewById(R.id.btn_back)
+        btn_back.setOnClickListener{
+            val intent=Intent(this,Board1All::class.java)
+            startActivity(intent)
+        }
+        et_categories=findViewById(R.id.et_category)
         // 날짜 포맷팅
         val dateMillis = intent.getLongExtra("TIME", -1)
         findViewById<TextView>(R.id.date).text = if (dateMillis != -1L) {
@@ -108,6 +116,8 @@ class Board1Detail : AppCompatActivity() {
         findViewById<Button>(R.id.btn_message).setOnClickListener {
             postComment(postId)
         }
+        //카테고리 나열
+        loadCategories(postId)
     }
 
 
@@ -166,7 +176,27 @@ class Board1Detail : AppCompatActivity() {
             Toast.makeText(this, "댓글 내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
         }
     }
+    //카테고리 나열함수
+    private fun loadCategories(postId: String) {
+        val postRef = FirebaseDatabase.getInstance().getReference("Board1").child(postId)
+        postRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val categoriesList = snapshot.child("categories").getValue(object : GenericTypeIndicator<List<String>>() {})
+                categoriesList?.let { list ->
+                    // 첫 번째 줄에 최대 3개의 카테고리만 표시
+                    val displayCategories = list.take(5).joinToString("  ") { "#$it" } // 간격을 2개의 공백으로 설정
+                    et_categories.text = displayCategories
+                    et_categories.text = displayCategories
+                } ?: run {
+                    et_categories.text = "카테고리 없음"
+                }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("loadCategories", "Failed to load categories.", error.toException())
+            }
+        })
+    }
     private fun fetchUserDetails(
         userId: String,
         onUserDetailsFetched: (String, String, String) -> Unit
@@ -188,4 +218,5 @@ class Board1Detail : AppCompatActivity() {
         })
     }
 }
+
 

@@ -55,7 +55,7 @@ class Board2Adapter(
         val dday = TimeUnit.MILLISECONDS.toDays(eventDate.time - currentTime)
         holder.ddayTextView.text = "D-${dday}"
         // D-day가 0 이하일 경우 레이아웃 변경
-        if (dday <= 0) {
+        if (dday < 0) {
             holder.ddayTextView.apply {
                 text = "D+${-dday}"
                 // 텍스트 색상, 배경 등의 스타일 변경
@@ -87,6 +87,7 @@ class Board2Adapter(
                             putExtra("CONTENT",board2.content)
                             putExtra("PEOPLE",board2.numberOfPeople)
                             putExtra("DDAY",holder.ddayTextView.text.toString())
+                            putExtra("POST_ID",board2.postId)
                         }
                 holder.itemView.context.startActivity(intent)
             }
@@ -106,8 +107,7 @@ class Board2Adapter(
                             // 이미지 로드
                             Glide.with(holder.itemView.context)
                                 .load(profileImageUrl)
-                                .placeholder(R.drawable.user) // 예시 placeholder 이미지
-                                .error(R.drawable.image1) // 예시 에러 이미지
+                                .error(R.drawable.user) // 예시 에러 이미지
                                 .into(holder.profileImageView)
                         }
                     }

@@ -16,4 +16,5 @@
     <item name="drawer_layout" type="id" />
     <item name="login" type="id" />
     <item name="username" type="id" />
+    <item name="contentLayout" type="id" />
 </resources>

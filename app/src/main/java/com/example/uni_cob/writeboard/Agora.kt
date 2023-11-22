@@ -65,7 +65,7 @@ class Agora : AppCompatActivity() {
             override  fun onDataChange(snapshot: DataSnapshot) {
                 board2List.clear()
                 snapshot.children.mapNotNullTo(board2List) { dataSnapshot ->
-                    val board2 = dataSnapshot.getValue(Board2::class.java)
+                    val board2 = dataSnapshot.getValue(Board2::class.java) as Board2
                     board2?.let { boardItem ->
                         val uid = boardItem.userId // Board2의 userId 가져옴
 

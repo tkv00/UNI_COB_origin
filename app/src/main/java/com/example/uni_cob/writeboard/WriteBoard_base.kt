@@ -37,6 +37,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.io.File
@@ -169,7 +170,7 @@ class WriteBoard_base : AppCompatActivity() {
 
         )
         saveBoard1ToFirebase("Board1", board1)
-        finish()
+
     }
 
     // 게시글을 Firebase에 저장하는 함수
@@ -188,7 +189,7 @@ class WriteBoard_base : AppCompatActivity() {
     }
 
     private fun showDialog() {
-        val bottomSheetDialog = BottomSheetDialog(this)
+        val bottomSheetDialog = BottomSheetDialog(this,R.style.BottomSheetDialogTheme)
 
 
         bottomSheetDialog.setContentView(R.layout.dialog_category)
@@ -198,8 +199,9 @@ class WriteBoard_base : AppCompatActivity() {
         if (window != null) {
             window.addFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
             val params = window.attributes
-            params.dimAmount = 0.5f // 흐릿함 정도 설정 (0.0 to 1.0)
+
             window.attributes = params
+            params.dimAmount=0.5f
         }
 
         val etdialogText: EditText = bottomSheetDialog.findViewById(R.id.etDialogInput) ?: return
@@ -221,6 +223,7 @@ class WriteBoard_base : AppCompatActivity() {
             if (position < categories.size) {
                 categories.removeAt(position)
                 adapter.notifyItemRemoved(position)
+                adapter.notifyItemRangeChanged(position, categories.size) // 이 줄 추가
                 countPeopleTextView.text = categories.size.toString()
             }
         }
@@ -229,9 +232,10 @@ class WriteBoard_base : AppCompatActivity() {
 
         // 카테고리 등록 버튼에 클릭 리스너 설정
         categoryRegister.setOnClickListener {
-            val categoryText = etdialogText.text.toString()
+            val categoryText = etdialogText.text.toString().trim()
             if (categoryText.isNotEmpty() && categories.size < 5) {
-                categories.add(categoryText)
+                val formattedCategory = "$categoryText"
+                categories.add(formattedCategory)
                 adapter.notifyItemInserted(categories.size - 1)
                 countPeopleTextView.text = categories.size.toString()
                 etdialogText.text.clear()
@@ -239,6 +243,7 @@ class WriteBoard_base : AppCompatActivity() {
                 Toast.makeText(this, "카테고리는 최대 5개까지만 추가할 수 있습니다.", Toast.LENGTH_SHORT).show()
             }
         }
+
 
         // 다이얼로그 내 등록 버튼 클릭 리스너
         val submitButton: Button = bottomSheetDialog.findViewById(R.id.register_category) ?: return
@@ -285,6 +290,7 @@ class WriteBoard_base : AppCompatActivity() {
         val submit: Button = findViewById(R.id.btn_register)
         submit.setOnClickListener {
             submitBoard1()
+            finish()
         }
 
     }
@@ -313,6 +319,7 @@ class WriteBoard_base : AppCompatActivity() {
         val btn_close2 = newLayout.findViewById<Button>(R.id.btn_delete)
         val et_title = newLayout.findViewById<EditText>(R.id.et_title)
         val et_write = newLayout.findViewById<EditText>(R.id.write)
+
 
 
         // 새로운 레이아웃에 있는 버튼을 찾아서 클릭 이벤트를 설정합니다.
@@ -406,7 +413,8 @@ class WriteBoard_base : AppCompatActivity() {
                 Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-
+            val databaseReference = FirebaseDatabase.getInstance().getReference("Board2")
+            val boardId = databaseReference.push().key
             // Board2 객체를 생성합니다.
             val board2 = Board2(
                 userId = userId,
@@ -418,11 +426,16 @@ class WriteBoard_base : AppCompatActivity() {
                 eventDate = selectedDate,
                 location = Location,
                 numberOfPeople = people,
-                online = isOnlineClass
+                online = isOnlineClass,
+                postId = boardId
             )
 
             // Firebase에 게시글을 저장하는 함수를 호출합니다.
             saveBoard2ToFirebase("Board2", board2)
+            val intent=Intent(this,AgoraBoardDetail::class.java).apply {
+                putExtra("POST_ID",board2.postId)
+            }
+            startActivity(intent)
             finish()
         }
         // 날짜 및 시간 선택 버튼 참조를 가져옵니다.
@@ -444,8 +457,10 @@ class WriteBoard_base : AppCompatActivity() {
 
 
     private fun saveBoard2ToFirebase(boardType: String, board: Board2) {
+
+
         val databaseReference = FirebaseDatabase.getInstance().getReference(boardType)
-        val boardId = databaseReference.push().key ?: return
+
 
         // Board2 객체에 올바른 위치 정보가 있는지 확인
         if (board.location.isNullOrEmpty()) {
@@ -453,12 +468,15 @@ class WriteBoard_base : AppCompatActivity() {
             return
         }
 
-        databaseReference.child(boardId).setValue(board).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Toast.makeText(this, "게시글 저장 성공", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "게시글 저장 실패: ${task.exception?.message}", Toast.LENGTH_SHORT)
-                    .show()
+        board.postId?.let {
+            databaseReference.child(it).setValue(board).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    Toast.makeText(this, "게시글 저장 성공", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "게시글 저장 실패: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
 
