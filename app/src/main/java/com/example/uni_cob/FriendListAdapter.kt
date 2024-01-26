@@ -1,3 +1,4 @@
+/*
 package com.example.uni_cob
 
 import android.util.Log
@@ -121,81 +122,81 @@ class FriendsAdapter(private val friendRequestList: MutableList<FriendRequest>,
                     .setValue("DECLINED")
             }
         }
-        }
-
-        private fun fetchUserData(userId: String, callback: (User) -> Unit) {
-            Log.d("FriendsAdapter", "fetchUserData called with userId: $userId")
-            val databaseReference = FirebaseDatabase.getInstance().getReference("users")
-            databaseReference.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)
-                    Log.e("fetchUserData","${user}")
-                    if (user != null) {
-
-                        callback(user)
-                    } else {
-                        Log.e("FriendsAdapter", "User data is null for userId: $userId")
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e("FriendsAdapter", "Failed to fetch user data for userId: $userId, error: ${error.message}", error.toException())
-                }
-            })
-        }
-
     }
 
-    class FriendViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var nameTextView: TextView = itemView.findViewById(R.id.findfriend_name)
-        private var departmentTextView: TextView = itemView.findViewById(R.id.findfriend_uni)
-        private var profileImage: ImageView = itemView.findViewById(R.id.register_profile1)
+    private fun fetchUserData(userId: String, callback: (User) -> Unit) {
+        Log.d("FriendsAdapter", "fetchUserData called with userId: $userId")
+        val databaseReference = FirebaseDatabase.getInstance().getReference("users")
+        databaseReference.child(userId).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                Log.e("fetchUserData","${user}")
+                if (user != null) {
 
-        fun bind(friendRequest: FriendRequest) {
-            Log.d("FriendViewHolder", "bind - FriendRequest: $friendRequest")
-            friendRequest.toUserId?.let {
-                fetchUserData(it) { user ->
-                    nameTextView.text = user.name
-                    departmentTextView.text = user.department
-                    Glide.with(itemView.context).load(user.profileImageUrl).into(profileImage)
+                    callback(user)
+                } else {
+                    Log.e("FriendsAdapter", "User data is null for userId: $userId")
                 }
             }
-        }
 
-        private fun fetchUserData(userId: String, callback: (User) -> Unit) {
-            Log.d("FriendsAdapter", "fetchUserData called with userId: $userId")
-            val databaseReference = FirebaseDatabase.getInstance().getReference("users")
-            databaseReference.child(userId).addListenerForSingleValueEvent(object :
-                ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val user = snapshot.getValue(User::class.java)
-                    Log.e("fetchUserData", "${user}")
-                    if (user != null) {
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("FriendsAdapter", "Failed to fetch user data for userId: $userId, error: ${error.message}", error.toException())
+            }
+        })
+    }
 
-                        callback(user)
-                    } else {
-                        Log.e("FriendsAdapter", "User data is null for userId: $userId")
-                    }
-                }
+}
 
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e(
-                        "FriendsAdapter",
-                        "Failed to fetch user data for userId: $userId, error: ${error.message}",
-                        error.toException()
-                    )
-                }
-            })
+class FriendViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    var nameTextView: TextView = itemView.findViewById(R.id.findfriend_name)
+    private var departmentTextView: TextView = itemView.findViewById(R.id.findfriend_uni)
+    private var profileImage: ImageView = itemView.findViewById(R.id.register_profile1)
+
+    fun bind(friendRequest: FriendRequest) {
+        Log.d("FriendViewHolder", "bind - FriendRequest: $friendRequest")
+        friendRequest.toUserId?.let {
+            fetchUserData(it) { user ->
+                nameTextView.text = user.name
+                departmentTextView.text = user.department
+                Glide.with(itemView.context).load(user.profileImageUrl).into(profileImage)
+            }
         }
     }
 
-    class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        // 빈 뷰 홀더 구현
-    }
+    private fun fetchUserData(userId: String, callback: (User) -> Unit) {
+        Log.d("FriendsAdapter", "fetchUserData called with userId: $userId")
+        val databaseReference = FirebaseDatabase.getInstance().getReference("users")
+        databaseReference.child(userId).addListenerForSingleValueEvent(object :
+            ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                Log.e("fetchUserData", "${user}")
+                if (user != null) {
 
-    enum class ViewType {
-        FRIEND,
-        REQUEST,
-        HIDDEN
-    }
+                    callback(user)
+                } else {
+                    Log.e("FriendsAdapter", "User data is null for userId: $userId")
+                }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                Log.e(
+                    "FriendsAdapter",
+                    "Failed to fetch user data for userId: $userId, error: ${error.message}",
+                    error.toException()
+                )
+            }
+        })
+    }
+}
+
+class EmptyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    // 빈 뷰 홀더 구현
+}
+
+enum class ViewType {
+    FRIEND,
+    REQUEST,
+    HIDDEN
+}
+*/
