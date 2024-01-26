@@ -3,6 +3,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.viewpager2.widget.ViewPager2
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -16,12 +17,20 @@ class image_slide : AppCompatActivity() {
     private lateinit var btn_signup:Button
     private val num_page = 4
     private lateinit var mIndicator: CircleIndicator
+    private lateinit var BigText:TextView
+    private lateinit var SmallText:TextView
+
+    private val bigTexts = arrayOf("전공 관련 문제를 해결해 보세요", "원하는 전공강의를 추천해 드릴게요", "아고라를 통해서 생각을 표현할 수 있어요", "전공자들의 원데이 클래스에 참여해 보세요")
+    private val smallTexts = arrayOf("전공대화", "알쓸전잡", "아고라", "원데이 클래스")
 
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
+
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_image_slide)
+
 
         /**
          * 가로 슬라이드 뷰 Fragment
@@ -41,6 +50,9 @@ class image_slide : AppCompatActivity() {
 
         // ViewPager Setting
         mPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        //텍스트뷰초기화
+        BigText=findViewById(R.id.textView3)
+        SmallText=findViewById(R.id.textView6)
 
         /**
          * 이 부분 조정하여 처음 시작하는 이미지 설정.
@@ -66,6 +78,10 @@ class image_slide : AppCompatActivity() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 mIndicator.animatePageSelected(position % num_page)
+
+                val realPosition=position%num_page
+                BigText.text=bigTexts[realPosition]
+                SmallText.text=smallTexts[realPosition]
             }
         })
 

@@ -36,7 +36,7 @@
                 app:layout_constraintHorizontal_bias="0.075"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.057" />
+                app:layout_constraintVertical_bias="0.024" />
 
             <EditText
                 android:id="@+id/et_search"
@@ -110,19 +110,7 @@
                 app:layout_constraintHorizontal_bias="0.935"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.75" />
-
-            <ImageButton
-                android:id="@+id/btn_department_communication"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/main_icon2"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btn_onedayclass"
-                app:layout_constraintHorizontal_bias="0.096"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.75" />
+                app:layout_constraintVertical_bias="0.733" />
 
             <ImageButton
                 android:id="@+id/study_together"
@@ -136,7 +124,7 @@
                 app:layout_constraintHorizontal_bias="0.63"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.75" />
+                app:layout_constraintVertical_bias="0.733" />
 
             <ImageButton
                 android:id="@+id/btn_usefulinfo"
@@ -148,28 +136,43 @@
                 app:layout_constraintHorizontal_bias="0.509"
                 app:layout_constraintStart_toEndOf="@+id/btn_department_communication"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.75" />
+                app:layout_constraintVertical_bias="0.733" />
+
+            <FrameLayout
+                android:id="@+id/fragments_frame"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                />
+
+            <ImageButton
+                android:id="@+id/btn_department_communication"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_icon2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_onedayclass"
+                app:layout_constraintHorizontal_bias="0.096"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.733" />
 
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/viewpager_main"
-                android:layout_width="365dp"
-                android:layout_height="289dp"
-                android:background="@drawable/btn_gray02"
+                android:layout_width="354dp"
+                android:layout_height="315dp"
+                android:background="@drawable/mainimg"
                 android:scaleType="fitXY"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.376" />
+                app:layout_constraintVertical_bias="0.333" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
-<FrameLayout
-    android:id="@+id/fragments_frame"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-
-    />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_nav"

@@ -24,9 +24,3 @@ data class Board2(
 ):Parcelable
 
 
-@Parcelize
-data class ApplicationInfo(
-    var name: String? = null, // 신청자 이름
-    var email: String? = null, // 신청자 이메일
-    var phone: String? = null // 신청자 전화번호
-) : Parcelable

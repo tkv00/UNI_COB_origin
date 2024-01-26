@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".writeboard.WriteBoard_base"
+    android:id="@+id/baselayout">
+
+
+    <Button
+        android:id="@+id/select"
+        android:layout_width="398dp"
+        android:layout_height="21dp"
+        android:background="#00000000"
+        android:drawableRight="@drawable/sortup"
+        android:gravity="left"
+        android:text="게시판 선택"
+        android:textColor="@color/black"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.461"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView24"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <TextView
+
+        android:id="@+id/textView25"
+        android:layout_width="392dp"
+        android:layout_height="1dp"
+        android:background="@color/Gray_03"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="81dp" />
+
+    <TextView
+        android:id="@+id/textView24"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:text="글 쓰기"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="56dp"
+        android:layout_height="34dp"
+        android:background="@drawable/btn_register"
+        android:text="등록하기"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.954"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.977" />
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="56dp"
+        android:layout_height="34dp"
+        android:background="@drawable/btn_delete"
+        android:text="취소"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.045"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.977" />
+
+    <Button
+        android:id="@+id/close"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:background="@drawable/close"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.022" />
+
+
+    <EditText
+        android:id="@+id/et_title"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:hint="제목"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.12" />
+
+    <EditText
+        android:id="@+id/write"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:gravity="top"
+        android:hint="내용을 입력하세요."
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.392"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/et_how_many_people"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/class2"
+        android:hint="참여 인원수(최대 10명)"
+        android:paddingStart="16dp"
+        android:textColor="@color/Gray_03"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.845"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+    <Button
+        android:id="@+id/btn_select_date"
+        android:layout_width="411dp"
+        android:layout_height="33dp"
+        android:background="#00000000"
+        android:drawableLeft="@drawable/calender"
+        android:gravity="left|center_vertical"
+        android:paddingStart="16dp"
+        android:text="마감 기한(날짜)"
+        android:textColor="@color/Gray_03"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.786"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <View
+        android:id="@+id/view30"
+        android:layout_width="391dp"
+        android:layout_height="1dp"
+        android:background="@color/Gray_03"
+        app:layout_constraintEnd_toEndOf="@id/btn_select_clock"
+        app:layout_constraintStart_toStartOf="@id/btn_select_clock"
+        app:layout_constraintTop_toBottomOf="@id/btn_select_clock" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="391dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="464dp"
+        android:layout_marginBottom="2dp"
+        android:background="@color/Gray_03"
+        app:layout_constraintBottom_toTopOf="@+id/et_how_many_people"
+        app:layout_constraintEnd_toEndOf="@id/btn_select_date"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@id/btn_select_date"
+        app:layout_constraintTop_toBottomOf="@id/btn_select_date" />
+
+    <Button
+        android:id="@+id/category"
+        android:paddingStart="11dp"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:background="#00000000"
+        android:gravity="left|center_vertical"
+        android:hint="  카테고리 입력(분야/학과)"
+        android:textSize="15sp"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.897"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+
+    <View
+        android:id="@+id/view31"
+        android:layout_width="391dp"
+        android:layout_height="1dp"
+        android:background="@color/Gray_03"
+        app:layout_constraintEnd_toEndOf="@id/btn_take_where"
+        app:layout_constraintStart_toStartOf="@id/btn_take_where"
+        app:layout_constraintTop_toBottomOf="@id/btn_take_where" />
+
+    <View
+
+        android:id="@+id/textView26"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/Gray_03"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.904"
+        tools:layout_editor_absoluteX="-7dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

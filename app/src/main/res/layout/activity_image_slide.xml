@@ -11,13 +11,13 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager"
-        android:layout_width="259dp"
-        android:layout_height="373dp"
+        android:layout_width="411dp"
+        android:layout_height="379dp"
         android:layout_marginTop="64dp"
-        android:background="@drawable/btn_gray02"
+
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="@+id/indicator"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.511"
         app:layout_constraintStart_toStartOf="@+id/indicator"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,7 +28,9 @@
             android:layout_marginStart="77dp"
             android:layout_marginLeft="77dp"
             app:layout_constraintBottom_toBottomOf="@+id/viewpager"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:ci_drawable="@color/black"
+            app:ci_drawable_unselected="@color/Gray_03"/>
 
 
     <TextView
@@ -36,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="UNICOB"
-        android:textColor="@color/black"
+        android:textColor="@color/Gray_03"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +56,6 @@
         android:text="혼자서 해결하기                  어려운 일들을 해결해봐요"
         android:textColor="@color/black"
         android:textSize="25sp"
-
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

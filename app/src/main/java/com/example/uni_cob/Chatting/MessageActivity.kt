@@ -13,11 +13,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,15 +23,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.uni_cob.Chatting.ChatModel
-import com.example.uni_cob.Chatting.HomeFragment
-import com.example.uni_cob.utility.FirebaseID.Companion.name
 import com.example.uni_cob.utility.User
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import org.w3c.dom.Comment
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -64,8 +58,6 @@ class MessageActivity : AppCompatActivity() {
         val imageView = findViewById<ImageView>(R.id.messageActivity_ImageView)
         val editText = findViewById<TextView>(R.id.messageActivity_editText)
         btn_back.setOnClickListener{
-            val intent=Intent(this,HomeFragment::class.java)
-            startActivity(intent)
             finish()
         }
         //메세지를 보낸 시간
@@ -88,8 +80,8 @@ class MessageActivity : AppCompatActivity() {
             val chatModel = ChatModel()
             chatModel.users.put(uid.toString(), true)
             chatModel.users.put(destinationUid!!, true)
-
-            val comment = ChatModel.Comment(uid, editText.text.toString(), "",curTime,"")
+            val currentTimestamp = System.currentTimeMillis()
+            val comment = ChatModel.Comment(uid, editText.text.toString(), "",currentTimestamp,"")
             if (chatRoomUid == null) {
                 imageView.isEnabled = false
                 fireDatabase.child("chatrooms").push().setValue(chatModel).addOnSuccessListener {
@@ -174,8 +166,8 @@ class MessageActivity : AppCompatActivity() {
     private fun sendMessageWithImage(imageUrl: String) {
         val time = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("MM월dd일 hh:mm", Locale.getDefault())
-        val curTime = dateFormat.format(Date(time))
-        val comment = ChatModel.Comment(uid, null,imageUrl, curTime,messageType = "image")
+        val currentTimestamp = System.currentTimeMillis()
+        val comment = ChatModel.Comment(uid, null,imageUrl, currentTimestamp, messageType = "image")
         fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
             .push().setValue(comment)
     }
@@ -205,20 +197,26 @@ class MessageActivity : AppCompatActivity() {
         fun getMessageList() {
             fireDatabase.child("chatrooms").child(chatRoomUid.toString()).child("comments")
                 .addValueEventListener(object : ValueEventListener {
-                    override fun onCancelled(error: DatabaseError) {
-                    }
-
                     override fun onDataChange(snapshot: DataSnapshot) {
                         comments.clear()
                         for (data in snapshot.children) {
-                            data.getValue<ChatModel.Comment>()?.let { comment ->
-                                comments.add(comment)
+                            val comment = data.getValue<ChatModel.Comment>()
+                            comment?.let {
+                                if (it.uid != uid && !it.isRead) {
+                                    // 메시지가 본인이 보낸 것이 아니고, 아직 읽지 않은 경우
+                                    fireDatabase.child("chatrooms").child(chatRoomUid.toString())
+                                        .child("comments").child(data.key!!)
+                                        .child("isRead").setValue(true)
+                                }
+                                comments.add(it)
                             }
-                            println(comments)
                         }
                         notifyDataSetChanged()
-                        //메세지를 보낼 시 화면을 맨 밑으로 내림
                         recyclerView?.scrollToPosition(comments.size - 1)
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        // 에러 처리
                     }
                 })
         }
@@ -234,7 +232,7 @@ class MessageActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: MessageViewHolder, position: Int) {
             val comment = comments[position]
             val context = holder.itemView.context
-            holder.textView_time.text = comments[position].time
+            holder.textView_time.text = comments[position].timestamp.toString()
 
 
             // 프로필 이미지와 이름 설정
@@ -292,7 +290,7 @@ class MessageActivity : AppCompatActivity() {
                 }
             }
 
-            holder.textView_time.text = comment.time // 메시지 시간 설정
+            holder.textView_time.text = comment.timestamp.toString() // 메시지 시간 설정
         }
 
 
@@ -313,4 +311,5 @@ class MessageActivity : AppCompatActivity() {
         }
 
     }
+
 }

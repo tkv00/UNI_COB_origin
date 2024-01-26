@@ -59,38 +59,33 @@ class Agora : AppCompatActivity() {
         }
 
         recyclerView.adapter = adapter
-
         dbRef = FirebaseDatabase.getInstance().getReference("Board2")
-        dbRef.limitToFirst(3).addValueEventListener(object : ValueEventListener {
-            override  fun onDataChange(snapshot: DataSnapshot) {
-                board2List.clear()
-                snapshot.children.mapNotNullTo(board2List) { dataSnapshot ->
-                    val board2 = dataSnapshot.getValue(Board2::class.java) as Board2
-                    board2?.let { boardItem ->
-                        val uid = boardItem.userId // Board2의 userId 가져옴
 
-                        // 사용자 정보 가져오는 함수 호출
-                        if (uid != null) {
-                            fetchUserInfo(uid) { userName, userProfileImageUrl ->
-                                // 사용자 정보를 Board2 객체에 설정
-                                boardItem.userName = userName
-                                boardItem.profileImageURl = userProfileImageUrl
-
-                                runOnUiThread {
-                                    adapter.notifyDataSetChanged()
-                                }
-                            }
+// 현재 시간을 기준으로 가장 가까운 3개의 이벤트를 가져옵니다.
+        dbRef.orderByChild("eventDate").startAt(System.currentTimeMillis().toDouble())
+            .limitToFirst(3).addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    board2List.clear()
+                    for (dataSnapshot in snapshot.children) {
+                        dataSnapshot.getValue(Board2::class.java)?.let { board2 ->
+                            board2List.add(board2)
                         }
                     }
-                    board2 // 수정된 변수 반환
+                    // 리스트를 현재 시간과 가장 가까운 D-day 순으로 정렬합니다.
+                    board2List.sortBy { it.eventDate?.let { date -> Math.abs(System.currentTimeMillis() - date.toLong()) } }
+                    adapter.notifyDataSetChanged()
                 }
 
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(applicationContext, "Error fetching data", Toast.LENGTH_LONG).show()
+                }
+            })
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(applicationContext, "Error fetching data", Toast.LENGTH_LONG).show()
-            }
-        })
+
+
+
+
+
     }
 
     private  fun fetchUserInfo(

@@ -34,6 +34,36 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".FriendList"
+            android:exported="false" />
+        <activity
+            android:name=".Chatting.ChatMain"
+            android:exported="false" />
+        <activity
+            android:name=".FindFriend.FriendProfile"
+            android:exported="false" />
+        <activity
+            android:name=".FindFriend.FindFriend_main"
+            android:exported="false" />
+        <activity
+            android:name=".writeboard.Board4Detail"
+            android:exported="false" />
+        <activity
+            android:name=".writeboard.Board4All"
+            android:exported="false" />
+        <activity
+            android:name=".writeboard.Board3All"
+            android:exported="false" />
+        <activity
+            android:name=".writeboard.Board3Detail"
+            android:exported="false" />
+        <activity
+            android:name=".ShowMyApplication"
+            android:exported="false" />
+        <activity
+            android:name=".MyProfile"
+            android:exported="false" />
+        <activity
             android:name=".writeboard.Board1Detail"
             android:exported="false" />
         <activity

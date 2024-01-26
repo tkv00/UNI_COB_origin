@@ -28,6 +28,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.uni_cob.utility.FirebaseID
 import com.example.uni_cob.utility.User
+import com.example.uni_cob.utility.UserStatus
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -177,6 +178,7 @@ class SignUpActivity2 : AppCompatActivity() {
             stNumber=stNumber,
             profileImageUrl =profileImageUrl,
             userPhoneNumber = phoneNumber
+
         )
         val user=Firebase.auth.currentUser
         val userId= user?.uid

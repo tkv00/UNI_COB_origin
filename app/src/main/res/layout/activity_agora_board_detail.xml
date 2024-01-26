@@ -230,17 +230,19 @@
 
             <TextView
                 android:id="@+id/textView31"
-                android:layout_width="match_parent"
-                android:layout_height="418dp"
+                android:layout_width="365dp"
+                android:layout_height="414dp"
+                android:background="@drawable/et_box"
                 android:gravity="left|center_horizontal"
                 android:padding="15sp"
                 android:text="상세정보"
                 android:textColor="@color/black"
                 android:textSize="15sp"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_info_container"
-                app:layout_constraintVertical_bias="0.099"
-                tools:layout_editor_absoluteX="0dp" />
+                app:layout_constraintVertical_bias="0.112" />
 
             <View
                 android:id="@+id/view7"
@@ -327,6 +329,18 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.762" />
+            <TextView
+                android:id="@+id/category2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="카테고리"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/view3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.044"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_title"
+                app:layout_constraintVertical_bias="0.617" />
 
             <EditText
                 android:id="@+id/et_01"

@@ -30,6 +30,7 @@ import com.example.uni_cob.R
 import com.example.uni_cob.utility.Board1
 import com.example.uni_cob.utility.Board2
 import com.example.uni_cob.utility.Board3
+import com.example.uni_cob.utility.Board4
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -264,7 +265,7 @@ class WriteBoard_base : AppCompatActivity() {
 
 
     private fun showBoardSelectionDialog() {
-        val boards = arrayOf("전공관련대화", "아고라", "원데이클래스") // 실제 게시판 이름으로 교체하세요.
+        val boards = arrayOf("전공관련대화", "아고라", "원데이클래스","프로젝트") // 실제 게시판 이름으로 교체하세요.
         val builder = AlertDialog.Builder(this)
         builder.setTitle("게시판 선택")
         builder.setItems(boards) { _, which ->
@@ -272,6 +273,7 @@ class WriteBoard_base : AppCompatActivity() {
                 0 -> setLayoutForBoard1()
                 1 -> setLayoutForBoard2()
                 2 -> setLayoutForBoard3()
+                3->setLayoutForBoard4()
             }
         }
         val dialog = builder.create()
@@ -482,41 +484,6 @@ class WriteBoard_base : AppCompatActivity() {
 
     }
 
-
-
-    private fun takePicture() {
-        val tempUri: Uri = createImageUri() ?: return // 임시 파일 URI 생성
-        takePictureLauncher.launch(tempUri)
-    }
-
-    private fun createImageUri(): Uri? {
-
-        val contentResolver = contentResolver
-        val contentValues = ContentValues().apply {
-            put(MediaStore.MediaColumns.DISPLAY_NAME, "temp_image_${System.currentTimeMillis()}.jpg")
-            put(MediaStore.MediaColumns.MIME_TYPE, "image/jpeg")
-        }
-        return contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
-    }
-
-    // 카메라 앱을 열어 사진을 찍는 함수입니다.
-
-
-
-
-
-    // Firebase에 이미지를 업로드하는 메소드
-    // 이미지를 선택하고 Firebase에 업로드하는 메소드입니다.
-    // Firebase에 이미지를 업로드하는 메소드
-    // 이미지 업로드 함수
-
-
-
-
-
-
-
-
     private fun saveBoard3ToFirebase(boardType:String,board: Board3){
         val databaseReference = FirebaseDatabase.getInstance().getReference(boardType)
         val boardId = databaseReference.push().key ?: return
@@ -526,6 +493,21 @@ class WriteBoard_base : AppCompatActivity() {
             Toast.makeText(this, "위치 정보가 없습니다", Toast.LENGTH_SHORT).show()
             return
         }
+
+        databaseReference.child(boardId).setValue(board).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "게시글 저장 성공", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(this, "게시글 저장 실패: ${task.exception?.message}", Toast.LENGTH_SHORT)
+                    .show()
+            }
+        }
+    }
+    private fun saveBoard4ToFirebase(boardType:String,board: Board4){
+        val databaseReference = FirebaseDatabase.getInstance().getReference(boardType)
+        val boardId = databaseReference.push().key ?: return
+
+
 
         databaseReference.child(boardId).setValue(board).addOnCompleteListener { task ->
             if (task.isSuccessful) {
@@ -564,6 +546,7 @@ class WriteBoard_base : AppCompatActivity() {
         val btn_close2 = newLayout.findViewById<Button>(R.id.btn_delete)
         val et_title = newLayout.findViewById<EditText>(R.id.et_title)
         val et_write = newLayout.findViewById<EditText>(R.id.write)
+
 
 
         // 새로운 레이아웃에 있는 버튼을 찾아서 클릭 이벤트를 설정합니다.
@@ -696,6 +679,8 @@ class WriteBoard_base : AppCompatActivity() {
                 Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+            val databaseReference = FirebaseDatabase.getInstance().getReference("Board3")
+            val boardId = databaseReference.push().key
 
 
             // Board2 객체를 생성합니다.
@@ -710,7 +695,8 @@ class WriteBoard_base : AppCompatActivity() {
                 location = Location,
                 numberOfPeople = people,
                 online = isOnlineClass,
-                money = money
+                money = money,
+                postId = boardId
 
             )
             saveBoard3ToFirebase("Board3", board3)
@@ -729,18 +715,15 @@ class WriteBoard_base : AppCompatActivity() {
         btn_time.setOnClickListener {
             showTimePickerDialog()
         }
+        btn_category2.setOnClickListener {
+            showDialog()
+        }
+
     }
-
-
-
 
     companion object {
         private const val REQUEST_CODE_MAP_SEARCH = 1
     }
-
-
-
-
 
     private fun showTimePickerDialog() {
         // 현재 시간을 기본값으로 설정합니다.
@@ -782,7 +765,112 @@ class WriteBoard_base : AppCompatActivity() {
 
     //원데이클래스 레이아웃셋팅
 
+    private fun setLayoutForBoard4() {
+        // 현재 ConstraintLayout의 부모 뷰그룹을 가져옵니다.
 
+
+        val parentLayout: ViewGroup = findViewById(R.id.baselayout)
+        parentLayout.removeAllViews()
+        val inflater = layoutInflater
+        val newLayout = inflater.inflate(R.layout.board_layout_4, parentLayout, false)
+
+
+        // 새로운 레이아웃을 부모 뷰그룹에 추가합니다.
+        parentLayout.addView(newLayout)
+
+        val btn_board = newLayout.findViewById<Button>(R.id.select)
+        val btn_category2 = newLayout.findViewById<Button>(R.id.category)
+        val btn_close1 = newLayout.findViewById<Button>(R.id.close)
+        val btn_close2 = newLayout.findViewById<Button>(R.id.btn_delete)
+        val et_title = newLayout.findViewById<EditText>(R.id.et_title)
+        val et_write = newLayout.findViewById<EditText>(R.id.write)
+
+
+        val et_people: EditText = newLayout.findViewById(R.id.et_how_many_people)
+        et_people.addTextChangedListener(object : TextWatcher {
+            var edited = false
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                if (!edited && !s.isNullOrEmpty() && !s.endsWith("명")) {
+                    edited = true
+                    s.append("명")
+                    et_people.setSelection(et_people.text.length - 1)
+                } else {
+                    edited = false
+                }
+            }
+        })
+
+
+// onCreate 함수 내에 있는 코드의 일부
+        btn_board.text = "프로젝트"
+        btn_close1.setOnClickListener {
+            finish()
+        }
+        btn_close2.setOnClickListener {
+            finish()
+        }
+
+
+        // 게시글 등록 버튼에 리스너를 설정합니다.
+        val submit: Button = newLayout.findViewById(R.id.btn_register)
+        submit.setOnClickListener {
+            val title = et_title.text.toString().trim()
+            val content = et_write.text.toString().trim()
+            val peopleString = et_people.text.toString().replace("명", "").trim()
+            val people = peopleString.toIntOrNull() ?: 0 // 유효하지 않은 값이면 0을 반환
+
+
+
+            // 디버깅을 위해 수집된 데이터 로깅
+            Log.d("SubmitDebug", "Title: $title")
+            Log.d("SubmitDebug", "Content: $content")
+            Log.d("SubmitDebug", "People: $people")
+            Log.d("SubmitDebug", "Categories: ${categories.joinToString()}")
+
+            // 모든 정보를 입력했는지 확인합니다.
+            if (title.isEmpty() || content.isEmpty() || people <= 0 || ( selectedLocation.isNullOrBlank()) || people.toString()
+                    .isEmpty()
+            ) {
+                Toast.makeText(this, "모든 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val databaseReference = FirebaseDatabase.getInstance().getReference("Board4")
+            val boardId = databaseReference.push().key
+
+
+            // Board2 객체를 생성합니다.
+            val board4 = Board4(
+                userId = userId,
+                title = title,
+                content = content,
+                categories = categories,
+                date = System.currentTimeMillis(),
+                time = selectedTime,
+                eventDate = selectedDate,
+                numberOfPeople = people,
+                postId = boardId
+
+            )
+            saveBoard4ToFirebase("Board4", board4)
+            finish()
+        }
+        // 날짜 및 시간 선택 버튼 참조를 가져옵니다.
+        val btn_date = newLayout.findViewById<Button>(R.id.btn_select_date)
+
+        // 날짜 선택 버튼 클릭 리스너 설정
+        btn_date.setOnClickListener {
+            showDatePickerDialog()
+        }
+        btn_category2.setOnClickListener{
+            showDialog()
+        }
+
+
+    }
 
 
 }

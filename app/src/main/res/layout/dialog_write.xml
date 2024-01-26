@@ -41,12 +41,22 @@
         android:layout_height="42dp"
         android:background="#00000000"
         android:gravity="left|center"
+        android:text="     프로젝트"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        tools:layout_editor_absoluteX="-14dp"
+        tools:layout_editor_absoluteY="116dp" />
+
+    <Button
+        android:layout_width="328dp"
+        android:layout_height="42dp"
+        android:background="#00000000"
+        android:gravity="left|center"
         android:text="     원데이클래스"
         android:textColor="@color/black"
         android:textSize="12sp"
         tools:layout_editor_absoluteX="-14dp"
         tools:layout_editor_absoluteY="74dp" />
-
 
     <!-- 여기에 추가적인 뷰를 추가할 수 있습니다. -->
 </androidx.constraintlayout.widget.ConstraintLayout>

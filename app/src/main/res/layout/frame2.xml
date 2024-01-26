@@ -9,8 +9,8 @@
 
     <ImageView
 
-        android:layout_width="259dp"
-        android:layout_height="373dp"
+        android:layout_width="300dp"
+        android:layout_height="370dp"
         android:background="@drawable/image2"
         android:gravity="center"
         android:scaleType="fitXY"

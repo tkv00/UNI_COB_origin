@@ -1,5 +1,6 @@
 package com.example.uni_cob
 
+
 import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -13,8 +14,11 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.core.widget.NestedScrollView
 import androidx.fragment.app.Fragment
+import com.example.uni_cob.Chatting.ChatFragment
+import com.example.uni_cob.Chatting.ChatMain
 import com.example.uni_cob.Chatting.HomeFragment
 import com.example.uni_cob.Chatting.ProfileFragment
+import com.example.uni_cob.FindFriend.FindFriend_main
 import com.example.uni_cob.department.Useful_info
 import com.example.uni_cob.writeboard.Agora
 import com.example.uni_cob.writeboard.Board1All
@@ -89,25 +93,21 @@ class MainActivity : AppCompatActivity() {
                 R.id.menu_home -> {
                     fragmentFrame.visibility = View.GONE
                     mainContent.visibility = View.VISIBLE
-                    true
+                   true
                 }
                 R.id.menu_chat -> {
-                    val homeFragment = HomeFragment.newInstance()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragments_frame, homeFragment).commit()
-                    mainContent.visibility = View.GONE
-                    fragmentFrame.visibility = View.VISIBLE
+                    val intent=Intent(this,ChatMain::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.menu_profile -> {
-                    val profileFragment = ProfileFragment.newInstance()
-                    supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragments_frame, profileFragment).commit()
-                    mainContent.visibility = View.GONE
-                    fragmentFrame.visibility = View.VISIBLE
+                    val intent=Intent(this,MyProfile::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.menu_notification -> {
+                    val intent=Intent(this,FindFriend_main::class.java)
+                    startActivity(intent)
                     true
                 }
                 R.id.menu_register -> {

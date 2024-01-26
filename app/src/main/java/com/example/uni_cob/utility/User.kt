@@ -7,6 +7,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.uni_cob.R
+import java.io.Serializable
 
 // 사용자 정보를 담는 데이터 클래스입니다.
 data class User(
@@ -20,5 +21,8 @@ data class User(
     val stNumber: String? = null,
     var uid: String? = null,
     val userPhoneNumber: String? = null // 'userPhoneNumbergs'에서 'userPhoneNumber'로 수정
-)
+): Serializable
+enum class UserStatus {
+    NONE, FRIEND, DECLINED,REQUEST, HIDDEN
+}
 

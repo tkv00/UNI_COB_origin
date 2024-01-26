@@ -19,12 +19,11 @@
         android:enabled="true"
         android:id="@+id/menu_register"
 
-        android:icon="@drawable/register"/>
+        android:icon="@drawable/board"/>
     <item
         android:id="@+id/menu_notification"
         android:enabled="true"
         android:icon="@drawable/bell"
-
         android:title="Notification" />
     <item
         android:id="@+id/menu_profile"

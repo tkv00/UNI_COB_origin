@@ -7,6 +7,6 @@ data class Comment1(
     val timestamp: Long=0L,
     val department:String="",
     val profileImageUrl: String="",
-    val postId:String=""
-
+    val postId:String="",
+    val isRead: Boolean = false // 읽음 상태 필드 추가
 )
